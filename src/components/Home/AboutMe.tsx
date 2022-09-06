@@ -1,17 +1,16 @@
-import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, extend } from "@react-three/fiber";
 import gsap from "gsap";
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 
 import { colors } from "../../color";
 import TypingText from "../../hooks/TypingText";
 import { bounceAnim } from "../../utils/bounceAnim";
+import Three from "./Three";
 
 function AboutMe() {
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const sphereRef = useRef<any>(null);
-  const [planePos, setPlanePos] = useState<any>([]);
   useEffect(() => {
     if (titleRef.current !== null) {
       gsap.to(titleRef.current?.children, {
@@ -22,23 +21,11 @@ function AboutMe() {
         },
       });
     }
+    extend({ TextGeometry });
   });
 
-  useEffect(() => {
-    if (sphereRef.current !== null) {
-      var tempP = Array.from(sphereRef.current.attributes.position.array);
-      var newP = [];
-      for (let i = 0; i < tempP.length; i += 3) {
-        const temp = [tempP[i], tempP[i + 1], tempP[i + 2]];
-        newP.push(temp);
-      }
-      setPlanePos(newP);
-    }
-  }, [sphereRef.current]);
-  console.log(sphereRef.current);
-
   return (
-    <Container onClick={() => setPlanePos([])}>
+    <Container>
       <div>
         <Title ref={titleRef}>
           <TypingText size={4}>About Me</TypingText>
@@ -60,19 +47,19 @@ function AboutMe() {
           odio. Mauris eu pulvinar metus.
         </Description>
       </div>
-      <Canvas style={{ height: "35vw" }}>
-        <OrbitControls />
-        <points>
-          <sphereGeometry ref={sphereRef} args={[3, 6, 6]} />
-          <pointsMaterial size={0.1} color={"yellow"} />
-        </points>
-        {planePos.map((arr: any, i: number) => (
-          <mesh key={i} position={[arr[0], arr[1], arr[2]]}>
-            <planeGeometry args={[0.3, 0.3]} />
-            <meshBasicMaterial />
-          </mesh>
-        ))}
-      </Canvas>
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Canvas>
+          <Three />
+        </Canvas>
+      </div>
     </Container>
   );
 }
@@ -81,11 +68,15 @@ export default AboutMe;
 
 const Container = styled.div`
   margin-top: 25vh;
-  height: 100vh;
+  min-height: 100vh;
   padding: 0 5vw;
   display: grid;
-  grid-template-columns: 35vw 45vw;
+  grid-template-columns: 25vw 55vw;
   align-items: center;
+  @media screen and (max-width: 1000px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const Title = styled.h2`
