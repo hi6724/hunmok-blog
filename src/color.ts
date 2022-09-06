@@ -7,4 +7,5 @@ export const colors = {
   black: "000",
   darkBlack: "#181818",
   lightBlack: "#1d1d1d",
+  purple: "#be2ed6",
 };
