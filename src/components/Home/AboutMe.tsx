@@ -3,20 +3,38 @@ import gsap from "gsap";
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
+import Three from "./Three";
 
 import { colors } from "../../color";
 import TypingText from "../../hooks/TypingText";
 import { bounceAnim } from "../../utils/bounceAnim";
-import Three from "./Three";
+import { useMobile } from "../../utils/useMobile";
 
 function AboutMe() {
+  const isMobile = useMobile();
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const descriptionRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (titleRef.current !== null) {
       gsap.to(titleRef.current?.children, {
         ...bounceAnim,
         scrollTrigger: {
           trigger: titleRef.current.children,
+          start: "top 60%",
+        },
+      });
+    }
+    if (descriptionRef.current) {
+      gsap.from(descriptionRef.current.children, {
+        opacity: 0,
+        y: 30,
+        duration: 1.5,
+        stagger: {
+          each: 0.5,
+        },
+        scrollTrigger: {
+          trigger: descriptionRef.current.children,
           start: "top 60%",
         },
       });
@@ -30,27 +48,40 @@ function AboutMe() {
         <Title ref={titleRef}>
           <TypingText size={4}>About Me</TypingText>
         </Title>
-        <Description>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc posuere
-          varius arcu volutpat ullamcorper. Donec accumsan odio eu blandit
-          auctor. Phasellus vitae ornare enim, vitae eleifend nunc.
-        </Description>
-        <Description>
-          Nullam commodo nisl ut dapibus varius. Vivamus vestibulum, purus et
-          placerat blandit, purus magna consequat nisl, at fringilla erat nisl
-          non massa. Duis nisl dolor, feugiat non risus ut, pretium porta odio.
-        </Description>
-        <Description>
-          Curabitur consequat facilisis fringilla. Pellentesque turpis diam,
-          convallis ac sollicitudin non, maximus in odio. Curabitur porta
-          interdum libero quis facilisis. Nunc a aliquam ipsum, aliquet cursus
-          odio. Mauris eu pulvinar metus.
+        <Description ref={descriptionRef}>
+          {!isMobile ? (
+            <>
+              <p>
+                Nullam commodo nisl ut dapibus varius. Vivamus vestibulum, purus
+                et placerat blandit, purus magna consequat nisl, at fringilla
+                erat nisl non massa. Duis nisl dolor, feugiat non risus ut,
+                pretium porta odio.
+              </p>
+              <p>
+                Curabitur consequat facilisis fringilla. Pellentesque turpis
+                diam, convallis ac sollicitudin non, maximus in odio. Curabitur
+                porta interdum libero quis facilisis. Nunc a aliquam ipsum,
+                aliquet cursus odio. Mauris eu pulvinar metus.
+              </p>
+            </>
+          ) : (
+            <>
+              <p>
+                Lorem ipsum dolor accumsan sit amet, consectetur adipiscing
+                elit.
+              </p>
+              <p>
+                Donec accumsan odio eu. Phasellus vitae ornare enim, vitae
+                eleifend nunc.
+              </p>
+            </>
+          )}
         </Description>
       </div>
-      <div
+      <CanvasContainer
         style={{
-          width: "100%",
-          height: "100%",
+          width: "95vw",
+          height: "95vw",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -59,12 +90,14 @@ function AboutMe() {
         <Canvas>
           <Three />
         </Canvas>
-      </div>
+      </CanvasContainer>
     </Container>
   );
 }
 
 export default AboutMe;
+
+const CanvasContainer = styled.div<any>``;
 
 const Container = styled.div`
   margin-top: 25vh;
@@ -92,5 +125,7 @@ const Description = styled.div`
   font-family: "BM-Air";
   line-height: 1.5rem;
   color: ${colors.white};
-  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
 `;
