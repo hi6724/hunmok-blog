@@ -66,7 +66,7 @@ const Container = styled.div`
     transform: translateY(-100vh);
     width: 100vw;
   }
-  z-index: 99;
+  z-index: 9;
 `;
 const Dropdown = styled.div`
   @media screen and (min-width: 1000px) {
@@ -75,7 +75,5 @@ const Dropdown = styled.div`
   position: fixed;
   z-index: 999;
   padding: 1rem;
-  width: 100%;
-  height: 100%;
   font-size: 2rem;
 `;
