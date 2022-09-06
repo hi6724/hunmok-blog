@@ -1,44 +1,27 @@
 import gsap from "gsap";
 import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
+
 import logoList from "../../assets/logo";
+import { useMobile } from "../../utils/useMobile";
 
-// function animateBoxes(from, axis, ease) {
-//   //one stagger call does all the animation:
-//   tl.to(".box", {
-//       duration: 1,
-//       scale: 0.1,
-//       y: 60,
-//       yoyo: true,
-//       repeat: 1,
-//       ease: "power1.inOut",
-//       stagger: {
-//         amount: 1.5,
-//         grid: grid,
-//         axis: axis,
-//         ease: ease,
-//         from: from
-//       }
-//     }
-//   );
-// }
-const TEMP_DATA = Array.from({ length: 10 }, (_, i) => i);
+const FIRST_LINE = Array.from({ length: 10 }, (_, i) => i % 5);
+const SECOND_LINE = Array.from({ length: 10 }, (_, i) => (i % 5) + 5);
+
 function GridItems() {
-  const ref = useRef<HTMLDivElement>(null);
+  const isMobile = useMobile();
+  const ref = useRef<HTMLDivElement[]>([]);
 
-  const flipToBack = (e: React.MouseEvent<HTMLDivElement>) => {
-    const { currentTarget } = e;
-    gsap.killTweensOf(currentTarget);
-    gsap.to(currentTarget, {
+  const flipToBack = (e: React.TouchEvent | React.MouseEvent) => {
+    gsap.to(e.currentTarget, {
       duration: 0.4,
       rotateX: 180,
     });
   };
 
-  const flipToFront = (e: React.MouseEvent<HTMLDivElement>) => {
-    const { currentTarget } = e;
-    gsap.to(currentTarget, {
-      delay: 0.4,
+  const flipToFront = (e: React.TouchEvent | React.MouseEvent) => {
+    gsap.to(e.currentTarget, {
+      delay: 2,
       duration: 0.4,
       rotateX: 0,
     });
@@ -46,48 +29,95 @@ function GridItems() {
 
   useEffect(() => {
     ref.current !== null &&
-      gsap.from(ref.current?.children, {
-        scale: 0.2,
-        opacity: 0,
-        duration: 0.4,
-        scrollTrigger: {
-          trigger: ref.current,
-          start: "top center",
-        },
-        stagger: {
-          grid: "auto",
-          from: "start",
-          each: 0.1,
-        },
+      ref.current.forEach((el, i) => {
+        gsap.from(el.children, {
+          scale: 0.2,
+          opacity: 0,
+          duration: 0.4,
+          scrollTrigger: {
+            trigger: ref.current,
+            start: "top center",
+          },
+          stagger: {
+            grid: "auto",
+            from: "start",
+            each: 0.1,
+          },
+        });
+        gsap.to(el, {
+          duration: 30,
+          repeat: -1,
+          ease: "linear",
+          x:
+            i === 0
+              ? isMobile
+                ? "-=200%"
+                : "-=150%"
+              : isMobile
+              ? "+=200%"
+              : "+=150%",
+        });
       });
   });
 
   return (
-    <Container ref={ref}>
-      {TEMP_DATA.map((el) => (
-        <Item
-          className="card"
-          key={el}
-          onMouseOver={flipToBack}
-          onMouseLeave={flipToFront}
-        >
-          <FrontSide src={logoList[el]} alt="" />
-          <BackSide />
-        </Item>
-      ))}
+    <Container>
+      <ProjectWrapper ref={(el: HTMLDivElement) => (ref.current[0] = el)}>
+        {FIRST_LINE.map((el, i) => (
+          <Item
+            isMobile={isMobile}
+            className="card"
+            key={i}
+            onTouchStart={flipToBack}
+            onTouchEnd={flipToFront}
+            onMouseDown={flipToBack}
+            onMouseLeave={flipToFront}
+          >
+            <FrontSide src={logoList[el]} alt="" />
+            <BackSide onClick={() => console.log("work")} />
+          </Item>
+        ))}
+      </ProjectWrapper>
+
+      <ProjectWrapper
+        reverse
+        ref={(el: HTMLDivElement) => (ref.current[1] = el)}
+      >
+        {SECOND_LINE.map((el, i) => (
+          <Item
+            isMobile={isMobile}
+            key={i}
+            onTouchStart={flipToBack}
+            onTouchEnd={flipToFront}
+            onMouseDown={flipToBack}
+            onMouseLeave={flipToFront}
+          >
+            <FrontSide src={logoList[el]} alt="" />
+            <BackSide onClick={() => console.log("work")} />
+          </Item>
+        ))}
+      </ProjectWrapper>
     </Container>
   );
 }
 
 export default GridItems;
 
-const Container = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, auto);
+const ProjectWrapper = styled.div<any>`
+  /* width: 100%; */
+  display: flex;
+  flex-direction: ${(p) => (p.reverse ? "row-reverse" : "row")};
+  /* overflow: hidden; */
 `;
 
-const Item = styled.div`
+const Container = styled.div`
+  @media screen and (max-width: 1000px) {
+  }
+`;
+
+const Item = styled.div<any>`
   width: 100%;
+  min-width: ${(p) => (p.isMobile ? "40vw" : "30vw")};
   aspect-ratio: 1;
   position: relative;
   transform-style: preserve-3d;
