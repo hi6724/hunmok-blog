@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import { getNumFromStr } from "../utils/getNumFromStr";
 
 type Props = {
-  children: React.ReactNode;
-  size: number;
+  children?: React.ReactNode;
+  size: number | string;
 };
 /**
  *
@@ -25,15 +26,7 @@ const TypingText = ({ children, size }: Props) => {
             <React.Fragment key={i}>
               {string.split("").map((char: string, j: number) => {
                 if (char === " ") {
-                  return (
-                    <div
-                      key={j}
-                      style={{
-                        width: `${size / 3}vw`,
-                        display: "inline-block",
-                      }}
-                    />
-                  );
+                  return <Blank size={size} key={j} />;
                 }
                 return <Span key={i + j}>{char}</Span>;
               })}
@@ -48,6 +41,14 @@ const TypingText = ({ children, size }: Props) => {
 
 export default TypingText;
 
+const Blank = styled.div<Props>`
+  display: inline-block;
+  width: ${(p) =>
+    typeof p.size === "number"
+      ? `${p.size / 3}vw`
+      : getNumFromStr(p.size) / 3 +
+        p.size.split(getNumFromStr(p.size).toString())[1]};
+`;
 const Span = styled.span`
   opacity: 0;
 `;
