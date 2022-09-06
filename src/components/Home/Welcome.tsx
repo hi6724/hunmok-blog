@@ -6,11 +6,12 @@ import ShadowText from "../Navigation/ShadowText";
 import { colors } from "../../color";
 import TypingText from "../../hooks/TypingText";
 import { bounceAnim } from "../../utils/bounceAnim";
+import { useMobile } from "../../utils/useMobile";
 
 const Welcome = () => {
   const ref = useRef<any[]>([]);
   const timeline = gsap.timeline();
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1000);
+  const isMobile = useMobile();
 
   useEffect(() => {
     if (ref.current !== null) {
@@ -23,36 +24,28 @@ const Welcome = () => {
     }
   });
 
-  useEffect(() => {
-    const resizeEvent = () => {
-      window.innerWidth <= 1000 ? setIsMobile(true) : setIsMobile(false);
-    };
-    window.addEventListener("resize", resizeEvent);
-    return () => window.removeEventListener("resize", resizeEvent);
-  });
-
   return (
     <Container>
       <div>
         <TextContainer ref={(el) => (ref.current[0] = el)}>
-          <TypingText size={isMobile ? 20 : 12}>
+          <TypingText size={isMobile ? 20 : 8}>
             {isMobile ? "I'm" : "Hi,"}
           </TypingText>
         </TextContainer>
         <TextContainer ref={(el) => (ref.current[1] = el)}>
-          <TypingText size={isMobile ? 20 : 12}>
+          <TypingText size={isMobile ? 20 : 8}>
             {!isMobile && "I'm "}
-            <ShadowText size={isMobile ? 20 : 12} text="H" />
+            <ShadowText size={isMobile ? 20 : 8} text="H" />
             unmok,
           </TypingText>
         </TextContainer>
         <TextContainer ref={(el) => (ref.current[2] = el)}>
-          {!isMobile && <TypingText size={12}>web developer</TypingText>}
-          {isMobile && <TypingText size={12}>web</TypingText>}
+          {!isMobile && <TypingText size={8}>web developer</TypingText>}
+          {isMobile && <TypingText size={20}>web</TypingText>}
         </TextContainer>
         {isMobile && (
           <TextContainer ref={(el) => (ref.current[3] = el)}>
-            <TypingText size={12}>developer</TypingText>
+            <TypingText size={8}>developer</TypingText>
           </TextContainer>
         )}
       </div>
@@ -64,7 +57,7 @@ export default Welcome;
 
 const TextContainer = styled.h2`
   display: flex;
-  font-size: 12vw;
+  font-size: 8vw;
   font-family: "BM-Pro";
   color: ${colors.white};
   @media screen and (max-width: 1000px) {
