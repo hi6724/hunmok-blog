@@ -18,7 +18,9 @@ const Layout = () => {
 export default Layout;
 
 const Container = styled.div`
-  padding-left: 8rem;
   max-width: 100vw;
   overflow-x: hidden;
+  @media screen and (min-width: 1000px) {
+    padding-left: 8rem;
+  }
 `;
