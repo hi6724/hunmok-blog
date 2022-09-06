@@ -4,7 +4,7 @@ import { colors } from "../../color";
 
 interface Props {
   text?: string;
-  size: number;
+  size: number | string;
 }
 
 const ShadowText = ({ text, size }: Props) => {
@@ -23,14 +23,15 @@ const BigText = styled.span<Props>`
   .shadow {
     color: ${colors.fluor};
     position: absolute;
-    left: -${(props) => props.size / 12}rem;
+    left: -${(props) => (typeof props.size === "number" ? `${props.size / 12}vw` : props.size)};
     top: 0;
     z-index: -1;
   }
   color: ${colors.pink};
-  font-size: ${(props) => props.size}rem;
+  font-size: ${(props) => props.size}vw;
   font-weight: 900;
   font-family: "BM-Jua";
   z-index: 3;
-  transform: ${(p) => `translateX(${p.size / 24}rem)`};
+  transform: ${(p) =>
+    typeof p.size === "number" ? `translateX(${p.size / 24}vw)` : p.size};
 `;

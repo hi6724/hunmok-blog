@@ -16,23 +16,6 @@ const TypingText = ({ children, size }: Props) => {
     children = [children];
   }
 
-  // useEffect(() => {
-  //   if (ref.current !== null) {
-  //     timeline.to(ref.current.children, {
-  //       opacity: 1,
-  //       duration: 0.5,
-  //       keyframes: {
-  //         y: [0, -20, 0],
-  //         scale: [0.75, 1.15, 1],
-  //         easeEach: "power2.inOut",
-  //       },
-  //       stagger: {
-  //         each: 0.2,
-  //       },
-  //     });
-  //   }
-  // }, [ref]);
-
   if (!Array.isArray(children)) return null;
   return (
     <React.Fragment>
@@ -46,7 +29,7 @@ const TypingText = ({ children, size }: Props) => {
                     <div
                       key={j}
                       style={{
-                        width: `${size / 3}rem`,
+                        width: `${size / 3}vw`,
                         display: "inline-block",
                       }}
                     />
