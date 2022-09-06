@@ -6,7 +6,7 @@ import ShadowText from "./ShadowText";
 const Logo = () => {
   return (
     <Container>
-      <ShadowText text="H" size={5.5} />
+      <ShadowText text="H" size={"6rem"} />
       <NameText>Hunmok</NameText>
       <h4>web developer</h4>
     </Container>
