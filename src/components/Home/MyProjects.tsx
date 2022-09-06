@@ -9,15 +9,30 @@ import { useMobile } from "../../utils/useMobile";
 import GridItems from "../GridItems/GridItems";
 
 function MyProjects() {
-  const ref = useRef<any>();
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const descriptionRef = useRef<HTMLDivElement>(null);
   const isMobile = useMobile();
 
   useEffect(() => {
-    if (ref.current !== null) {
-      gsap.to(ref.current.children, {
+    if (titleRef.current !== null) {
+      gsap.to(titleRef.current.children, {
         ...bounceAnim,
         scrollTrigger: {
-          trigger: ref.current.children,
+          trigger: titleRef.current.children,
+          start: "top 60%",
+        },
+      });
+    }
+    if (descriptionRef.current) {
+      gsap.from(descriptionRef.current.children, {
+        opacity: 0,
+        y: 30,
+        duration: 1.5,
+        stagger: {
+          each: 0.5,
+        },
+        scrollTrigger: {
+          trigger: descriptionRef.current.children,
           start: "top 60%",
         },
       });
@@ -27,18 +42,22 @@ function MyProjects() {
   return (
     <>
       <Container>
-        <Title size={isMobile ? "3rem" : "5rem"} ref={ref}>
+        <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
           <TypingText size={isMobile ? "3rem" : "5rem"}>My Projects</TypingText>
         </Title>
-        <Description>
+        <Description ref={descriptionRef}>
           <p>
             Quisque et nisl nulla. nec bibendum turpis enim, a gravida massa
           </p>
-          <p>
-            maximus quis. Duis ante ex, volutpat ac pulvinar at, feugiat non
-            enim.
-          </p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          {!isMobile && (
+            <>
+              <p>
+                maximus quis. Duis ante ex, volutpat ac pulvinar at, feugiat non
+                enim.
+              </p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </>
+          )}
         </Description>
       </Container>
       <GridItems />
@@ -65,4 +84,7 @@ const Description = styled.div`
   font-family: "BM-Air";
   line-height: 1.5rem;
   color: ${colors.white};
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
 `;
