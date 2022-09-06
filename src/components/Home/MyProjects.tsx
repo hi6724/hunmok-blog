@@ -5,10 +5,12 @@ import styled from "styled-components";
 import { colors } from "../../color";
 import TypingText from "../../hooks/TypingText";
 import { bounceAnim } from "../../utils/bounceAnim";
+import { useMobile } from "../../utils/useMobile";
 import GridItems from "../GridItems/GridItems";
 
 function MyProjects() {
   const ref = useRef<any>();
+  const isMobile = useMobile();
 
   useEffect(() => {
     if (ref.current !== null) {
@@ -25,8 +27,8 @@ function MyProjects() {
   return (
     <>
       <Container>
-        <Title ref={ref}>
-          <TypingText size={4}>My Projects</TypingText>
+        <Title size={isMobile ? "3rem" : "5rem"} ref={ref}>
+          <TypingText size={isMobile ? "3rem" : "5rem"}>My Projects</TypingText>
         </Title>
         <Description>
           <p>
@@ -51,8 +53,8 @@ const Container = styled.div`
   margin-bottom: 10vh;
 `;
 
-const Title = styled.h2`
-  font-size: 4rem;
+const Title = styled.h2<any>`
+  font-size: ${(p) => p.size};
   font-family: "BM-Pro";
   color: ${colors.fluor};
   margin-bottom: 2rem;
