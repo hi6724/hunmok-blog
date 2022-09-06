@@ -52,10 +52,10 @@ function GridItems() {
             i === 0
               ? isMobile
                 ? "-=200%"
-                : "-=150%"
+                : "-=100%"
               : isMobile
               ? "+=200%"
-              : "+=150%",
+              : "+=100%",
         });
       });
   });
@@ -104,10 +104,8 @@ function GridItems() {
 export default GridItems;
 
 const ProjectWrapper = styled.div<any>`
-  /* width: 100%; */
   display: flex;
   flex-direction: ${(p) => (p.reverse ? "row-reverse" : "row")};
-  /* overflow: hidden; */
 `;
 
 const Container = styled.div`
@@ -117,7 +115,7 @@ const Container = styled.div`
 
 const Item = styled.div<any>`
   width: 100%;
-  min-width: ${(p) => (p.isMobile ? "40vw" : "30vw")};
+  min-width: ${(p) => (p.isMobile ? "40vw" : "25vw")};
   aspect-ratio: 1;
   position: relative;
   transform-style: preserve-3d;
