@@ -5,6 +5,7 @@ import myFont from "three/examples/fonts/droid/droid_sans_bold.typeface.json";
 import React, { useEffect, useRef, useState } from "react";
 
 import { colors } from "../../color";
+import { useMobile } from "../../utils/useMobile";
 
 declare global {
   namespace JSX {
@@ -46,10 +47,20 @@ function Three() {
   const [pointsRef, setPointsRef] = useState<any>();
   const font = useRef(new FontLoader().parse(myFont));
   const planeRefArr = useRef<any[]>([]);
+  const isMobile = useMobile();
 
   useFrame(({ camera, clock }) => {
-    // console.log(Math.floor(10000 / window.innerWidth));
-    const distance = Math.floor(11000 / window.innerWidth);
+    const v = 10000;
+    const width =
+      window.innerWidth > 1300
+        ? 1300
+        : window.innerWidth < 500
+        ? 1500
+        : window.innerWidth < 1000
+        ? 1300
+        : window.innerWidth;
+
+    const distance = Math.floor(v / width);
     camera.position.x = Math.sin(clock.elapsedTime / 3) * distance;
     camera.position.z = Math.cos(clock.elapsedTime / 3) * distance;
     camera.lookAt(0, 0, 0);
@@ -72,6 +83,12 @@ function Three() {
       setPlanes(newP);
     }
   }, [pointsRef, font]);
+
+  useEffect(() => {
+    planeRefArr.current.forEach((ref) => {
+      ref.geometry.center();
+    });
+  }, [planes]);
 
   return (
     <>

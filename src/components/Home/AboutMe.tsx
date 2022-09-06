@@ -45,8 +45,8 @@ function AboutMe() {
   return (
     <Container>
       <div>
-        <Title ref={titleRef}>
-          <TypingText size={4}>About Me</TypingText>
+        <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
+          <TypingText size={isMobile ? "3rem" : "5rem"}>About Me</TypingText>
         </Title>
         <Description ref={descriptionRef}>
           {!isMobile ? (
@@ -78,10 +78,10 @@ function AboutMe() {
           )}
         </Description>
       </div>
-      <CanvasContainer
+      <div
         style={{
-          width: "95vw",
-          height: "95vw",
+          width: isMobile ? "95vw" : "100%",
+          height: isMobile ? "95vw" : "100%",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -90,14 +90,12 @@ function AboutMe() {
         <Canvas>
           <Three />
         </Canvas>
-      </CanvasContainer>
+      </div>
     </Container>
   );
 }
 
 export default AboutMe;
-
-const CanvasContainer = styled.div<any>``;
 
 const Container = styled.div`
   margin-top: 25vh;
@@ -112,8 +110,8 @@ const Container = styled.div`
   }
 `;
 
-const Title = styled.h2`
-  font-size: 4rem;
+const Title = styled.h2<any>`
+  font-size: ${(p) => p.size};
   font-family: "BM-Pro";
   color: ${colors.fluor};
   margin-bottom: 2rem;
