@@ -3,8 +3,8 @@ import gsap from "gsap";
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
-import Three from "./Three";
 
+import Three from "./Three";
 import { colors } from "../../color";
 import TypingText from "../../hooks/TypingText";
 import { bounceAnim } from "../../utils/bounceAnim";
@@ -14,13 +14,25 @@ function AboutMe() {
   const isMobile = useMobile();
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descriptionRef = useRef<HTMLDivElement>(null);
+  const threeRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    if (titleRef.current !== null) {
+    if (titleRef.current) {
       gsap.to(titleRef.current?.children, {
         ...bounceAnim,
         scrollTrigger: {
           trigger: titleRef.current.children,
+          start: "top 60%",
+        },
+      });
+    }
+    if (threeRef.current) {
+      gsap.from(threeRef.current, {
+        opacity: 0,
+        duration: 2,
+        scale: 0.1,
+        scrollTrigger: {
+          trigger: threeRef.current,
           start: "top 60%",
         },
       });
@@ -87,7 +99,7 @@ function AboutMe() {
           alignItems: "center",
         }}
       >
-        <Canvas>
+        <Canvas ref={threeRef}>
           <Three />
         </Canvas>
       </div>

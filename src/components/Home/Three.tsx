@@ -92,8 +92,6 @@ function Three() {
 
   return (
     <>
-      <OrbitControls enabled={false} />
-
       <pointLight position={[-6, 0, 0]} intensity={0.5} />
       <pointLight position={[6, 0, 0]} intensity={0.5} />
       <pointLight position={[0, 0, 6]} intensity={0.5} />
