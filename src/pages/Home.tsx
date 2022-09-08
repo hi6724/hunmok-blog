@@ -4,6 +4,8 @@ import styled from "styled-components";
 
 import { colors } from "../color";
 import AboutMe from "../components/Home/AboutMe";
+import Blog from "../components/Home/Blog";
+import ContactMe from "../components/Home/ContactMe";
 import MyProjects from "../components/Home/MyProjects";
 import Welcome from "../components/Home/Welcome";
 
@@ -35,20 +37,16 @@ const Home = () => {
 
   return (
     <Container>
-      <ShowContainer ref={showContainer}>
-        <Welcome />
-        <MyProjects />
-        <AboutMe />
-      </ShowContainer>
+      <Welcome />
+      <MyProjects />
+      <AboutMe />
+      <Blog />
+      <ContactMe />
     </Container>
   );
 };
 
 export default Home;
-
-const ShowContainer = styled.div`
-  /* transform: translateY(-50vh); */
-`;
 
 const Container = styled.div`
   width: 100%;

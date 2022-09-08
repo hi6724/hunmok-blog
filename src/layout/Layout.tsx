@@ -19,7 +19,7 @@ export default Layout;
 
 const Container = styled.div`
   max-width: 100vw;
-  overflow-x: hidden;
+  overflow: hidden;
   @media screen and (min-width: 1000px) {
     padding-left: 8rem;
   }
