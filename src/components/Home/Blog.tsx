@@ -1,14 +1,28 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { loremIpsum } from "lorem-ipsum";
+import gsap from "gsap";
 
-import { blogData } from "../../test/blogData";
 import { colors } from "../../color";
+import TypingText from "../../hooks/TypingText";
+import { useMobile } from "../../utils/useMobile";
+import { bounceAnim } from "../../utils/bounceAnim";
+import axios from "axios";
 
 type ObjType = {
   [index: string]: string;
   algorithm: string;
   frontend: string;
+};
+export type PostType = {
+  createdAt: string;
+  icon: "✅" | "❌";
+  idx: string;
+  object: string;
+  site: string;
+  status: string;
+  title: string;
+  type: string;
 };
 const TYPE_PALETTE: ObjType = {
   algorithm: colors.fluor,
@@ -22,31 +36,88 @@ const getTypeColor = (type?: keyof typeof TYPE_PALETTE) => {
 };
 
 function Blog() {
-  console.log();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const isMobile = useMobile();
+  const [post, setPost] = useState<PostType[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async function () {
+      const { data } = await axios.get("http://localhost:8800/notionList/0");
+      console.log(data);
+      // loading && setPost(data);
+      setLoading(false);
+    })();
+  });
+
+  useEffect(() => {
+    if (titleRef.current) {
+      gsap.to(titleRef.current?.children, {
+        ...bounceAnim,
+        scrollTrigger: {
+          trigger: titleRef.current.children,
+          start: "top 70%",
+        },
+      });
+    }
+    if (containerRef.current && !loading) {
+      gsap.from(containerRef.current?.children, {
+        duration: 0.4,
+        scale: 0.2,
+        opacity: 0,
+        stagger: {
+          grid: "auto",
+          from: "start",
+          each: 0.1,
+        },
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 70%",
+        },
+      });
+    }
+  });
+
   return (
     <Container>
-      <GridContainer>
-        {blogData.map((data, i) => (
-          <BlogItem key={i} type={data.type}>
-            <TypeText type={data.type}>{data.type}</TypeText>
-            <h1>{data.title}</h1>
-            <p>{loremIpsum({ count: 2 })}</p>
-            <div>
-              <button>Continue</button>
-            </div>
-          </BlogItem>
-        ))}
-      </GridContainer>
+      <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
+        <TypingText size={isMobile ? "3rem" : "5rem"}>My Blog</TypingText>
+      </Title>
+      {loading && !(post.length > 0) ? (
+        "loading"
+      ) : (
+        <GridContainer ref={containerRef}>
+          {post.map((data) => (
+            <BlogItem key={data.idx} type={data.type}>
+              <TypeText type={data.type}>{data.type}</TypeText>
+              <h1>{data.title}</h1>
+              <p>{loremIpsum({ count: 2 })}</p>
+              <div>
+                <button>Continue</button>
+              </div>
+            </BlogItem>
+          ))}
+        </GridContainer>
+      )}
     </Container>
   );
 }
 
 export default Blog;
-type props = {
-  type: string;
-};
+
+const Title = styled.h2<any>`
+  font-size: ${(p) => p.size};
+  font-family: "BM-Pro";
+  color: ${colors.fluor};
+  margin-bottom: 2rem;
+  margin-left: 5vw;
+  display: flex;
+`;
+
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
   padding: 0 1rem;
 `;
 const GridContainer = styled.div`
@@ -65,13 +136,13 @@ const GridContainer = styled.div`
     grid-template-columns: repeat(1, 90vw);
   }
 `;
-const TypeText = styled.h2<props>`
+const TypeText = styled.h2<any>`
   font-size: 1.2rem;
   font-family: "BM-Air";
   color: ${({ type }: { type: string }) => getTypeColor(type)};
   text-transform: uppercase;
 `;
-const BlogItem = styled.div<props>`
+const BlogItem = styled.div<any>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
