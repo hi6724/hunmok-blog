@@ -115,7 +115,7 @@ const Container = styled.div`
   padding: 0 5vw;
   display: grid;
   grid-template-columns: 25vw 55vw;
-  align-items: center;
+
   @media screen and (max-width: 1000px) {
     display: flex;
     flex-direction: column;
