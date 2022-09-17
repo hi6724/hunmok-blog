@@ -7,7 +7,7 @@ import { colors } from "../../color";
 import TypingText from "../../hooks/TypingText";
 import { useMobile } from "../../utils/useMobile";
 import { bounceAnim } from "../../utils/bounceAnim";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 type ObjType = {
   [index: string]: string;
@@ -16,14 +16,21 @@ type ObjType = {
 };
 export type PostType = {
   createdAt: string;
-  icon: "✅" | "❌";
-  idx: string;
-  object: string;
+  icon:
+    | { type: "emoji"; emoji: "✅" | "❌" }
+    | { type: "file"; file: { url: string } };
+  id: string;
   site: string;
   status: string;
   title: string;
   type: string;
 };
+export type NotionListResponse = {
+  has_more: boolean;
+  next_cursor: string;
+  results: PostType[];
+};
+
 const TYPE_PALETTE: ObjType = {
   algorithm: colors.fluor,
   frontend: colors.pink,
@@ -38,18 +45,24 @@ const getTypeColor = (type?: keyof typeof TYPE_PALETTE) => {
 function Blog() {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const animCursor = useRef(0);
   const isMobile = useMobile();
+  const cursor = useRef("0");
+
   const [post, setPost] = useState<PostType[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    (async function () {
-      const { data } = await axios.get("http://localhost:8800/notionList/0");
-      console.log(data);
-      // loading && setPost(data);
-      setLoading(false);
-    })();
-  });
+  const getNotionList = async () => {
+    if (cursor.current === null) return;
+    setLoading(true);
+    const { data }: AxiosResponse<NotionListResponse> = await axios.get(
+      `http://localhost:8800/notionList/${cursor.current}`
+    );
+    cursor.current = data.next_cursor;
+    animCursor.current += 10;
+    setPost([...post, ...data.results]);
+    setLoading(false);
+  };
 
   useEffect(() => {
     if (titleRef.current) {
@@ -63,49 +76,79 @@ function Blog() {
     }
     if (containerRef.current && !loading) {
       gsap.from(containerRef.current?.children, {
-        duration: 0.4,
         scale: 0.2,
         opacity: 0,
-        stagger: {
-          grid: "auto",
-          from: "start",
-          each: 0.1,
-        },
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top 70%",
         },
+        duration: (index) => {
+          const delay = index * 0.1 - (animCursor.current - 10) / 10;
+          return delay >= 0 ? 0.4 : 0;
+        },
+        stagger: (index) => {
+          const delay = index * 0.1 - (animCursor.current - 10) / 10;
+          return delay >= 0 ? delay : 0;
+        },
       });
     }
   });
+
+  useEffect(() => {
+    getNotionList();
+  }, []);
 
   return (
     <Container>
       <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
         <TypingText size={isMobile ? "3rem" : "5rem"}>My Blog</TypingText>
       </Title>
-      {loading && !(post.length > 0) ? (
-        "loading"
-      ) : (
+      <>
         <GridContainer ref={containerRef}>
           {post.map((data) => (
-            <BlogItem key={data.idx} type={data.type}>
-              <TypeText type={data.type}>{data.type}</TypeText>
+            <BlogItem
+              onClick={() => console.log(data)}
+              key={data.id}
+              type={data.type}
+            >
+              <BlogHeader>
+                <TypeText type={data.type}>{data.type}</TypeText>
+                <CreatedAt>{data.createdAt.split("T")[0]}</CreatedAt>
+              </BlogHeader>
               <h1>{data.title}</h1>
-              <p>{loremIpsum({ count: 2 })}</p>
-              <div>
+              <p>{loremIpsum()}</p>
+              <BlogFooter>
                 <button>Continue</button>
-              </div>
+              </BlogFooter>
             </BlogItem>
           ))}
         </GridContainer>
-      )}
+        {!loading ? (
+          cursor.current !== null && (
+            <button onClick={getNotionList}>read more</button>
+          )
+        ) : (
+          <div>Loading...</div>
+        )}
+      </>
     </Container>
   );
 }
 
 export default Blog;
 
+const CreatedAt = styled.span`
+  font-family: "BM-Jua";
+  color: ${colors.darkGray};
+`;
+const BlogHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const BlogFooter = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+`;
 const Title = styled.h2<any>`
   font-size: ${(p) => p.size};
   font-family: "BM-Pro";
@@ -124,14 +167,12 @@ const GridContainer = styled.div`
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(2, 45vw);
+  justify-content: center;
   @media screen and (min-width: 1000px) {
     justify-content: space-between;
     grid-template-columns: repeat(3, auto);
   }
-  @media screen and (min-width: 1400px) {
-    justify-content: space-between;
-    grid-template-columns: repeat(4, auto);
-  }
+
   @media screen and (max-width: 500px) {
     grid-template-columns: repeat(1, 90vw);
   }
@@ -174,10 +215,7 @@ const BlogItem = styled.div<any>`
     font-family: "BM-Air";
     color: ${colors.darkGray};
   }
-  div {
-    display: flex;
-    flex-direction: row-reverse;
-  }
+
   button {
     box-shadow: rgba(50, 50, 50, 0.4) 0px 2px 4px,
       rgba(50, 50, 50, 0.3) 0px 7px 13px -3px,
