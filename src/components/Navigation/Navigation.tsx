@@ -1,6 +1,7 @@
 import gsap from "gsap";
 import React, { useRef, useState } from "react";
-import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
+import { AiOutlineClose, AiOutlineLeft, AiOutlineMenu } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { colors } from "../../color";
@@ -27,6 +28,7 @@ const DATA = [
 ];
 
 const Navigation = () => {
+  const navigation = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const openMenu = () => {
@@ -39,11 +41,12 @@ const Navigation = () => {
   };
   return (
     <>
-      <Dropdown onClick={openMenu}>
+      <Dropdown>
+        <AiOutlineLeft onClick={() => navigation(-1)} />
         {isOpen ? (
-          <AiOutlineClose color={colors.lightGray} />
+          <AiOutlineClose onClick={openMenu} />
         ) : (
-          <AiOutlineMenu color={colors.darkGray} />
+          <AiOutlineMenu onClick={openMenu} color={colors.darkGray} />
         )}
       </Dropdown>
       <Container ref={containerRef}>
@@ -72,6 +75,10 @@ const Dropdown = styled.div`
   @media screen and (min-width: 1000px) {
     display: none;
   }
+  color: ${colors.darkGray};
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
   position: fixed;
   z-index: 999;
   padding: 1rem;
