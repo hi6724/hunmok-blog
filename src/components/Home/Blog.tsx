@@ -8,6 +8,7 @@ import TypingText from "../../hooks/TypingText";
 import { useMobile } from "../../utils/useMobile";
 import { bounceAnim } from "../../utils/bounceAnim";
 import axios, { AxiosResponse } from "axios";
+import { useNavigate } from "react-router-dom";
 
 type ObjType = {
   [index: string]: string;
@@ -35,7 +36,7 @@ const TYPE_PALETTE: ObjType = {
   algorithm: colors.fluor,
   frontend: colors.pink,
 };
-const getTypeColor = (type?: keyof typeof TYPE_PALETTE) => {
+export const getTypeColor = (type?: keyof typeof TYPE_PALETTE) => {
   if (type && TYPE_PALETTE[type]) {
     return TYPE_PALETTE[type];
   }
@@ -48,6 +49,7 @@ function Blog() {
   const animCursor = useRef(0);
   const isMobile = useMobile();
   const cursor = useRef("0");
+  const navigation = useNavigate();
 
   const [post, setPost] = useState<PostType[]>([]);
   const [loading, setLoading] = useState(true);
@@ -107,7 +109,7 @@ function Blog() {
         <GridContainer ref={containerRef}>
           {post.map((data) => (
             <BlogItem
-              onClick={() => console.log(data)}
+              onClick={() => navigation(`/blog/${data.id}`)}
               key={data.id}
               type={data.type}
             >
