@@ -193,7 +193,7 @@ const BlogItem = styled.div<any>`
   border-top: 2px solid ${({ type }: { type: string }) => getTypeColor(type)};
   height: 100%;
   padding: 1rem;
-  background-color: ${colors.black};
+  background-color: ${colors.darkBlack};
   box-shadow: rgba(255, 255, 255, 0.12) 0px 1px 3px,
     rgba(255, 255, 255, 0.24) 0px 1px 3px;
   h1 {

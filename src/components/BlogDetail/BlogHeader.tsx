@@ -60,14 +60,14 @@ const CreatedAt = styled.span`
 const Title = styled.div`
   display: flex;
   align-items: center;
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-family: "BM-Pro";
   color: ${colors.lightGray};
   gap: 1rem;
 `;
 const Icon = styled.span`
   img {
-    width: 2rem;
-    height: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
   }
 `;
