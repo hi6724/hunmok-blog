@@ -9,6 +9,7 @@ import { useMobile } from "../../utils/useMobile";
 import { bounceAnim } from "../../utils/bounceAnim";
 import axios, { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
+import SmallBlogItem from "../BlogDetail/SmallBlogItem";
 
 type ObjType = {
   [index: string]: string;
@@ -43,16 +44,20 @@ export const getTypeColor = (type?: keyof typeof TYPE_PALETTE) => {
   return colors.purple;
 };
 
+let titleAnim = true;
 function Blog() {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const animCursor = useRef(0);
-  const isMobile = useMobile();
   const cursor = useRef("0");
+  const animate = useRef(true);
+
+  const isMobile = useMobile();
   const navigation = useNavigate();
 
   const [post, setPost] = useState<PostType[]>([]);
   const [loading, setLoading] = useState(true);
+  const [focusItem, setFocusItem] = useState("");
 
   const getNotionList = async () => {
     if (cursor.current === null) return;
@@ -62,35 +67,41 @@ function Blog() {
     );
     cursor.current = data.next_cursor;
     animCursor.current += 10;
+    animate.current = true;
     setPost([...post, ...data.results]);
     setLoading(false);
   };
 
   useEffect(() => {
-    if (titleRef.current) {
+    if (titleRef.current && titleAnim) {
       gsap.to(titleRef.current?.children, {
         ...bounceAnim,
+        onStart: () => {
+          titleAnim = false;
+        },
         scrollTrigger: {
           trigger: titleRef.current.children,
           start: "top 70%",
         },
       });
     }
-    if (containerRef.current && !loading) {
+    if (containerRef.current && !loading && animate.current) {
       gsap.from(containerRef.current?.children, {
-        scale: 0.2,
-        opacity: 0,
+        scale: 0,
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top 70%",
         },
         duration: (index) => {
           const delay = index * 0.1 - (animCursor.current - 10) / 10;
-          return delay >= 0 ? 0.4 : 0;
+          return delay >= 0 ? 0.6 : 0;
         },
         stagger: (index) => {
           const delay = index * 0.1 - (animCursor.current - 10) / 10;
           return delay >= 0 ? delay : 0;
+        },
+        onStart: () => {
+          animate.current = false;
         },
       });
     }
@@ -100,6 +111,14 @@ function Blog() {
     getNotionList();
   }, []);
 
+  const handleClick = (id: string) => {
+    if (focusItem === id) {
+      navigation(`/blog/${id}`);
+    } else {
+      setFocusItem(id);
+    }
+  };
+
   return (
     <Container>
       <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
@@ -108,21 +127,12 @@ function Blog() {
       <>
         <GridContainer ref={containerRef}>
           {post.map((data) => (
-            <BlogItem
-              onClick={() => navigation(`/blog/${data.id}`)}
+            <SmallBlogItem
+              onClick={() => handleClick(data.id)}
+              isFocus={focusItem}
               key={data.id}
-              type={data.type}
-            >
-              <BlogHeader>
-                <TypeText type={data.type}>{data.type}</TypeText>
-                <CreatedAt>{data.createdAt.split("T")[0]}</CreatedAt>
-              </BlogHeader>
-              <h1>{data.title}</h1>
-              <p>{loremIpsum()}</p>
-              <BlogFooter>
-                <button>Continue</button>
-              </BlogFooter>
-            </BlogItem>
+              data={data}
+            />
           ))}
         </GridContainer>
         {!loading ? (
@@ -139,18 +149,6 @@ function Blog() {
 
 export default Blog;
 
-const CreatedAt = styled.span`
-  font-family: "BM-Jua";
-  color: ${colors.darkGray};
-`;
-const BlogHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-const BlogFooter = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-`;
 const Title = styled.h2<any>`
   font-size: ${(p) => p.size};
   font-family: "BM-Pro";
@@ -177,58 +175,5 @@ const GridContainer = styled.div`
 
   @media screen and (max-width: 500px) {
     grid-template-columns: repeat(1, 90vw);
-  }
-`;
-const TypeText = styled.h2<any>`
-  font-size: 1.2rem;
-  font-family: "BM-Air";
-  color: ${({ type }: { type: string }) => getTypeColor(type)};
-  text-transform: uppercase;
-`;
-const BlogItem = styled.div<any>`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 1rem;
-  border-top: 2px solid ${({ type }: { type: string }) => getTypeColor(type)};
-  height: 100%;
-  padding: 1rem;
-  background-color: ${colors.darkBlack};
-  box-shadow: rgba(255, 255, 255, 0.12) 0px 1px 3px,
-    rgba(255, 255, 255, 0.24) 0px 1px 3px;
-  h1 {
-    font-size: 1.6rem;
-    width: 100%;
-    white-space: normal;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    font-family: "BM-Jua";
-    color: ${colors.lightGray};
-  }
-  p {
-    width: 100%;
-    white-space: normal;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    font-family: "BM-Air";
-    color: ${colors.darkGray};
-  }
-
-  button {
-    box-shadow: rgba(50, 50, 50, 0.4) 0px 2px 4px,
-      rgba(50, 50, 50, 0.3) 0px 7px 13px -3px,
-      rgba(50, 50, 50, 0.2) 0px -3px 0px inset;
-    padding: 0.5rem;
-    border: none;
-    background-color: ${colors.darkBlack};
-    width: 45%;
-    border-radius: 0.6rem;
-    font-size: 1rem;
-    font-family: "BM-Pro";
-    color: ${colors.darkGray};
   }
 `;
