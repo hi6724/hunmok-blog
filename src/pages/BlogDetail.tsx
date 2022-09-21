@@ -45,6 +45,7 @@ function BlogDetail() {
               />
             ))}
           </BlogBlocksContainer>
+          <div>댓글창</div>
         </div>
       )}
     </Container>

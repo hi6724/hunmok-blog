@@ -12,6 +12,7 @@
     "@react-three/drei": "^9.25.3",
     "@react-three/fiber": "^8.6.2",
     "axios": "^0.27.2",
+    "fontfaceobserver": "^2.3.0",
     "gsap": "^3.11.0",
     "lorem-ipsum": "^2.0.8",
     "react": "^18.2.0",
@@ -26,6 +27,7 @@
     "three.js": "^0.77.1"
   },
   "devDependencies": {
+    "@types/fontfaceobserver": "^2.1.0",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@types/styled-components": "^5.1.26",

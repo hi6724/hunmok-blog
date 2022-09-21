@@ -108,6 +108,7 @@ function Blog() {
   });
 
   useEffect(() => {
+    setPost([]);
     getNotionList();
   }, []);
 
