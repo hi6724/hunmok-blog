@@ -58,7 +58,9 @@ function AboutMe() {
     <Container>
       <div>
         <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
-          <TypingText size={isMobile ? "3rem" : "5rem"}>About Me</TypingText>
+          <TypingText size={isMobile ? "3rem" : "5rem"}>
+            나를 소개합니다
+          </TypingText>
         </Title>
         <Description ref={descriptionRef}>
           {!isMobile ? (
@@ -92,8 +94,8 @@ function AboutMe() {
       </div>
       <div
         style={{
-          width: isMobile ? "95vw" : "100%",
-          height: isMobile ? "95vw" : "100%",
+          width: "100%",
+          aspectRatio: "1",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",

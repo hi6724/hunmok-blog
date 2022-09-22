@@ -43,7 +43,9 @@ function MyProjects() {
     <>
       <Container>
         <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
-          <TypingText size={isMobile ? "3rem" : "5rem"}>My Projects</TypingText>
+          <TypingText size={isMobile ? "3rem" : "5rem"}>
+            나의 프로젝트들
+          </TypingText>
         </Title>
         <Description ref={descriptionRef}>
           <p>

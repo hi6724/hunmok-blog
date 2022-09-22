@@ -26,29 +26,28 @@ const Welcome = () => {
 
   return (
     <Container>
-      <div>
-        <TextContainer ref={(el) => (ref.current[0] = el)}>
-          <TypingText size={isMobile ? 20 : 8}>
-            {isMobile ? "I'm" : "Hi,"}
-          </TypingText>
-        </TextContainer>
-        <TextContainer ref={(el) => (ref.current[1] = el)}>
-          <TypingText size={isMobile ? 20 : 8}>
-            {!isMobile && "I'm "}
-            <ShadowText size={isMobile ? 20 : 8} text="H" />
-            unmok,
-          </TypingText>
-        </TextContainer>
+      <TextContainer ref={(el) => (ref.current[0] = el)}>
+        <TypingText size={8}>
+          {/* {isMobile ? "나는" : "안녕하세요"} */}
+          안녕하세요
+        </TypingText>
+      </TextContainer>
+
+      <TextContainer ref={(el) => (ref.current[1] = el)}>
+        {!isMobile && <TypingText size={8}>프론트엔드 개발자</TypingText>}
+        {isMobile && <TypingText size={8}>프론트엔드</TypingText>}
+      </TextContainer>
+      {isMobile && (
         <TextContainer ref={(el) => (ref.current[2] = el)}>
-          {!isMobile && <TypingText size={8}>web developer</TypingText>}
-          {isMobile && <TypingText size={20}>web</TypingText>}
+          <TypingText size={8}>개발자</TypingText>
         </TextContainer>
-        {isMobile && (
-          <TextContainer ref={(el) => (ref.current[3] = el)}>
-            <TypingText size={8}>developer</TypingText>
-          </TextContainer>
-        )}
-      </div>
+      )}
+      <TextContainer ref={(el) => (ref.current[3] = el)}>
+        <TypingText size={8}>
+          <ShadowText size={isMobile ? 15 : 8} text="하훈목" />
+          {" 입니다"}
+        </TypingText>
+      </TextContainer>
     </Container>
   );
 };
@@ -61,7 +60,7 @@ const TextContainer = styled.h2`
   font-family: "BM-Pro";
   color: ${colors.white};
   @media screen and (max-width: 1000px) {
-    font-size: 20vw;
+    font-size: 15vw;
   }
 `;
 const Container = styled.div`
@@ -71,4 +70,5 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   padding: 0 5vw;
+  gap: 2vh;
 `;

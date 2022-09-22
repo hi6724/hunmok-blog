@@ -19,7 +19,7 @@ const Home = () => {
       <AboutMe />
       <Blog />
       <ContactMe />
-      <div style={{ height: "100vh" }}></div>
+      <div style={{ height: "20vh", backgroundColor: "tomato" }}>footer</div>
     </Container>
   );
 };

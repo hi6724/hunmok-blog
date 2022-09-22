@@ -6,9 +6,12 @@ import { colors } from "../color";
 import BlogBlock from "../components/BlogDetail/BlogBlock";
 import BlogHeader from "../components/BlogDetail/BlogHeader";
 import { getTypeColor } from "../components/Home/Blog";
+import { apiRoutes } from "../utils/apiRoutes";
 
 const getNotionById = async (id: string) => {
-  const { data } = await axios.get(`http://localhost:8800/notion/${id}`);
+  const { data } = await axios.get(
+    `${apiRoutes.rootApi}${apiRoutes.getNotionById}${id}`
+  );
   return data;
 };
 
