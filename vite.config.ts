@@ -18,18 +18,7 @@ export default defineConfig({
       },
     },
   },
-  build: {
-    commonjsOptions: {
-      strictRequires: true,
-      ignoreGlobal: true,
-      transformMixedEsModules: true,
-    },
-    rollupOptions: {
-      output: {
-        globals: {
-          react: "react",
-        },
-      },
-    },
+  define: {
+    global: {},
   },
 });
