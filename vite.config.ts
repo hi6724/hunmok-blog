@@ -4,8 +4,19 @@ import react from "@vitejs/plugin-react";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  define: {
-    global: {},
+  build: {
+    commonjsOptions: {
+      strictRequires: true,
+      ignoreGlobal: true,
+      transformMixedEsModules: true,
+    },
+    rollupOptions: {
+      output: {
+        globals: {
+          react: "react",
+        },
+      },
+    },
   },
   build: {
     commonjsOptions: {
