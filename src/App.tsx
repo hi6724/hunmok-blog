@@ -15,15 +15,14 @@ function App() {
   useLayoutEffect(() => {
     (async function () {
       const fonts = [
-        new FontFaceObserver("BM-Pro"),
-        new FontFaceObserver("BM-Air"),
-        new FontFaceObserver("BM-Jua"),
+        new FontFaceObserver("BM-Pro").load(),
+        new FontFaceObserver("BM-Air").load(),
+        new FontFaceObserver("BM-Jua").load(),
       ];
       await Promise.all(fonts);
       setLoading(false);
     })();
   });
-  // const webFontsLoaded = useFontFaceObserver([{family: `MyGreatFont`}]);
   return (
     <>
       {loading ? (

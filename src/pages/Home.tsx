@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 import { colors } from "../color";
+import Footer from "../components/Footer";
 import AboutMe from "../components/Home/AboutMe";
 import Blog from "../components/Home/Blog";
 import ContactMe from "../components/Home/ContactMe";
@@ -19,7 +20,7 @@ const Home = () => {
       <AboutMe />
       <Blog />
       <ContactMe />
-      <div style={{ height: "20vh", backgroundColor: "tomato" }}>footer</div>
+      <Footer />
     </Container>
   );
 };
