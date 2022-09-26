@@ -78,7 +78,7 @@ const BlogItem = styled.div<any>`
     font-size: 1.6rem;
     width: 100%;
     white-space: normal;
-    overflow-x: hidden;
+    overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;

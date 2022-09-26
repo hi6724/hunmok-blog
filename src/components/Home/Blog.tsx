@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import SmallBlogItem from "../BlogDetail/SmallBlogItem";
 import { apiRoutes } from "../../utils/apiRoutes";
 import Button from "../Button";
+import getNotionListByCursor from "../../hooks/getNotionListByCursor";
 
 type ObjType = {
   [index: string]: string;
@@ -64,18 +65,14 @@ function Blog() {
   const [focusItem, setFocusItem] = useState("");
 
   const getNotionList = async () => {
-    if (cursor.current === null) return;
     setLoading(true);
-    const { data }: AxiosResponse<NotionListResponse> = await axios.get(
-      `${apiRoutes.rootApi}${apiRoutes.getNotionList}${cursor.current}`,
-      {
-        params: { count: count.current },
-      }
-    );
-    cursor.current = data.next_cursor;
-    animCursor.current += count.current;
-    animate.current = true;
-    setPost([...post, ...data.results]);
+    const data = await getNotionListByCursor(cursor.current, count.current);
+    if (data) {
+      cursor.current = data.next_cursor;
+      animCursor.current += count.current;
+      animate.current = true;
+      setPost([...post, ...data.results]);
+    }
     setLoading(false);
   };
 
@@ -149,7 +146,7 @@ function Blog() {
         <CenteredContainer>
           {!loading ? (
             cursor.current !== null && (
-              <Button onClick={getNotionList}>read more</Button>
+              <Button onClick={getNotionList}>블로그페이지로</Button>
             )
           ) : (
             <ReactLoading

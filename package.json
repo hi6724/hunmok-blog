@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "host": "vite --host",
-    "build": "tsc && vite build",
+    "build": "vite build --watch",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -24,7 +24,6 @@
     "react-icons": "^4.4.0",
     "react-loading": "^2.0.3",
     "react-router-dom": "^6.3.0",
-    "recoil": "^0.7.5",
     "styled-components": "^5.3.5",
     "styled-reset": "^4.4.2",
     "three.js": "^0.77.1"
