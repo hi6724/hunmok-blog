@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "host": "vite --host",
-    "build": "vite build --minify false",
+    "build": "vite build --minify false --base=./",
     "preview": "vite preview"
   },
   "dependencies": {
