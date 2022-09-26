@@ -7,4 +7,18 @@ export default defineConfig({
   define: {
     global: {},
   },
+  build: {
+    commonjsOptions: {
+      strictRequires: true,
+      ignoreGlobal: true,
+      transformMixedEsModules: true,
+    },
+    rollupOptions: {
+      output: {
+        globals: {
+          react: "react",
+        },
+      },
+    },
+  },
 });

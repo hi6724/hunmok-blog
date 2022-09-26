@@ -2,6 +2,8 @@ import { loremIpsum } from "lorem-ipsum";
 import React from "react";
 import styled from "styled-components";
 import { colors } from "../../color";
+import convertHexToRGBA from "../../utils/convertHexToRGBA";
+import Button from "../Button";
 import { getTypeColor, PostType } from "../Home/Blog";
 
 type Props = {
@@ -30,7 +32,7 @@ function SmallBlogItem({ data, onClick, isFocus }: Props) {
         time (like if you want to reverse()
       </p> */}
       <BlogFooter>
-        <button>{isFocus === data.id ? "Go Detail Page" : "Continue"}</button>
+        <Button>{isFocus === data.id ? "자세히 보기" : "계속"}</Button>
       </BlogFooter>
     </BlogItem>
   );
@@ -94,17 +96,13 @@ const BlogItem = styled.div<any>`
     color: ${colors.darkGray};
   }
 
+  transition: border 0.4s;
   button {
-    box-shadow: rgba(50, 50, 50, 0.4) 0px 2px 4px,
-      rgba(50, 50, 50, 0.3) 0px 7px 13px -3px,
-      rgba(50, 50, 50, 0.2) 0px -3px 0px inset;
-    padding: 0.5rem;
-    border: none;
-    background-color: ${colors.darkBlack};
-    width: 45%;
-    border-radius: 0.6rem;
-    font-size: 1rem;
-    font-family: "BM-Pro";
-    color: ${(p) => (p.isFocus ? getTypeColor(p.type) : colors.darkGray)};
+    transition: all 0.4s;
+    color: ${(p) => (p.isFocus ? colors.lightGray : colors.darkGray)};
+    background-color: ${(p) =>
+      p.isFocus
+        ? convertHexToRGBA(getTypeColor(p.type), 0.6)
+        : colors.darkBlack};
   }
 `;

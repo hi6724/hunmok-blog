@@ -2,9 +2,30 @@ import gsap from "gsap";
 import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 
-import logoList from "../../assets/logo";
+import bear from "../../assets/logo/bear.png";
+import eagle from "../../assets/logo/eagle.webp";
+import elephant from "../../assets/logo/elephant.jpg";
+import gorilla from "../../assets/logo/gorilla.webp";
+import king from "../../assets/logo/king.webp";
+import man from "../../assets/logo/man.jpg";
+import pama from "../../assets/logo/pama.png";
+import panda from "../../assets/logo/panda.jpg";
+import rogue from "../../assets/logo/rogue.jpg";
+import zap from "../../assets/logo/zap.png";
 import { useMobile } from "../../utils/useMobile";
 
+const logoList = [
+  bear,
+  eagle,
+  elephant,
+  gorilla,
+  king,
+  man,
+  pama,
+  panda,
+  rogue,
+  zap,
+];
 const FIRST_LINE = Array.from({ length: 10 }, (_, i) => i % 5);
 const SECOND_LINE = Array.from({ length: 10 }, (_, i) => (i % 5) + 5);
 

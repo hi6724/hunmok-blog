@@ -1,5 +1,5 @@
 export const apiRoutes = {
-  rootApi: "http://118.37.187.42:8800/",
+  rootApi: "https://hunmok-blog.herokuapp.com/",
   getNotionList: "notionList/",
   getNotionById: "notion/",
 };
