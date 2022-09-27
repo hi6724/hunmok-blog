@@ -6,7 +6,9 @@ import { colors } from "../../color";
 import TypingText from "../../hooks/TypingText";
 import { bounceAnim } from "../../utils/bounceAnim";
 import { useMobile } from "../../utils/useMobile";
+import Button from "../Button";
 import GridItems from "../GridItems/GridItems";
+import ScrollAnimContainer from "../ScrollAnimContainer";
 
 function MyProjects() {
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -63,6 +65,18 @@ function MyProjects() {
         </Description>
       </Container>
       <GridItems />
+      <ScrollAnimContainer
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "5vh",
+        }}
+        from={true}
+        anim={{ opacity: 0, scale: 0.3 }}
+      >
+        <Button>자세히보기</Button>
+      </ScrollAnimContainer>
     </>
   );
 }

@@ -14,6 +14,7 @@ import SmallBlogItem from "../BlogDetail/SmallBlogItem";
 import { apiRoutes } from "../../utils/apiRoutes";
 import Button from "../Button";
 import getNotionListByCursor from "../../hooks/getNotionListByCursor";
+import Dropdown from "../Dropdown";
 
 type ObjType = {
   [index: string]: string;
@@ -49,7 +50,7 @@ export const getTypeColor = (type?: keyof typeof TYPE_PALETTE) => {
 };
 
 let titleAnim = true;
-function Blog() {
+function Blog({ btn }: { btn?: boolean }) {
   const isMobile = useMobile();
   const navigation = useNavigate();
 
@@ -98,12 +99,14 @@ function Blog() {
         },
         duration: (index) => {
           const delay =
-            index * 0.1 - (animCursor.current - count.current) / count.current;
+            index / count.current -
+            (animCursor.current - count.current) / count.current;
           return delay >= 0 ? 0.6 : 0;
         },
         stagger: (index) => {
           const delay =
-            index * 0.1 - (animCursor.current - count.current) / count.current;
+            index / count.current -
+            (animCursor.current - count.current) / count.current;
           return delay >= 0 ? delay : 0;
         },
         onStart: () => {
@@ -129,9 +132,12 @@ function Blog() {
 
   return (
     <Container>
-      <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
-        <TypingText size={isMobile ? "3rem" : "5rem"}>블로그</TypingText>
-      </Title>
+      <HeaderContainer>
+        <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
+          <TypingText size={isMobile ? "3rem" : "5rem"}>블로그</TypingText>
+        </Title>
+        {/* {btn && <Dropdown items={["1", "2", "3"]} />} */}
+      </HeaderContainer>
       <>
         <GridContainer ref={containerRef}>
           {post.map((data) => (
@@ -145,8 +151,10 @@ function Blog() {
         </GridContainer>
         <CenteredContainer>
           {!loading ? (
-            cursor.current !== null && (
-              <Button onClick={getNotionList}>블로그페이지로</Button>
+            cursor.current !== null && !btn ? (
+              <Button onClick={() => navigation("/blog")}>자세히보기</Button>
+            ) : (
+              <Button onClick={getNotionList}>더보기</Button>
             )
           ) : (
             <ReactLoading
@@ -195,5 +203,15 @@ const GridContainer = styled.div`
 
   @media screen and (max-width: 500px) {
     grid-template-columns: repeat(1, 90vw);
+  }
+`;
+
+const HeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .sort-btn {
+    padding: 1rem;
+    background-color: ${colors.darkGray};
   }
 `;

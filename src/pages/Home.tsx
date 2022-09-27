@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { Link, Button, Element } from "react-scroll";
 
 import { colors } from "../color";
 import Footer from "../components/Footer";
@@ -16,9 +17,13 @@ const Home = () => {
   return (
     <Container>
       <Welcome />
+      <Element style={{ paddingTop: "10vh" }} name="project-scroll" />
       <MyProjects />
+      <Element style={{ paddingTop: "10vh" }} name="about-scroll" />
       <AboutMe />
+      <Element style={{ paddingTop: "10vh" }} name="blog-scroll" />
       <Blog />
+      <Element style={{ paddingTop: "10vh" }} name="contact-scroll" />
       <ContactMe />
       <Footer />
     </Container>

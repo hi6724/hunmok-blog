@@ -42,10 +42,19 @@ function GridItems() {
 
   const flipToFront = (e: React.TouchEvent | React.MouseEvent) => {
     gsap.to(e.currentTarget, {
-      delay: 2,
+      delay: isMobile ? 0.5 : 0.1,
       duration: 0.4,
       rotateX: 0,
     });
+  };
+  const handleFlip = (e: React.TouchEvent | React.MouseEvent) => {
+    if (e.currentTarget.getAttribute("rotate") === "true") {
+      flipToFront(e);
+      e.currentTarget.setAttribute("rotate", "false");
+    } else {
+      flipToBack(e);
+      e.currentTarget.setAttribute("rotate", "true");
+    }
   };
 
   useEffect(() => {
@@ -72,11 +81,11 @@ function GridItems() {
           x:
             i === 0
               ? isMobile
-                ? "-=200%"
-                : "-=100%"
+                ? "-=200vw"
+                : "-=125vw"
               : isMobile
-              ? "+=200%"
-              : "+=100%",
+              ? "+=200vw"
+              : "+=125vw",
         });
       });
   });
@@ -91,11 +100,10 @@ function GridItems() {
             key={i}
             onTouchStart={flipToBack}
             onTouchEnd={flipToFront}
-            onMouseDown={flipToBack}
-            onMouseLeave={flipToFront}
+            onMouseDown={handleFlip}
           >
             <FrontSide src={logoList[el]} alt="" />
-            <BackSide onClick={() => console.log("work")} />
+            <BackSide />
           </Item>
         ))}
       </ProjectWrapper>
@@ -110,11 +118,10 @@ function GridItems() {
             key={i}
             onTouchStart={flipToBack}
             onTouchEnd={flipToFront}
-            onMouseDown={flipToBack}
-            onMouseLeave={flipToFront}
+            onMouseDown={handleFlip}
           >
             <FrontSide src={logoList[el]} alt="" />
-            <BackSide onClick={() => console.log("work")} />
+            <BackSide />
           </Item>
         ))}
       </ProjectWrapper>

@@ -5,40 +5,46 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { colors } from "../../color";
+import { useMobile } from "../../utils/useMobile";
 import Items from "./Items";
 import Logo from "./Logo";
 import ShadowText from "./ShadowText";
 
 const DATA = [
   {
-    title: "About",
+    title: "Projects",
+    to: "project-scroll",
   },
   {
-    title: "My Skills",
-  },
-  {
-    title: "Work",
-  },
-  {
-    title: "Contact",
+    title: "About Me",
+    to: "about-scroll",
   },
   {
     title: "Blog",
+    to: "blog-scroll",
+  },
+  {
+    title: "Contact",
+    to: "contact-scroll",
   },
 ];
 
 const Navigation = () => {
   const navigation = useNavigate();
+  const isMobile = useMobile();
   const containerRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
+
   const openMenu = () => {
-    gsap.to(containerRef.current, {
-      duration: 1.5,
-      translateY: isOpen ? "-100vh" : 0,
-      ease: "Power4.easeOut",
-    });
+    isMobile &&
+      gsap.to(containerRef.current, {
+        duration: 1.5,
+        translateY: isOpen ? "-100vh" : 0,
+        ease: "Power4.easeOut",
+      });
     setIsOpen(!isOpen);
   };
+  console.log(isOpen);
   return (
     <>
       <Dropdown>
@@ -51,7 +57,7 @@ const Navigation = () => {
       </Dropdown>
       <Container ref={containerRef}>
         <Logo />
-        <Items data={DATA} />
+        <Items data={DATA} toggleOpen={openMenu} />
       </Container>
     </>
   );

@@ -9,6 +9,8 @@ import { colors } from "../../color";
 import TypingText from "../../hooks/TypingText";
 import { bounceAnim } from "../../utils/bounceAnim";
 import { useMobile } from "../../utils/useMobile";
+import Button from "../Button";
+import ScrollAnimContainer from "../ScrollAnimContainer";
 
 function AboutMe() {
   const isMobile = useMobile();
@@ -55,65 +57,78 @@ function AboutMe() {
   });
 
   return (
-    <Container>
-      <div>
-        <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
-          <TypingText size={isMobile ? "3rem" : "5rem"}>
-            나를 소개합니다
-          </TypingText>
-        </Title>
-        <Description ref={descriptionRef}>
-          {!isMobile ? (
-            <>
-              <p>
-                Nullam commodo nisl ut dapibus varius. Vivamus vestibulum, purus
-                et placerat blandit, purus magna consequat nisl, at fringilla
-                erat nisl non massa. Duis nisl dolor, feugiat non risus ut,
-                pretium porta odio.
-              </p>
-              <p>
-                Curabitur consequat facilisis fringilla. Pellentesque turpis
-                diam, convallis ac sollicitudin non, maximus in odio. Curabitur
-                porta interdum libero quis facilisis. Nunc a aliquam ipsum,
-                aliquet cursus odio. Mauris eu pulvinar metus.
-              </p>
-            </>
-          ) : (
-            <>
-              <p>
-                Lorem ipsum dolor accumsan sit amet, consectetur adipiscing
-                elit.
-              </p>
-              <p>
-                Donec accumsan odio eu. Phasellus vitae ornare enim, vitae
-                eleifend nunc.
-              </p>
-            </>
-          )}
-        </Description>
-      </div>
-      <div
+    <>
+      <Container>
+        <div>
+          <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
+            <TypingText size={isMobile ? "3rem" : "5rem"}>
+              나를 소개합니다
+            </TypingText>
+          </Title>
+          <Description ref={descriptionRef}>
+            {!isMobile ? (
+              <>
+                <p>
+                  Nullam commodo nisl ut dapibus varius. Vivamus vestibulum,
+                  purus et placerat blandit, purus magna consequat nisl, at
+                  fringilla erat nisl non massa. Duis nisl dolor, feugiat non
+                  risus ut, pretium porta odio.
+                </p>
+                <p>
+                  Curabitur consequat facilisis fringilla. Pellentesque turpis
+                  diam, convallis ac sollicitudin non, maximus in odio.
+                  Curabitur porta interdum libero quis facilisis. Nunc a aliquam
+                  ipsum, aliquet cursus odio. Mauris eu pulvinar metus.
+                </p>
+              </>
+            ) : (
+              <>
+                <p>
+                  Lorem ipsum dolor accumsan sit amet, consectetur adipiscing
+                  elit.
+                </p>
+                <p>
+                  Donec accumsan odio eu. Phasellus vitae ornare enim, vitae
+                  eleifend nunc.
+                </p>
+              </>
+            )}
+          </Description>
+        </div>
+        <div
+          style={{
+            width: "100%",
+            aspectRatio: "1",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Canvas ref={threeRef}>
+            <Three />
+          </Canvas>
+        </div>
+      </Container>
+      <ScrollAnimContainer
         style={{
           width: "100%",
-          aspectRatio: "1",
           display: "flex",
           justifyContent: "center",
-          alignItems: "center",
         }}
+        from={true}
+        anim={{ opacity: 0, scale: 0.3 }}
       >
-        <Canvas ref={threeRef}>
-          <Three />
-        </Canvas>
-      </div>
-    </Container>
+        <Button>자세히보기</Button>
+      </ScrollAnimContainer>
+    </>
   );
 }
 
 export default AboutMe;
 
 const Container = styled.div`
-  margin-top: 25vh;
-  min-height: 100vh;
+  margin-top: 10vh;
+  min-height: 70vh;
   padding: 0 5vw;
   display: grid;
   grid-template-columns: 25vw 55vw;

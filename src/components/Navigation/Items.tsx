@@ -1,24 +1,37 @@
 import React from "react";
 import styled from "styled-components";
 import { AiFillGithub, AiFillInstagram, AiFillFacebook } from "react-icons/ai";
+import { scroller } from "react-scroll";
+
 import { colors } from "../../color";
 
 type item = {
   title: string;
+  to: string;
 };
 type Props = {
   data: item[];
+  toggleOpen: Function;
 };
 
-const Items = ({ data }: Props) => {
+const Items = ({ data, toggleOpen }: Props) => {
   return (
     <Container>
       <ItemsContainer>
         <Divider className="divider" />
         {data.map((el, i) => (
           <React.Fragment key={i}>
-            <Item>
-              <span>{el.title}</span>
+            <Item
+              onClick={() => {
+                toggleOpen();
+                scroller.scrollTo(el.to, {
+                  duration: 800,
+                  delay: 0,
+                  smooth: "easeInOutQuad",
+                });
+              }}
+            >
+              <span>{el.title.toLowerCase()}</span>
             </Item>
             <Divider className="divider" />
           </React.Fragment>
