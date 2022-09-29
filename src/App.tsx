@@ -3,6 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FontFaceObserver from "fontfaceobserver";
+import { SWRConfig } from "swr";
 
 import "./style.css";
 import { GlobalStyle } from "./GlobalStyle";
@@ -28,12 +29,19 @@ function App() {
       {loading ? (
         "loading..."
       ) : (
-        <>
+        <SWRConfig
+          value={{
+            fetcher: (url: string) => fetch(url).then((res) => res.json()),
+            revalidateIfStale: false,
+            revalidateOnFocus: false,
+            revalidateOnReconnect: false,
+          }}
+        >
           <GlobalStyle />
           <BrowserRouter>
             <Router />
           </BrowserRouter>
-        </>
+        </SWRConfig>
       )}
     </>
   );

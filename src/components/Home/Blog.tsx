@@ -8,13 +8,13 @@ import { colors } from "../../color";
 import TypingText from "../../hooks/TypingText";
 import { useMobile } from "../../utils/useMobile";
 import { bounceAnim } from "../../utils/bounceAnim";
-import axios, { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import SmallBlogItem from "../BlogDetail/SmallBlogItem";
-import { apiRoutes } from "../../utils/apiRoutes";
 import Button from "../Button";
 import getNotionListByCursor from "../../hooks/getNotionListByCursor";
 import Dropdown from "../Dropdown";
+import { getNotionListApi } from "../../utils/apiRoutes";
+import useSWR from "swr";
 
 type ObjType = {
   [index: string]: string;
@@ -49,40 +49,34 @@ export const getTypeColor = (type?: keyof typeof TYPE_PALETTE) => {
   return colors.purple;
 };
 
-let titleAnim = true;
 function Blog({ btn }: { btn?: boolean }) {
   const isMobile = useMobile();
   const navigation = useNavigate();
 
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const animCursor = useRef(0);
-  const cursor = useRef("0");
+
   const animate = useRef(true);
+  const titleAnim = useRef(true);
   const count = useRef(isMobile ? 6 : 12);
 
-  const [post, setPost] = useState<PostType[]>([]);
+  const animCursor = useRef(isMobile ? 6 : 12);
+  const cursor = useRef("0");
+
   const [loading, setLoading] = useState(true);
   const [focusItem, setFocusItem] = useState("");
+  const [postList, setPostList] = useState<PostType[]>([]);
 
-  const getNotionList = async () => {
-    setLoading(true);
-    const data = await getNotionListByCursor(cursor.current, count.current);
-    if (data) {
-      cursor.current = data.next_cursor;
-      animCursor.current += count.current;
-      animate.current = true;
-      setPost([...post, ...data.results]);
-    }
-    setLoading(false);
-  };
+  const { data, error } = useSWR<NotionListResponse>(
+    `${getNotionListApi}/${cursor.current}?count=${count.current}`
+  );
 
   useEffect(() => {
-    if (titleRef.current && titleAnim) {
+    if (titleRef.current && titleAnim.current) {
       gsap.to(titleRef.current?.children, {
         ...bounceAnim,
         onStart: () => {
-          titleAnim = false;
+          titleAnim.current = false;
         },
         scrollTrigger: {
           trigger: titleRef.current.children,
@@ -116,12 +110,6 @@ function Blog({ btn }: { btn?: boolean }) {
     }
   });
 
-  useEffect(() => {
-    setPost([]);
-    titleAnim = true;
-    getNotionList();
-  }, []);
-
   const handleClick = (id: string) => {
     if (focusItem === id) {
       navigation(`/blog/${id}`);
@@ -130,31 +118,48 @@ function Blog({ btn }: { btn?: boolean }) {
     }
   };
 
+  useEffect(() => {
+    if (data !== undefined) {
+      setPostList([...postList, ...data?.results]);
+      setLoading(false);
+    }
+  }, [data]);
+
   return (
     <Container>
       <HeaderContainer>
         <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
           <TypingText size={isMobile ? "3rem" : "5rem"}>블로그</TypingText>
         </Title>
-        {/* {btn && <Dropdown items={["1", "2", "3"]} />} */}
       </HeaderContainer>
       <>
         <GridContainer ref={containerRef}>
-          {post.map((data) => (
+          {postList.map((el) => (
             <SmallBlogItem
-              onClick={() => handleClick(data.id)}
+              onClick={() => handleClick(el.id)}
               isFocus={focusItem}
-              key={data.id}
-              data={data}
+              key={el.id}
+              data={el}
             />
           ))}
         </GridContainer>
         <CenteredContainer>
-          {!loading ? (
+          {data ? (
             cursor.current !== null && !btn ? (
               <Button onClick={() => navigation("/blog")}>자세히보기</Button>
             ) : (
-              <Button onClick={getNotionList}>더보기</Button>
+              data.next_cursor && (
+                <Button
+                  onClick={() => {
+                    animate.current = true;
+                    animCursor.current += count.current;
+                    cursor.current = data.next_cursor;
+                    setLoading(true);
+                  }}
+                >
+                  더보기
+                </Button>
+              )
             )
           ) : (
             <ReactLoading
