@@ -13,8 +13,10 @@ import { useMobile } from "../../utils/useMobile";
 import Button from "../Button";
 import ScrollAnimContainer from "../ScrollAnimContainer";
 import ShadowText from "../Navigation/ShadowText";
+import { useNavigate } from "react-router-dom";
 
 function AboutMe() {
+  const navigation = useNavigate();
   const isMobile = useMobile();
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descriptionRef = useRef<HTMLDivElement>(null);
@@ -88,11 +90,11 @@ function AboutMe() {
               </>
             ) : (
               <>
-                <p>
-                  <ShadowText size={3} text="프론트엔드" /> 개발자 하훈목 입니다
-                </p>
-                <p>2016.04.03 ~ 2022.03.18 (대학교)</p>
-                <p>07.17 ~ {dayjs().format("MM.DD")} (SSAFY)</p>
+                <ul>
+                  <li>2016.04.03 ~ 2022.03.18 (대학교)</li>
+                  <li>2018.04.09 ~ 2019.12.06 (육군 만기제대)</li>
+                  <li>07.17 ~ {dayjs().format("MM.DD")} (SSAFY)</li>
+                </ul>
               </>
             )}
           </Description>
@@ -120,7 +122,7 @@ function AboutMe() {
         from={true}
         anim={{ opacity: 0, scale: 0.3 }}
       >
-        <Button>자세히보기</Button>
+        <Button onClick={() => navigation("/about-me")}>자세히보기</Button>
       </ScrollAnimContainer>
     </>
   );
@@ -129,7 +131,6 @@ function AboutMe() {
 export default AboutMe;
 
 const Container = styled.div`
-  margin-top: 10vh;
   min-height: 70vh;
   padding: 0 5vw;
   display: grid;
@@ -150,18 +151,17 @@ const Title = styled.h2<any>`
 `;
 
 const Description = styled.div`
-  font-size: 1.2rem;
   font-family: "BM-Air";
   line-height: 1.5rem;
   color: ${colors.white};
   p {
+    font-size: 1.2rem;
     margin-bottom: 1rem;
   }
   h6 {
     text-overflow: ellipsis;
     display: block;
     overflow: hidden;
-    width: 25vw;
     white-space: nowrap;
   }
 `;
