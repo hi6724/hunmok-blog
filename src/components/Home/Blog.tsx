@@ -49,7 +49,7 @@ export const getTypeColor = (type?: keyof typeof TYPE_PALETTE) => {
   return colors.purple;
 };
 
-function Blog({ btn }: { btn?: boolean }) {
+function Blog() {
   const isMobile = useMobile();
   const navigation = useNavigate();
 
@@ -145,21 +145,18 @@ function Blog({ btn }: { btn?: boolean }) {
         </GridContainer>
         <CenteredContainer>
           {data ? (
-            cursor.current !== null && !btn ? (
-              <Button onClick={() => navigation("/blog")}>자세히보기</Button>
-            ) : (
-              data.next_cursor && (
-                <Button
-                  onClick={() => {
-                    animate.current = true;
-                    animCursor.current += count.current;
-                    cursor.current = data.next_cursor;
-                    setLoading(true);
-                  }}
-                >
-                  더보기
-                </Button>
-              )
+            cursor.current !== null &&
+            data.next_cursor && (
+              <Button
+                onClick={() => {
+                  animate.current = true;
+                  animCursor.current += count.current;
+                  cursor.current = data.next_cursor;
+                  setLoading(true);
+                }}
+              >
+                더보기
+              </Button>
             )
           ) : (
             <ReactLoading
@@ -201,7 +198,7 @@ const GridContainer = styled.div`
   grid-template-columns: repeat(2, 45vw);
   justify-content: center;
   @media screen and (min-width: 1000px) {
-    justify-content: space-between;
+    justify-content: center;
     grid-template-columns: repeat(3, calc(30vw - 1.5rem));
     gap: 0.5rem;
   }

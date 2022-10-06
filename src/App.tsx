@@ -13,6 +13,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const [loading, setLoading] = useState(true);
+
   useLayoutEffect(() => {
     (async function () {
       const fonts = [

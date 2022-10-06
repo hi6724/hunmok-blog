@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { Link, Button, Element } from "react-scroll";
+import { Element } from "react-scroll";
 
 import { colors } from "../color";
 import Footer from "../components/Footer";
@@ -10,12 +9,10 @@ import ContactMe from "../components/Home/ContactMe";
 import MyProjects from "../components/Home/MyProjects";
 import Welcome from "../components/Home/Welcome";
 
-let prevScroll = 0;
 const Home = () => {
-  const showContainer = useRef<HTMLDivElement>(null);
-
   return (
     <Container>
+      <Element name="top" />
       <Welcome />
       <Element style={{ paddingTop: "10vh" }} name="project-scroll" />
       <MyProjects />

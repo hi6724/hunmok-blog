@@ -10,13 +10,11 @@ function BlogHeader({ info }: any) {
     info.title.replaceAll(" ", "-") + "-" + info.id.replaceAll("-", "");
   useEffect(() => {
     const iconType = info.icon.type;
-    console.log(info.icon.type);
     if (info.icon.type === "file") {
       setIcon(info.icon.file.url);
     } else {
       setIcon(info.icon[iconType]);
     }
-    console.log(icon);
   });
   return (
     <Container>

@@ -31,10 +31,8 @@ export default function ContactMe() {
   const { register, handleSubmit, formState } = useForm({ mode: "onSubmit" });
   const onValid = (data: any) => {
     send("service_ibn0zqm", "template_tfjt1wb", data, "nR6ZXXMVRBD0CIHOb");
-    console.log(data);
     // send("service_8nc23u4", "template_3fmphv9", data, "user_KLZ4yRcvBwnZVfFADzXUj");
   };
-  console.log(formState.errors?.from_email?.type);
 
   return (
     <Wrapper>

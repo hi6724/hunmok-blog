@@ -1,17 +1,13 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import useSWR from "swr";
+
 import { colors } from "../color";
 import BlogBlock from "../components/BlogDetail/BlogBlock";
 import BlogHeader from "../components/BlogDetail/BlogHeader";
 import { getTypeColor } from "../components/Home/Blog";
 import { getNotionByIdApi } from "../utils/apiRoutes";
-
-const getNotionById = async (id: string) => {
-  const { data } = await axios.get(`${getNotionByIdApi}/${id}`);
-  return data;
-};
 
 function BlogDetail() {
   const { id } = useParams();
@@ -19,16 +15,14 @@ function BlogDetail() {
   const [blocks, setBlocks] = useState<any>(null);
   const [pageInfo, setPageInfo] = useState<any>(null);
 
+  const { data } = useSWR(`${getNotionByIdApi}/${id}`);
   useEffect(() => {
-    if (id !== undefined) {
-      (async function () {
-        const data = await getNotionById(id);
-        loading && setBlocks(data.child);
-        loading && setPageInfo(data.pageInfo);
-        setLoading(false);
-      })();
+    if (data) {
+      setBlocks(data.child);
+      setPageInfo(data.pageInfo);
+      setLoading(false);
     }
-  });
+  }, [data]);
 
   return (
     <Container>

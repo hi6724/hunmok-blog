@@ -1,14 +1,14 @@
 import gsap from "gsap";
 import React, { useRef, useState } from "react";
 import { AiOutlineClose, AiOutlineLeft, AiOutlineMenu } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { scroller } from "react-scroll";
 import styled from "styled-components";
 
 import { colors } from "../../color";
 import { useMobile } from "../../utils/useMobile";
 import Items from "./Items";
 import Logo from "./Logo";
-import ShadowText from "./ShadowText";
 
 const DATA = [
   {
@@ -31,6 +31,7 @@ const DATA = [
 
 const Navigation = () => {
   const navigation = useNavigate();
+  const location = useLocation();
   const isMobile = useMobile();
   const containerRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -44,11 +45,29 @@ const Navigation = () => {
       });
     setIsOpen(!isOpen);
   };
-  console.log(isOpen);
+
+  const handleBack = () => {
+    if (location.pathname.includes("blog")) {
+      console.log("JJ");
+      navigation("/", { replace: true, state: { from: "blog-scroll" } });
+    } else if (location.pathname.includes("project")) {
+      navigation("/", { replace: true, state: { from: "project-scroll" } });
+    } else {
+      window.history.state.idx > 0
+        ? navigation(-1)
+        : location.pathname === "/" &&
+          scroller.scrollTo("top", {
+            duration: 800,
+            delay: 0,
+            smooth: "easeInOutQuad",
+          });
+    }
+  };
+
   return (
     <>
       <Dropdown>
-        <AiOutlineLeft onClick={() => navigation(-1)} />
+        <AiOutlineLeft onClick={() => handleBack()} />
         {isOpen ? (
           <AiOutlineClose onClick={openMenu} />
         ) : (

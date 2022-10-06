@@ -5,7 +5,6 @@ import typeTransform from "../../utils/typeTransform";
 import { CodeBlock, CopyBlock, dracula } from "react-code-blocks";
 
 function BlogBlock({ data, typeColor }: any) {
-  data.link && console.log(data);
   return (
     <Container typeColor={typeColor}>
       {typeTransform(data.type) !== "hr" ? (
