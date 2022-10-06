@@ -78,21 +78,21 @@ function AboutMe() {
           <Description ref={descriptionRef}>
             {!isMobile ? (
               <>
-                <p>
+                <section>
                   <h5>2016.04.03 ~ 2022.03.18 (대학교)</h5>
                   <h5>07.17 ~ {dayjs().format("MM.DD")} (SSAFY)</h5>
-                </p>
+                </section>
 
-                <p>
+                <section>
                   <h4>프론트엔드</h4>
                   <h6> react, react-native, next.js</h6>
                   <h6>redux, gsap, styled-components, react-query</h6>
-                </p>
-                <p>
+                </section>
+                <section>
                   <h4>백엔드</h4>
                   <h6>node.js, python, java</h6>
                   <h6>express, graphql, django, spring</h6>
-                </p>
+                </section>
               </>
             ) : (
               <>
@@ -165,7 +165,7 @@ const Description = styled.div`
   font-family: "BM-Air";
   line-height: 1.5rem;
   color: ${colors.white};
-  p {
+  section {
     font-size: 1.2rem;
     margin-bottom: 1rem;
   }

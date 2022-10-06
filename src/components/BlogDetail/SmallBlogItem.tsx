@@ -25,12 +25,7 @@ function SmallBlogItem({ data, onClick, isFocus }: Props) {
         <CreatedAt>{data.createdAt.split("T")[0]}</CreatedAt>
       </BlogHeader>
       <h1>{data.title}</h1>
-      {/* <p>
-        Boolean If autoRemoveChildren is set to true, as soon as child
-        tweens/timelines complete, they will automatically get killed/removed.
-        This is normally undesireable because it prevents going backwards in
-        time (like if you want to reverse()
-      </p> */}
+
       <BlogFooter>
         <Button>{isFocus === data.id ? "자세히 보기" : "계속"}</Button>
       </BlogFooter>

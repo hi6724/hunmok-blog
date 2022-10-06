@@ -12,7 +12,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import SmallBlogItem from "../BlogDetail/SmallBlogItem";
 import Button from "../Button";
 import getNotionListByCursor from "../../hooks/getNotionListByCursor";
-import Dropdown from "../Dropdown";
+
 import { getNotionListApi } from "../../utils/apiRoutes";
 import useSWR from "swr";
 
@@ -39,14 +39,16 @@ export type NotionListResponse = {
 };
 
 const TYPE_PALETTE: ObjType = {
+  all: colors.darkGray,
   algorithm: colors.fluor,
   frontend: colors.pink,
+  backend: colors.purple,
 };
 export const getTypeColor = (type?: keyof typeof TYPE_PALETTE) => {
   if (type && TYPE_PALETTE[type]) {
     return TYPE_PALETTE[type];
   }
-  return colors.purple;
+  return colors.link;
 };
 
 function Blog({ show = false }: { show?: boolean }) {
@@ -130,11 +132,13 @@ function Blog({ show = false }: { show?: boolean }) {
 
   return (
     <Container>
-      <HeaderContainer>
-        <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
-          <TypingText size={isMobile ? "3rem" : "5rem"}>블로그</TypingText>
-        </Title>
-      </HeaderContainer>
+      {!show && (
+        <HeaderContainer>
+          <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
+            <TypingText size={isMobile ? "3rem" : "5rem"}>블로그</TypingText>
+          </Title>
+        </HeaderContainer>
+      )}
       <>
         <GridContainer ref={containerRef}>
           {postList.map((el) => (

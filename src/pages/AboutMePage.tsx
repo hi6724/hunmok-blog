@@ -48,37 +48,37 @@ function AboutMePage() {
       <Description ref={descriptionRef}>
         {!isMobile ? (
           <>
-            <p>
+            <section>
               <h5>2016.04.03 ~ 2022.03.18 (대학교)</h5>
               <h5>07.17 ~ {dayjs().format("MM.DD")} (SSAFY)</h5>
-            </p>
+            </section>
 
-            <p>
+            <section>
               <h4>프론트엔드</h4>
               <h6> react, react-native, next.js</h6>
               <h6>redux, gsap, styled-components, react-query</h6>
-            </p>
-            <p>
+            </section>
+            <section>
               <h4>백엔드</h4>
               <h6>node.js, python, java</h6>
               <h6>express, graphql, django, spring</h6>
-            </p>
+            </section>
           </>
         ) : (
           <>
-            <p>
+            <section>
               저는 2015년에 고등학교를 졸업하고, 일본으로 유학을 떠났습니다.
               1년동안의 어학연수를 마치고 일본에 있는 대학교에
               <h6>
                 <StrongText> 정보시스템 공학과</StrongText> 로 입학을 했습니다.
               </h6>
-            </p>
-            <p>
+            </section>
+            <section>
               <StrongText>일본어</StrongText>를 능숙하게 사용할 수 있고,
               프론트엔드는 2021년 5월에 html, css, js 를 시작으로 현재는
               프론트엔드는 react, next.js 백엔드는 express,django, spring 를
               사용할 수 있습니다.
-            </p>
+            </section>
             <ul>
               <li>2016.04.03 ~ 2022.03.18 (대학교)</li>
               <li>2018.04.09 ~ 2019.12.06 (육군 만기제대)</li>
@@ -115,7 +115,7 @@ const Description = styled.div`
   font-family: "BM-Air";
   line-height: 1.5rem;
   color: ${colors.white};
-  p {
+  section {
     font-size: 1.2rem;
     margin-bottom: 1rem;
   }
