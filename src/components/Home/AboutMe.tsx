@@ -3,6 +3,7 @@ import gsap from "gsap";
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
+import dayjs from "dayjs";
 
 import Three from "./Three";
 import { colors } from "../../color";
@@ -11,6 +12,7 @@ import { bounceAnim } from "../../utils/bounceAnim";
 import { useMobile } from "../../utils/useMobile";
 import Button from "../Button";
 import ScrollAnimContainer from "../ScrollAnimContainer";
+import ShadowText from "../Navigation/ShadowText";
 
 function AboutMe() {
   const isMobile = useMobile();
@@ -69,28 +71,28 @@ function AboutMe() {
             {!isMobile ? (
               <>
                 <p>
-                  Nullam commodo nisl ut dapibus varius. Vivamus vestibulum,
-                  purus et placerat blandit, purus magna consequat nisl, at
-                  fringilla erat nisl non massa. Duis nisl dolor, feugiat non
-                  risus ut, pretium porta odio.
+                  <h5>2016.04.03 ~ 2022.03.18 (대학교)</h5>
+                  <h5>07.17 ~ {dayjs().format("MM.DD")} (SSAFY)</h5>
+                </p>
+
+                <p>
+                  <h4>프론트엔드</h4>
+                  <h6> react, react-native, next.js</h6>
+                  <h6>redux, gsap, styled-components, react-query</h6>
                 </p>
                 <p>
-                  Curabitur consequat facilisis fringilla. Pellentesque turpis
-                  diam, convallis ac sollicitudin non, maximus in odio.
-                  Curabitur porta interdum libero quis facilisis. Nunc a aliquam
-                  ipsum, aliquet cursus odio. Mauris eu pulvinar metus.
+                  <h4>백엔드</h4>
+                  <h6>node.js, python, java</h6>
+                  <h6>express, graphql, django, spring</h6>
                 </p>
               </>
             ) : (
               <>
                 <p>
-                  Lorem ipsum dolor accumsan sit amet, consectetur adipiscing
-                  elit.
+                  <ShadowText size={3} text="프론트엔드" /> 개발자 하훈목 입니다
                 </p>
-                <p>
-                  Donec accumsan odio eu. Phasellus vitae ornare enim, vitae
-                  eleifend nunc.
-                </p>
+                <p>2016.04.03 ~ 2022.03.18 (대학교)</p>
+                <p>07.17 ~ {dayjs().format("MM.DD")} (SSAFY)</p>
               </>
             )}
           </Description>
@@ -152,7 +154,14 @@ const Description = styled.div`
   font-family: "BM-Air";
   line-height: 1.5rem;
   color: ${colors.white};
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
+  p {
+    margin-bottom: 1rem;
+  }
+  h6 {
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+    width: 25vw;
+    white-space: nowrap;
+  }
 `;
