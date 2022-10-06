@@ -4,10 +4,13 @@ import { AiFillGithub, AiFillInstagram, AiFillFacebook } from "react-icons/ai";
 import { scroller } from "react-scroll";
 
 import { colors } from "../../color";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useMobile } from "../../utils/useMobile";
 
 type item = {
   title: string;
   to: string;
+  path: string;
 };
 type Props = {
   data: item[];
@@ -15,22 +18,28 @@ type Props = {
 };
 
 const Items = ({ data, toggleOpen }: Props) => {
+  const location = useLocation();
+  const isMobile = useMobile();
+  const navigate = useNavigate();
+  const handleClick = ({ to, path }: item) => {
+    toggleOpen();
+    if (location.pathname === "/" && !isMobile) {
+      scroller.scrollTo(to, {
+        duration: 800,
+        delay: 0,
+        smooth: "easeInOutQuad",
+      });
+    } else {
+      navigate(path);
+    }
+  };
   return (
     <Container>
       <ItemsContainer>
         <Divider className="divider" />
         {data.map((el, i) => (
           <React.Fragment key={i}>
-            <Item
-              onClick={() => {
-                toggleOpen();
-                scroller.scrollTo(el.to, {
-                  duration: 800,
-                  delay: 0,
-                  smooth: "easeInOutQuad",
-                });
-              }}
-            >
+            <Item onClick={() => handleClick(el)}>
               <span>{el.title.toLowerCase()}</span>
             </Item>
             <Divider className="divider" />

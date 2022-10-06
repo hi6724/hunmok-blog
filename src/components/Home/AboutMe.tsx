@@ -61,14 +61,20 @@ function AboutMe() {
   });
 
   return (
-    <>
+    <div style={{ position: "relative" }}>
+      <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
+        <TypingText size={isMobile ? "3rem" : "5rem"}>
+          나를 소개합니다
+        </TypingText>
+      </Title>
       <Container>
-        <div>
-          <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
-            <TypingText size={isMobile ? "3rem" : "5rem"}>
-              나를 소개합니다
-            </TypingText>
-          </Title>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
           <Description ref={descriptionRef}>
             {!isMobile ? (
               <>
@@ -124,7 +130,7 @@ function AboutMe() {
       >
         <Button onClick={() => navigation("/about-me")}>자세히보기</Button>
       </ScrollAnimContainer>
-    </>
+    </div>
   );
 }
 
@@ -143,11 +149,16 @@ const Container = styled.div`
 `;
 
 const Title = styled.h2<any>`
+  padding: 0 5vw;
   font-size: ${(p) => p.size};
   font-family: "BM-Pro";
   color: ${colors.fluor};
   margin-bottom: 2rem;
   display: flex;
+  @media screen and (min-width: 1000px) {
+    position: absolute;
+    top: 0px;
+  }
 `;
 
 const Description = styled.div`

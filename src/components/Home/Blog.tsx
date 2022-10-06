@@ -8,7 +8,7 @@ import { colors } from "../../color";
 import TypingText from "../../hooks/TypingText";
 import { useMobile } from "../../utils/useMobile";
 import { bounceAnim } from "../../utils/bounceAnim";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SmallBlogItem from "../BlogDetail/SmallBlogItem";
 import Button from "../Button";
 import getNotionListByCursor from "../../hooks/getNotionListByCursor";
@@ -49,9 +49,10 @@ export const getTypeColor = (type?: keyof typeof TYPE_PALETTE) => {
   return colors.purple;
 };
 
-function Blog() {
+function Blog({ show = false }: { show?: boolean }) {
   const isMobile = useMobile();
   const navigation = useNavigate();
+  const location = useLocation();
 
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -111,8 +112,10 @@ function Blog() {
   });
 
   const handleClick = (id: string) => {
-    if (focusItem === id) {
+    if (focusItem === id && location.pathname === "/blog") {
       navigation(`/blog/${id}`);
+    } else if (focusItem === id && location.pathname === "/") {
+      navigation(`/blog`);
     } else {
       setFocusItem(id);
     }
@@ -144,7 +147,15 @@ function Blog() {
           ))}
         </GridContainer>
         <CenteredContainer>
-          {data ? (
+          {!show ? (
+            <Button
+              onClick={() => {
+                navigation("/blog");
+              }}
+            >
+              자세히보기
+            </Button>
+          ) : data ? (
             cursor.current !== null &&
             data.next_cursor && (
               <Button

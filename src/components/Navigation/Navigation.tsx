@@ -12,20 +12,29 @@ import Logo from "./Logo";
 
 const DATA = [
   {
+    title: "Home",
+    to: "top",
+    path: "/",
+  },
+  {
     title: "Projects",
     to: "project-scroll",
+    path: "/project",
   },
   {
     title: "About Me",
     to: "about-scroll",
+    path: "/about-me",
   },
   {
     title: "Blog",
     to: "blog-scroll",
+    path: "/blog",
   },
   {
     title: "Contact",
     to: "contact-scroll",
+    path: "",
   },
 ];
 
@@ -47,8 +56,7 @@ const Navigation = () => {
   };
 
   const handleBack = () => {
-    if (location.pathname.includes("blog")) {
-      console.log("JJ");
+    if (location.pathname === "/blog") {
       navigation("/", { replace: true, state: { from: "blog-scroll" } });
     } else if (location.pathname.includes("project")) {
       navigation("/", { replace: true, state: { from: "project-scroll" } });

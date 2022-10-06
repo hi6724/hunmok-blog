@@ -7,6 +7,7 @@ import NotFound from "./pages/NotFound";
 import { useEffect } from "react";
 import { scroller, animateScroll } from "react-scroll";
 import AboutMePage from "./pages/AboutMePage";
+import BlogPage from "./pages/BlogPage";
 
 function Router() {
   const location: any = useLocation();
@@ -24,6 +25,7 @@ function Router() {
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
+        <Route path="/blog" element={<BlogPage />} />
         <Route path="/about-me" element={<AboutMePage />} />
         <Route path="*" element={<NotFound />} />
       </Route>

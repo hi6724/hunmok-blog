@@ -6,7 +6,7 @@ import Blog from "../components/Home/Blog";
 function BlogPage() {
   return (
     <Container>
-      <Blog btn={true} />
+      <Blog show={true} />
     </Container>
   );
 }
