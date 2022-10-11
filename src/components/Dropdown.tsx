@@ -5,56 +5,82 @@ import styled from "styled-components";
 import { colors } from "../color";
 import { getTypeColor } from "./Home/Blog";
 
-function Dropdown() {
+interface IFilterItem {
+  uri: string;
+  type: string;
+}
+interface IProps {
+  items: IFilterItem[];
+  setFilter: Function;
+}
+
+function Dropdown({ items, setFilter }: IProps) {
   const menuRef = useRef<HTMLUListElement>(null);
   const [open, setOpen] = useState(false);
+  const isAnim = useRef(true);
 
   const handleOpen = () => {
-    setOpen(!open);
+    if (!isAnim.current) {
+      isAnim.current = true;
+      setOpen(!open);
+    }
   };
+  const toggleShow = () => {
+    Array.from(menuRef.current!.children as HTMLCollectionOf<HTMLElement>).map(
+      (el) => {
+        el.style.display = open ? "flex" : "none";
+      }
+    );
+  };
+
   useEffect(() => {
-    if (open) {
+    if (open&&menuRef) {
       gsap.to(menuRef.current!.children, {
+        onStart: toggleShow,
+        onComplete: () => {
+          isAnim.current = false;
+        },
         opacity: 1,
-        xPercent: 0,
-        duration: 0.6,
-        stagger: 0.06,
+        yPercent: 0,
+        rotateX: 0,
+        duration: 0.4,
+        stagger: 0.05,
       });
     } else {
       gsap.to(menuRef.current!.children, {
+        onComplete: () => {
+          toggleShow();
+          isAnim.current = false;
+        },
         opacity: 0,
-        xPercent: -25,
-        duration: 0.6,
-        stagger: { from: "end", each: 0.06 },
+        yPercent: -25,
+        rotateX: 180,
+        duration: 0.4,
+        stagger: { from: "end", each: 0.05 },
       });
     }
   }, [open]);
-  console.log(open);
+
+  const handleFilter = (filter: string) => {
+    setFilter(filter);
+    setOpen(false);
+  };
+
   return (
     <Container>
       <Title onClick={handleOpen}>카테고리</Title>
 
       <Menu ref={menuRef}>
-        <MenuItem type="all">
-          <span>all</span>
-          <AiOutlineRight />
-        </MenuItem>
-        <MenuItem type="frontend">
-          <span>frontend</span>
-          <AiOutlineRight />
-        </MenuItem>
-        <MenuItem type="backend">
-          <span>backend</span>
-          <AiOutlineRight />
-        </MenuItem>
-        <MenuItem type="algorithm">
-          <span>algorithm</span>
-          <AiOutlineRight />
-        </MenuItem>
-        <MenuItem type="others" last={true}>
-          <span>others</span>
-          <AiOutlineRight />
-        </MenuItem>
+        {items.map((item) => (
+          <MenuItem
+            key={item.type}
+            onClick={() => handleFilter(item.uri)}
+            type={item.type}
+          >
+            <span>{item.type}</span>
+            <AiOutlineRight />
+          </MenuItem>
+        ))}
       </Menu>
     </Container>
   );
@@ -84,6 +110,7 @@ const Menu = styled.ul`
   align-items: center;
 `;
 const MenuItem = styled.li<any>`
+  opacity: 0;
   padding: 0 1rem;
   background-color: ${colors.lightBlack};
   display: flex;
@@ -96,4 +123,5 @@ const MenuItem = styled.li<any>`
   color: ${({ type }) => getTypeColor(type)};
   font-family: "BM-Pro";
   font-size: 1.2rem;
+  backface-visibility: hidden;
 `;

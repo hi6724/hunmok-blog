@@ -15,6 +15,8 @@ import getNotionListByCursor from "../../hooks/getNotionListByCursor";
 
 import { getNotionListApi } from "../../utils/apiRoutes";
 import useSWR from "swr";
+import Dropdown from "../Dropdown";
+import { filterItems } from "../../utils/filterItems";
 
 type ObjType = {
   [index: string]: string;
@@ -67,11 +69,12 @@ function Blog({ show = false }: { show?: boolean }) {
   const cursor = useRef("0");
 
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("all");
   const [focusItem, setFocusItem] = useState("");
   const [postList, setPostList] = useState<PostType[]>([]);
 
   const { data, error } = useSWR<NotionListResponse>(
-    `${getNotionListApi}/${cursor.current}?count=${count.current}`
+    `${getNotionListApi}/${cursor.current}?count=${count.current}&filter=${filter}`
   );
 
   useEffect(() => {
@@ -113,6 +116,22 @@ function Blog({ show = false }: { show?: boolean }) {
     }
   });
 
+  useEffect(() => {
+    if (data !== undefined) {
+      setPostList([...postList, ...data?.results]);
+      setLoading(false);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    cursor.current = "0";
+    animCursor.current = isMobile ? 6 : 12;
+    setPostList([]);
+    if (data !== undefined) {
+      setPostList(data.results);
+    }
+  }, [filter]);
+
   const handleClick = (id: string) => {
     if (focusItem === id && location.pathname === "/blog") {
       navigation(`/blog/${id}`);
@@ -123,22 +142,15 @@ function Blog({ show = false }: { show?: boolean }) {
     }
   };
 
-  useEffect(() => {
-    if (data !== undefined) {
-      setPostList([...postList, ...data?.results]);
-      setLoading(false);
-    }
-  }, [data]);
-
   return (
     <Container>
-      {!show && (
-        <HeaderContainer>
-          <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
-            <TypingText size={isMobile ? "3rem" : "5rem"}>블로그</TypingText>
-          </Title>
-        </HeaderContainer>
-      )}
+      <HeaderContainer>
+        <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
+          <TypingText size={isMobile ? "3rem" : "5rem"}>블로그</TypingText>
+        </Title>
+        {show && <Dropdown items={filterItems} setFilter={setFilter} />}
+      </HeaderContainer>
+
       <>
         <GridContainer ref={containerRef}>
           {postList.map((el) => (
@@ -198,7 +210,6 @@ const Title = styled.h2<any>`
   font-family: "BM-Pro";
   color: ${colors.fluor};
   margin-bottom: 2rem;
-  margin-left: 5vw;
   display: flex;
 `;
 
@@ -227,8 +238,5 @@ const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  .sort-btn {
-    padding: 1rem;
-    background-color: ${colors.darkGray};
-  }
+  padding: 0 5vw;
 `;
