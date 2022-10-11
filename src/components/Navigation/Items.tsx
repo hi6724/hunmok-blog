@@ -21,6 +21,7 @@ const Items = ({ data, toggleOpen }: Props) => {
   const location = useLocation();
   const isMobile = useMobile();
   const navigate = useNavigate();
+
   const handleClick = ({ to, path }: item) => {
     toggleOpen();
     if (location.pathname === "/" && !isMobile) {
@@ -33,13 +34,17 @@ const Items = ({ data, toggleOpen }: Props) => {
       navigate(path);
     }
   };
+
   return (
     <Container>
       <ItemsContainer>
         <Divider className="divider" />
         {data.map((el, i) => (
           <React.Fragment key={i}>
-            <Item onClick={() => handleClick(el)}>
+            <Item
+              focus={location.pathname === el.path && location.pathname !== "/"}
+              onClick={() => handleClick(el)}
+            >
               <span>{el.title.toLowerCase()}</span>
             </Item>
             <Divider className="divider" />
@@ -79,11 +84,11 @@ const Container = styled.div`
   height: calc(100vh - 13rem);
 `;
 
-const Item = styled.div`
+const Item = styled.div<any>`
   padding: 1.3rem 0;
   display: flex;
   font-size: 1rem;
-  color: #aaa;
+  color: ${({ focus }) => (focus ? colors.fluor : "#aaa")};
   display: flex;
   flex-direction: column;
   align-items: center;
