@@ -34,7 +34,7 @@ function Dropdown({ items, setFilter }: IProps) {
   };
 
   useEffect(() => {
-    if (open&&menuRef) {
+    if (open && menuRef) {
       gsap.to(menuRef.current!.children, {
         onStart: toggleShow,
         onComplete: () => {
@@ -46,7 +46,7 @@ function Dropdown({ items, setFilter }: IProps) {
         duration: 0.4,
         stagger: 0.05,
       });
-    } else {
+    } else if (!open && menuRef) {
       gsap.to(menuRef.current!.children, {
         onComplete: () => {
           toggleShow();
