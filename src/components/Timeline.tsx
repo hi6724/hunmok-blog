@@ -33,7 +33,6 @@ function Timeline() {
         start: "top 90%",
         end: `+=${containerRef.current?.clientHeight}`,
         scrub: true,
-        markers: true,
       },
       ease: "linear",
       height: "100%",

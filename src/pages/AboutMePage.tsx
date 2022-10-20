@@ -6,6 +6,7 @@ import styled from "styled-components";
 
 import { colors } from "../color";
 import ShadowText from "../components/Navigation/ShadowText";
+import Skills from "../components/Skills";
 import Timeline from "../components/Timeline";
 import TypingText from "../hooks/TypingText";
 import { bounceAnim } from "../utils/bounceAnim";
@@ -16,22 +17,22 @@ function AboutMePage() {
   const isMobile = useMobile();
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descriptionRef = useRef<HTMLDivElement>(null);
-  const tl = gsap.timeline();
   useEffect(() => {
     if (titleRef.current && descriptionRef.current) {
-      tl.to(titleRef.current?.children, {
+      gsap.to(titleRef.current?.children, {
         ...bounceAnim,
         scrollTrigger: {
           trigger: titleRef.current.children,
           start: "top 40%",
         },
       });
-      tl.from(descriptionRef.current?.children, {
+      gsap.from(descriptionRef.current?.children, {
+        delay: 0.5,
         opacity: 0,
         y: 30,
-        duration: 1.5,
+        duration: 0.8,
         stagger: {
-          each: 0.5,
+          each: 0.2,
         },
         scrollTrigger: {
           trigger: descriptionRef.current.children,
@@ -78,6 +79,7 @@ function AboutMePage() {
               프론트엔드는 react, next.js 백엔드는 express,django, spring 를
               사용할 수 있습니다.
             </section>
+            <Skills />
             <Timeline />
           </>
         )}
