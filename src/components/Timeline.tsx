@@ -22,19 +22,21 @@ const anim = {
 };
 
 function Timeline() {
-  const ref = useRef<any>();
+  const arrowRef = useRef<any>();
   const contentRef = useRef<any>();
+  const containerRef = useRef<any>();
 
   useEffect(() => {
-    gsap.to(ref.current, {
+    gsap.to(arrowRef.current, {
       scrollTrigger: {
-        trigger: ref.current,
-        start: "top 70%",
-        end: "+=2000",
+        trigger: arrowRef.current,
+        start: "top 90%",
+        end: `+=${containerRef.current?.clientHeight}`,
         scrub: true,
+        markers: true,
       },
       ease: "linear",
-      height: "2000px",
+      height: "100%",
     });
 
     if (contentRef.current?.children) {
@@ -44,23 +46,29 @@ function Timeline() {
       });
       ScrollTrigger.batch(contentRef.current?.children, {
         interval: 0.1,
-        start: "top 55%",
-        onEnter: (batch) => gsap.to(batch, anim.open),
+        start: "top 90%",
+        onEnter: (batch) => {
+          console.log();
+          gsap.to(batch, anim.open);
+          gsap.to(batch[0].children[0], {});
+        },
         onLeave: (batch) => gsap.to(batch, anim.close),
         onEnterBack: (batch) => gsap.to(batch, anim.open),
         onLeaveBack: (batch) => gsap.to(batch, anim.close),
       });
     }
-  }, []);
+    console.dir(containerRef.current?.clientHeight);
+  }, [containerRef]);
 
   return (
     <>
       <Container>
         <Arrow color={colors.darkGray} />
-        <ArrowContainer ref={ref}>
+        <ArrowContainer ref={containerRef}>
           <Arrow
+            ref={arrowRef}
             color={colors.lightGray}
-            style={{ width: "3px", transform: "translateX(-1px)" }}
+            style={{ width: "3px", transform: "translateX(-1px)", height: "0" }}
           />
           <Content ref={contentRef}>
             <ListItem type="language">
@@ -75,10 +83,10 @@ function Timeline() {
               <figure />
               <div>
                 <h6>fullstack</h6>
-                <h3>2016.04 ~ 2022.03 (대학교)</h3>
+                <h3>2016.04 ~ 2018.03 (대학교 1,2학년)</h3>
                 <p>
                   정보시스템 공학과에 입학하여 컴퓨터 관련된 기초 지식을
-                  쌓았습니다
+                  쌓았습니다. 2학년까지 마친 후 휴학을 하였습니다
                 </p>
               </div>
             </ListItem>
@@ -90,15 +98,25 @@ function Timeline() {
                 <p>강원도 양구에서 육군으로 군복무를 완수하였습니다</p>
               </div>
             </ListItem>
+            <ListItem type="fullstack">
+              <figure />
+              <div>
+                <h6>fullstack</h6>
+                <h3>2020.04 ~ 2022.03 (대학교 3,4학년)</h3>
+                <p>
+                  3학년때는 대학과목을 들었고, 4학년 때는 기존의 정적인 신호등
+                  시스템을 개선하는 방안에 대하여 졸업논문을 작성했습니다
+                </p>
+              </div>
+            </ListItem>
             <ListItem type="frontend">
               <figure />
               <div>
                 <h6>frontend</h6>
-                <h3>2021.03 (Web개발 시작)</h3>
+                <h3>2020.10 (Web개발 시작)</h3>
                 <p>
-                  2022년 7월 부터 현재까지 SSAFY를 다니며, 저에게 부족했던
-                  알고리즘 역량을 키우고 있고, 팀 프로젝트를 통해
-                  커뮤니케이션능력을 기르고 있습니다.
+                  학교수업으로 web개발 수업을 처음으로 듣게 되었습니다. 이 때
+                  web 개발로 진로를 결정했습니다.
                 </p>
               </div>
             </ListItem>
@@ -108,9 +126,8 @@ function Timeline() {
                 <h6>backend</h6>
                 <h3>2021.05 ~ (ExpressJs)</h3>
                 <p>
-                  2022년 7월 부터 현재까지 SSAFY를 다니며, 저에게 부족했던
-                  알고리즘 역량을 키우고 있고, 팀 프로젝트를 통해
-                  커뮤니케이션능력을 기르고 있습니다.
+                  노마드코더의 youtube 클론 강의를 수강했습니다. ExpressJs로 MVC
+                  패턴을 사용하여 youtube 사이트를 클론했습니다.
                 </p>
               </div>
             </ListItem>
@@ -118,11 +135,10 @@ function Timeline() {
               <figure />
               <div>
                 <h6>frontend</h6>
-                <h3>2021.08 ~ (ReactJS)</h3>
+                <h3>2021.08 ~ (ReactJS,ReactNative)</h3>
                 <p>
-                  2022년 7월 부터 현재까지 SSAFY를 다니며, 저에게 부족했던
-                  알고리즘 역량을 키우고 있고, 팀 프로젝트를 통해
-                  커뮤니케이션능력을 기르고 있습니다.
+                  자바스크립트의 기초가 어느정도 갖춰졌다고 생각하여, 본격적으로
+                  프레임워크 공부를 시작했습니다.
                 </p>
               </div>
             </ListItem>
@@ -150,7 +166,7 @@ const ListItem = styled.li<any>`
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 10vh;
+  margin-bottom: 2rem;
   backface-visibility: hidden;
   div {
     border-top: 1px solid ${({ type }) => getTypeColor(type)};
@@ -187,27 +203,25 @@ const ListItem = styled.li<any>`
   }
 `;
 const Content = styled.ul`
-  padding: 10vh 0;
+  padding: 2rem 0;
 `;
 const Container = styled.article`
-  min-height: 2000px;
+  min-height: 100px;
   position: relative;
 `;
 
 const ArrowContainer = styled.div`
-  /* width: 80vw; */
-  height: 0px;
+  height: 100%;
   display: flex;
   position: relative;
   overflow: hidden;
-  /* padding: 0 1rem; */
 `;
 
 const Arrow = styled.div<any>`
   width: 1px;
-  height: 1800px;
+  height: 100%;
   position: absolute;
-  top: 50px;
+  top: 0;
   left: 1rem;
   background-color: ${({ color }) => color};
 `;

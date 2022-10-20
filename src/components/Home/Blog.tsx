@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { loremIpsum } from "lorem-ipsum";
 import gsap from "gsap";
 import ReactLoading from "react-loading";
 
@@ -8,11 +7,9 @@ import { colors } from "../../color";
 import TypingText from "../../hooks/TypingText";
 import { useMobile } from "../../utils/useMobile";
 import { bounceAnim } from "../../utils/bounceAnim";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SmallBlogItem from "../BlogDetail/SmallBlogItem";
 import Button from "../Button";
-import getNotionListByCursor from "../../hooks/getNotionListByCursor";
-
 import { getNotionListApi } from "../../utils/apiRoutes";
 import useSWR from "swr";
 import Dropdown from "../Dropdown";
@@ -57,7 +54,6 @@ export const getTypeColor = (type?: keyof typeof TYPE_PALETTE) => {
 function Blog({ show = false }: { show?: boolean }) {
   const isMobile = useMobile();
   const navigation = useNavigate();
-  const location = useLocation();
 
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -134,10 +130,8 @@ function Blog({ show = false }: { show?: boolean }) {
   }, [filter]);
 
   const handleClick = (id: string) => {
-    if (focusItem === id && location.pathname === "/blog") {
+    if (focusItem === id) {
       navigation(`/blog/${id}`);
-    } else if (focusItem === id && location.pathname === "/") {
-      navigation(`/blog`);
     } else {
       setFocusItem(id);
     }
@@ -170,7 +164,7 @@ function Blog({ show = false }: { show?: boolean }) {
                 navigation("/blog");
               }}
             >
-              자세히보기
+              전체글 보기
             </Button>
           ) : data ? (
             cursor.current !== null &&
