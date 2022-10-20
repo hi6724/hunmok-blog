@@ -56,7 +56,6 @@ function Timeline() {
         onLeaveBack: (batch) => gsap.to(batch, anim.close),
       });
     }
-    console.dir(containerRef.current?.clientHeight);
   }, [containerRef]);
 
   return (
@@ -207,6 +206,7 @@ const Content = styled.ul`
 const Container = styled.article`
   min-height: 100px;
   position: relative;
+  margin-bottom: 10%;
 `;
 
 const ArrowContainer = styled.div`

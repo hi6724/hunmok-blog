@@ -39,7 +39,7 @@ function Skill({ skillData }: { skillData: ISkill }) {
     gsap.from(arrowRef.current, {
       width: 0,
       duration: 1,
-      delay: 1.4,
+      delay: 1.6,
     });
   });
   return (

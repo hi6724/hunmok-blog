@@ -75,9 +75,13 @@ function AboutMePage() {
             </section>
             <section>
               <StrongText>일본어</StrongText>를 능숙하게 사용할 수 있고,
-              프론트엔드는 2021년 5월에 html, css, js 를 시작으로 현재는
+              프론트엔드는 2020년 10월에 html, css, js 를 시작으로 현재는
               프론트엔드는 react, next.js 백엔드는 express,django, spring 를
               사용할 수 있습니다.
+            </section>
+            <section>
+              2022년 7월 부터 <StrongText>SSAFY</StrongText>에 다니면서 web
+              개발자로서 부족한 필수 역량을 키우고 있습니다.
             </section>
             <Skills />
             <Timeline />
@@ -91,14 +95,14 @@ function AboutMePage() {
 export default AboutMePage;
 
 const StrongText = styled.span`
-  color: ${colors.pink};
+  color: ${colors.fluor};
 `;
 
 const Container = styled.div`
   width: 100%;
   min-height: 100vh;
   background-color: ${colors.lightBlack};
-  padding: 10vh 5vw;
+  padding: 10vh 3vw;
 `;
 
 const Title = styled.h2<any>`
