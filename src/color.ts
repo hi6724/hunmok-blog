@@ -10,4 +10,5 @@ export const colors = {
   lightBlack: "#1d1d1d",
   purple: "#be2ed6",
   link: "#4286f4",
+  lightGreen: "#72cc50",
 };

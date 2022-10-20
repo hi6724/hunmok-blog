@@ -45,6 +45,7 @@ const TYPE_PALETTE: ObjType = {
   algorithm: colors.fluor,
   frontend: colors.pink,
   backend: colors.purple,
+  fullstack: colors.lightGreen,
 };
 export const getTypeColor = (type?: keyof typeof TYPE_PALETTE) => {
   if (type && TYPE_PALETTE[type]) {

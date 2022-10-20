@@ -1,15 +1,18 @@
 import dayjs from "dayjs";
 import gsap from "gsap";
 import React, { useRef, useEffect } from "react";
+import { animateScroll } from "react-scroll";
 import styled from "styled-components";
 
 import { colors } from "../color";
 import ShadowText from "../components/Navigation/ShadowText";
+import Timeline from "../components/Timeline";
 import TypingText from "../hooks/TypingText";
 import { bounceAnim } from "../utils/bounceAnim";
 import { useMobile } from "../utils/useMobile";
 
 function AboutMePage() {
+  animateScroll.scrollToTop();
   const isMobile = useMobile();
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descriptionRef = useRef<HTMLDivElement>(null);
@@ -20,7 +23,7 @@ function AboutMePage() {
         ...bounceAnim,
         scrollTrigger: {
           trigger: titleRef.current.children,
-          start: "top 60%",
+          start: "top 40%",
         },
       });
       tl.from(descriptionRef.current?.children, {
@@ -49,11 +52,6 @@ function AboutMePage() {
         {!isMobile ? (
           <>
             <section>
-              <h5>2016.04.03 ~ 2022.03.18 (대학교)</h5>
-              <h5>07.17 ~ {dayjs().format("MM.DD")} (SSAFY)</h5>
-            </section>
-
-            <section>
               <h4>프론트엔드</h4>
               <h6> react, react-native, next.js</h6>
               <h6>redux, gsap, styled-components, react-query</h6>
@@ -63,6 +61,7 @@ function AboutMePage() {
               <h6>node.js, python, java</h6>
               <h6>express, graphql, django, spring</h6>
             </section>
+            <Timeline />
           </>
         ) : (
           <>
@@ -79,11 +78,7 @@ function AboutMePage() {
               프론트엔드는 react, next.js 백엔드는 express,django, spring 를
               사용할 수 있습니다.
             </section>
-            <ul>
-              <li>2016.04.03 ~ 2022.03.18 (대학교)</li>
-              <li>2018.04.09 ~ 2019.12.06 (육군 만기제대)</li>
-              <li>07.17 ~ {dayjs().format("MM.DD")} (SSAFY)</li>
-            </ul>
+            <Timeline />
           </>
         )}
       </Description>
