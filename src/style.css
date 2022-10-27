@@ -1,12 +1,26 @@
 @font-face {
   font-family: "BM-Air";
-  src: url("./assets/font/BM-Air.ttf");
+  src: url("./assets/font/NEXON.woff");
 }
 @font-face {
   font-family: "BM-Pro";
-  src: url("./assets/font/BM-Pro.ttf");
+  src: url("./assets/font/NEXON_Bold.woff");
 }
 @font-face {
   font-family: "BM-Jua";
   src: url("./assets/font/BM-Jua.ttf");
+}
+@font-face {
+  font-family: "NEXON";
+  src: url("./assets/font/NEXON.woff");
+}
+
+@font-face {
+  font-family: "NEXON-Bold";
+  src: url("./assets/font/NEXON_Bold.woff");
+}
+
+@font-face {
+  font-family: "NEXON-Light";
+  src: url("./assets/font/NEXON_Light.woff");
 }

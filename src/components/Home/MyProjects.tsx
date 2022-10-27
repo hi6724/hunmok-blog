@@ -1,5 +1,6 @@
 import gsap from "gsap";
 import React, { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { colors } from "../../color";
@@ -14,6 +15,7 @@ function MyProjects() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descriptionRef = useRef<HTMLDivElement>(null);
   const isMobile = useMobile();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (titleRef.current !== null) {
@@ -75,7 +77,7 @@ function MyProjects() {
         from={true}
         anim={{ opacity: 0, scale: 0.3 }}
       >
-        <Button>자세히보기</Button>
+        <Button onClick={() => navigate("/projects")}>전체보기</Button>
       </ScrollAnimContainer>
     </>
   );
