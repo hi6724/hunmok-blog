@@ -17,7 +17,7 @@ function BlogBlock({ data, typeColor }: any) {
             showLineNumbers={false}
           />
         ) : typeTransform(data.type) === "img" ? (
-          <img width={"100%"} src={data.payload.file.url} />
+          <img src={data.payload.file.url} />
         ) : (
           React.createElement(typeTransform(data.type), {
             ...(data.link && {
@@ -68,4 +68,9 @@ const Container = styled.div<any>`
     border-radius: 0.5rem;
   }
   /* code */
+  /* img */
+  img {
+    width: 100%;
+    max-width: 600px;
+  }
 `;

@@ -6,8 +6,6 @@ import { getTypeColor } from "../Home/Blog";
 
 function BlogHeader({ info }: any) {
   const [icon, setIcon] = useState("");
-  const url =
-    info.title.replaceAll(" ", "-") + "-" + info.id.replaceAll("-", "");
   useEffect(() => {
     const iconType = info.icon.type;
     if (info.icon.type === "file") {
@@ -22,9 +20,7 @@ function BlogHeader({ info }: any) {
         <h3>{info.type}</h3>
         <CreatedAt>{info.createdAt.split("T")[0]}</CreatedAt>
       </Header>
-      <a target="_blank" href={"https://wakeful-tax-728.notion.site/" + url}>
-        show in Notion
-      </a>
+
       <Title>
         <Icon>{icon.length > 10 ? <img src={icon} /> : icon}</Icon>
         <h1>{info.title}</h1>

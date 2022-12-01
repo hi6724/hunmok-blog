@@ -10,7 +10,7 @@ import { getProjectsApi } from "../../utils/apiRoutes";
 import { useMobile } from "../../utils/useMobile";
 import Button from "../Button";
 
-interface IProject {
+export interface IProject {
   id: string;
   icon: string;
   thumbImageUri: string;
@@ -19,6 +19,7 @@ interface IProject {
   startData: string;
   endDate: string;
   skills: string[];
+  overview: string;
 }
 
 function GridItems() {
@@ -207,6 +208,8 @@ const FrontSide = styled.img`
 
 function BackSide({ project }: { project: IProject }) {
   const navigate = useNavigate();
+  const isMobile = useMobile();
+
   return (
     <BackSideContainer>
       <Header>
@@ -215,6 +218,7 @@ function BackSide({ project }: { project: IProject }) {
       </Header>
       <div>
         <ShortDescription>
+          {project.overview}
           여기에 프로젝트에 관련한 간단한 설명이 들어갈예정입니다~ 여기에
           프로젝트에 관련한 간단한 설명이 들어갈예정입니다~
         </ShortDescription>
@@ -235,8 +239,8 @@ function BackSide({ project }: { project: IProject }) {
             width: "inherit",
             backgroundColor: colors.lightGray,
             color: colors.link,
-            fontSize: "3vw",
-            padding: "2vw",
+            fontSize: isMobile ? "3vw" : "0.9rem",
+            padding: isMobile ? "2vw" : "0.6rem",
           }}
           onClick={() => navigate(`/projects/${project.id}`)}
         >
@@ -254,9 +258,15 @@ const ShortDescription = styled.p`
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  @media screen and (min-width: 1000px) {
+    font-size: 1.1rem;
+  }
 `;
 const DateContainer = styled.div`
   font-size: 2vw;
+  @media screen and (min-width: 1000px) {
+    font-size: 1rem;
+  }
 `;
 const Header = styled.div`
   display: flex;
@@ -273,6 +283,17 @@ const Header = styled.div`
     font-family: "NEXON";
     font-size: 4vw;
   }
+  @media screen and (min-width: 1000px) {
+    gap: 0.5rem;
+    h3 {
+      padding-bottom: 0.7rem;
+      font-size: 1rem;
+    }
+    h1 {
+      font-family: "NEXON";
+      font-size: 1.5rem;
+    }
+  }
 `;
 const TypeContainer = styled.div`
   overflow: scroll;
@@ -288,6 +309,14 @@ const TypeContainer = styled.div`
     /* color: ${colors.lightGray}; */
     border-radius: 100rem;
     margin-right: 0.1rem;
+  }
+  @media screen and (min-width: 1000px) {
+    padding: 1rem 0 1rem;
+    span {
+      font-size: 0.8rem;
+      padding: 0.2rem 0.4rem;
+      margin-right: 0.1rem;
+    }
   }
 `;
 
@@ -309,4 +338,8 @@ const BackSideContainer = styled.div`
   box-shadow: rgba(50, 50, 50, 0.4) 0px 2px 4px,
     rgba(50, 50, 50, 0.3) 0px 7px 13px -3px,
     rgba(50, 50, 50, 0.2) 0px -3px 0px inset;
+  @media screen and (min-width: 1000px) {
+    padding: 1rem;
+    gap: 0.5rem;
+  }
 `;

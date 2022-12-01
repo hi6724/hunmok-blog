@@ -9,6 +9,7 @@ import { scroller, animateScroll } from "react-scroll";
 import AboutMePage from "./pages/AboutMePage";
 import BlogPage from "./pages/BlogPage";
 import ProjectsPage from "./pages/ProjectsPage";
+import ProjectDetailPage from "./pages/ProjectDetailPage";
 
 function Router() {
   const location: any = useLocation();
@@ -29,6 +30,7 @@ function Router() {
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/about-me" element={<AboutMePage />} />
         <Route path="/projects" element={<ProjectsPage />} />
+        <Route path="/projects/:id" element={<ProjectDetailPage />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
