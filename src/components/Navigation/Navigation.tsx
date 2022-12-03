@@ -56,20 +56,14 @@ const Navigation = () => {
   };
 
   const handleBack = () => {
-    if (location.pathname === "/blog") {
-      navigation("/", { replace: true, state: { from: "blog-scroll" } });
-    } else if (location.pathname.includes("project")) {
-      navigation("/", { replace: true, state: { from: "project-scroll" } });
-    } else {
-      window.history.state.idx > 0
-        ? navigation(-1)
-        : location.pathname === "/" &&
-          scroller.scrollTo("top", {
-            duration: 800,
-            delay: 0,
-            smooth: "easeInOutQuad",
-          });
-    }
+    window.history.state.idx > 0
+      ? navigation(-1)
+      : location.pathname === "/" &&
+        scroller.scrollTo("top", {
+          duration: 800,
+          delay: 0,
+          smooth: "easeInOutQuad",
+        });
   };
 
   return (

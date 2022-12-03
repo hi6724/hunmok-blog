@@ -28,7 +28,10 @@ function BlogBlock({ data, typeColor }: any) {
           })
         )
       ) : (
-        React.createElement("hr", { color: typeColor })
+        React.createElement("hr", {
+          color: typeColor,
+          style: { width: "100%" },
+        })
       )}
     </Container>
   );
@@ -37,6 +40,8 @@ function BlogBlock({ data, typeColor }: any) {
 export default BlogBlock;
 
 const Container = styled.div<any>`
+  display: flex;
+  justify-content: center;
   white-space: pre-wrap;
   color: ${colors.gray};
   font-family: "BM-E";

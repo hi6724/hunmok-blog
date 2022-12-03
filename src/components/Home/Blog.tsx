@@ -42,13 +42,13 @@ const TYPE_PALETTE: ObjType = {
   algorithm: colors.fluor,
   frontend: colors.pink,
   backend: colors.purple,
-  fullstack: colors.lightGreen,
+  fullstack: colors.link,
 };
 export const getTypeColor = (type?: keyof typeof TYPE_PALETTE) => {
   if (type && TYPE_PALETTE[type]) {
     return TYPE_PALETTE[type];
   }
-  return colors.link;
+  return colors.lightGreen;
 };
 
 function Blog({ show = false }: { show?: boolean }) {

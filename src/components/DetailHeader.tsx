@@ -13,7 +13,7 @@ function DetailHeader({ info }: any) {
   const [icon, setIcon] = useState("");
   const isMobile = useMobile();
   useEffect(() => {
-    if (!icon) return;
+    if (!info.icon) return;
     const iconType = info.icon.type;
     if (info.icon.type === "file") {
       setIcon(info.icon.file.url);
@@ -21,7 +21,7 @@ function DetailHeader({ info }: any) {
       setIcon(info.icon[iconType]);
     }
   });
-  console.log(info);
+  console.log(icon);
   return (
     <div style={{ position: "relative" }}>
       <CoverContainer>

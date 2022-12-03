@@ -2,7 +2,11 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { IoLogoInstagram, IoLogoFacebook, IoLogoGithub } from "react-icons/io";
 import styled from "styled-components";
-import { init, send } from "@emailjs/browser";
+import { send } from "@emailjs/browser";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 import { colors } from "../../color";
 import Button from "../Button";
@@ -28,10 +32,32 @@ const MetaData = () => {
 };
 
 export default function ContactMe() {
-  const { register, handleSubmit, formState } = useForm({ mode: "onSubmit" });
+  const { register, handleSubmit, formState, reset } = useForm({
+    mode: "onSubmit",
+  });
   const onValid = (data: any) => {
-    send("service_ibn0zqm", "template_tfjt1wb", data, "nR6ZXXMVRBD0CIHOb");
-    // send("service_8nc23u4", "template_3fmphv9", data, "user_KLZ4yRcvBwnZVfFADzXUj");
+    console.log(data);
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <h1>Are you sure?</h1>
+            <p>You want to delete this file?</p>
+            <button onClick={onClose}>No</button>
+            <button
+              onClick={() => {
+                onClose();
+              }}
+            >
+              Yes, Delete it!
+            </button>
+          </div>
+        );
+      },
+    });
+    // send("service_ibn0zqm", "template_tfjt1wb", data, "nR6ZXXMVRBD0CIHOb");
+    // toast("제출되었습니다");
+    // reset();
   };
 
   return (
@@ -88,13 +114,13 @@ export default function ContactMe() {
             />
 
             <InputBox
-              isError={formState?.errors?.from_msg?.message}
+              isError={formState?.errors?.message?.message}
               placeholder={
-                formState?.errors?.from_msg?.message
-                  ? (formState?.errors?.from_msg?.message as string)
+                formState?.errors?.message?.message
+                  ? (formState?.errors?.message?.message as string)
                   : "메세지"
               }
-              {...register("from_msg", {
+              {...register("message", {
                 required: { value: true, message: "내용을 입력해주세요" },
               })}
             />
@@ -104,6 +130,18 @@ export default function ContactMe() {
           </div>
         </div>
       </Container>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </Wrapper>
   );
 }
