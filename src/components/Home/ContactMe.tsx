@@ -40,26 +40,42 @@ export default function ContactMe() {
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
-          <div className="custom-ui">
-            <h1>Are you sure?</h1>
-            <p>You want to delete this file?</p>
-            <button onClick={onClose}>No</button>
-            <button
-              onClick={() => {
-                onClose();
-              }}
-            >
-              Yes, Delete it!
-            </button>
-          </div>
+          <CustomConfirmAlert>
+            <h1>내용이 맞습니까?</h1>
+            <section>
+              <p>
+                <span>이름</span>
+                {data.from_name}
+              </p>
+              <p>
+                <span>이메일</span> {data.from_email}
+              </p>
+              <p>
+                <span>내용</span>
+                {data.message}
+              </p>
+            </section>
+            <div>
+              <Button onClick={onClose}>취소</Button>
+              <Button
+                onClick={() => {
+                  sendEmail(data);
+                  onClose();
+                }}
+              >
+                보내기
+              </Button>
+            </div>
+          </CustomConfirmAlert>
         );
       },
     });
-    // send("service_ibn0zqm", "template_tfjt1wb", data, "nR6ZXXMVRBD0CIHOb");
-    // toast("제출되었습니다");
-    // reset();
   };
-
+  const sendEmail = (data: any) => {
+    send("service_ibn0zqm", "template_tfjt1wb", data, "nR6ZXXMVRBD0CIHOb");
+    toast("제출되었습니다");
+    reset();
+  };
   return (
     <Wrapper>
       <Container>
@@ -145,6 +161,51 @@ export default function ContactMe() {
     </Wrapper>
   );
 }
+const CustomConfirmAlert = styled.div`
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  padding: 2rem;
+  box-shadow: 0 20px 75px rgb(0 0 0 / 23%);
+  color: ${colors.lightGray};
+  background-color: ${colors.darkBlack};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  h1 {
+    font-size: 2rem;
+    font-family: "NEXON-Bold";
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+    border-bottom: 1px solid ${colors.darkGray};
+    padding-bottom: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+  p {
+    span {
+      width: 4rem;
+      font-size: 1.2rem;
+    }
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    font-size: 1.2rem;
+  }
+  div {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    min-width: 60vw;
+  }
+`;
 const ErrorMsg = styled.h1`
   color: tomato;
   font-family: "BM-Air";
