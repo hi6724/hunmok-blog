@@ -15,6 +15,7 @@ function BlogBlock({ data, typeColor }: any) {
             codeBlock
             theme={dracula}
             showLineNumbers={false}
+            style={{ width: "100%" }}
           />
         ) : typeTransform(data.type) === "img" ? (
           <img src={data.payload.file.url} />
@@ -40,6 +41,10 @@ function BlogBlock({ data, typeColor }: any) {
 export default BlogBlock;
 
 const Container = styled.div<any>`
+  width: 100%;
+  > * {
+    width: 100%;
+  }
   display: flex;
   justify-content: center;
   white-space: pre-wrap;
