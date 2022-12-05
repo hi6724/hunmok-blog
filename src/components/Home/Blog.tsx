@@ -139,10 +139,12 @@ function Blog({ show = false }: { show?: boolean }) {
 
   return (
     <Container>
-      <HeaderContainer>
-        <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
-          <TypingText size={isMobile ? "3rem" : "5rem"}>블로그</TypingText>
-        </Title>
+      <HeaderContainer style={{ flexDirection: show ? "row-reverse" : "row" }}>
+        {!show && (
+          <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
+            <TypingText size={isMobile ? "3rem" : "5rem"}>블로그</TypingText>
+          </Title>
+        )}
         {show && <Dropdown items={filterItems} setFilter={setFilter} />}
       </HeaderContainer>
 

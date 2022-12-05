@@ -19,7 +19,7 @@ const DATA = [
   {
     title: "Projects",
     to: "project-scroll",
-    path: "/project",
+    path: "/projects",
   },
   {
     title: "About Me",

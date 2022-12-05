@@ -7,6 +7,7 @@ import styled from "styled-components";
 import useSWR from "swr";
 import { colors } from "../color";
 import { IProject } from "../components/GridItems/GridItems";
+import ProjectsPageHeader from "../components/ProjectsPageHeader";
 import { getProjectsApi } from "../utils/apiRoutes";
 import { useMobile } from "../utils/useMobile";
 
@@ -37,7 +38,7 @@ function ProjectsPage() {
 
   return (
     <>
-      <Header />
+      <ProjectsPageHeader />
       <ProjectsContainer ref={ref}>
         {projects?.map((project) => (
           <Section key={project.id}>
@@ -69,7 +70,6 @@ function ProjectsPage() {
           </Section>
         ))}
       </ProjectsContainer>
-      <Footer />
     </>
   );
 }
@@ -98,7 +98,7 @@ const TextContainer = styled.div`
   }
 `;
 const ProjectsContainer = styled.div`
-  background-color: ${colors.darkBlack};
+  background-color: ${colors.lightBlack};
   padding: 5vh 0;
 `;
 const Section = styled.section`
@@ -122,40 +122,4 @@ const Section = styled.section`
     margin: 0;
     padding: 1rem;
   }
-`;
-
-function Header() {
-  return (
-    <HeaderContainer>
-      <div>
-        <span>work</span>
-        <span>work</span>
-        <span>work</span>
-        <span>work</span>
-      </div>
-      <div>KEEP SCROLLING</div>
-    </HeaderContainer>
-  );
-}
-const HeaderContainer = styled.div`
-  height: 70vh;
-  background-color: ${colors.lightGray};
-`;
-
-function Footer() {
-  return (
-    <HeaderContainer>
-      <div>
-        <span>work</span>
-        <span>work</span>
-        <span>work</span>
-        <span>work</span>
-      </div>
-      <div>KEEP SCROLLING</div>
-    </HeaderContainer>
-  );
-}
-const FooterContainer = styled.div`
-  height: 70vh;
-  background-color: ${colors.darkGray};
 `;

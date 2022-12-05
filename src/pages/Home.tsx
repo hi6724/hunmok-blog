@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Element } from "react-scroll";
 
 import { colors } from "../color";
-import Footer from "../components/Footer";
 import AboutMe from "../components/Home/AboutMe";
 import Blog from "../components/Home/Blog";
 import ContactMe from "../components/Home/ContactMe";
@@ -22,7 +21,6 @@ const Home = () => {
       <Blog />
       <Element style={{ paddingTop: "10vh" }} name="contact-scroll" />
       <ContactMe />
-      <Footer />
     </Container>
   );
 };

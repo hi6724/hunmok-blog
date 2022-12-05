@@ -262,7 +262,8 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  margin: 20vh 0;
+  margin: 20vh 0 0;
+  padding-bottom: 5rem;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -17,15 +17,18 @@ function Footer() {
 export default Footer;
 
 const Container = styled.div`
+  background-color: ${colors.lightBlack};
   padding: 5vh 5vw;
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
   font-size: 0.9rem;
-  opacity: 0.6;
   color: ${colors.lightGray};
   font-family: "BM-Air";
   span {
     font-family: sans-serif;
+  }
+  @media screen and (min-width: 1000px) {
+    margin-left: 8rem;
   }
 `;

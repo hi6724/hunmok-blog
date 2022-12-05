@@ -14,6 +14,7 @@ import ProjectDetailPage from "./pages/ProjectDetailPage";
 function Router() {
   const location: any = useLocation();
   useEffect(() => {
+    animateScroll.scrollToTop();
     scroller.scrollTo(location?.state?.from, {
       duration: 800,
       delay: 0,
