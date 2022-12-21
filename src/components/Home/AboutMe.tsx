@@ -1,18 +1,14 @@
-import { Canvas, extend } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import gsap from "gsap";
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
-import dayjs from "dayjs";
 
 import Three from "./Three";
 import { colors } from "../../color";
 import TypingText from "../../hooks/TypingText";
 import { bounceAnim } from "../../utils/bounceAnim";
 import { useMobile } from "../../utils/useMobile";
-import Button from "../Button";
 import ScrollAnimContainer from "../ScrollAnimContainer";
-import ShadowText from "../Navigation/ShadowText";
 import { useNavigate } from "react-router-dom";
 import GradientButton from "../GradientButton";
 import Skills from "../Skills";
@@ -59,7 +55,6 @@ function AboutMe() {
         },
       });
     }
-    extend({ TextGeometry });
   });
 
   return (
@@ -143,10 +138,6 @@ export const Title = styled.h2<any>`
   color: ${colors.fluor};
   margin-bottom: 2rem;
   display: flex;
-  @media screen and (min-width: 1000px) {
-    position: absolute;
-    top: 0px;
-  }
 `;
 
 const Description = styled.div`

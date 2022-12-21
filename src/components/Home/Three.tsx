@@ -1,11 +1,9 @@
-import { OrbitControls } from "@react-three/drei";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import myFont from "three/examples/fonts/droid/droid_sans_bold.typeface.json";
 import React, { useEffect, useRef, useState } from "react";
 
 import { colors } from "../../color";
-import { useMobile } from "../../utils/useMobile";
 
 declare global {
   namespace JSX {
@@ -21,7 +19,7 @@ const TEXT_ARR = [
   "RN",
   "Firebase",
   "Storybook",
-  "Next",
+  "Next.js",
   "JS/TS",
   "gsap",
   "React",
@@ -35,11 +33,7 @@ const TEXT_ARR = [
   "git",
   "Node JS",
   "ES5/ES6",
-  "REST",
-  "npm",
-  "npm",
-  "npm",
-  "npm",
+  "RTK",
 ];
 
 function Three() {
@@ -47,7 +41,6 @@ function Three() {
   const [pointsRef, setPointsRef] = useState<any>();
   const font = useRef(new FontLoader().parse(myFont));
   const planeRefArr = useRef<any[]>([]);
-  const isMobile = useMobile();
 
   useFrame(({ camera, clock }) => {
     const v = 10000;
