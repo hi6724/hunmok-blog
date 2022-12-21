@@ -12,29 +12,25 @@ import Logo from "./Logo";
 
 const DATA = [
   {
-    title: "Home",
+    title: "홈",
     to: "top",
     path: "/",
   },
   {
-    title: "Projects",
-    to: "project-scroll",
+    title: "프로젝트",
     path: "/projects",
   },
   {
-    title: "About Me",
-    to: "about-scroll",
+    title: "자기소개",
     path: "/about-me",
   },
   {
-    title: "Blog",
-    to: "blog-scroll",
+    title: "블로그",
     path: "/blog",
   },
   {
-    title: "Contact",
-    to: "contact-scroll",
-    path: "",
+    title: "방명록",
+    path: "/guestbook",
   },
 ];
 

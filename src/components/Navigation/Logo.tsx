@@ -1,11 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { colors } from "../../color";
 import ShadowText from "./ShadowText";
 
 const Logo = () => {
+  const navigate = useNavigate();
   return (
-    <Container>
+    <Container onClick={() => navigate("/")}>
       <ShadowText text="H" size={"6rem"} />
       <NameText>Hunmok</NameText>
       <h4>web developer</h4>
@@ -16,6 +18,7 @@ const Logo = () => {
 export default Logo;
 
 const Container = styled.div`
+  cursor: pointer;
   padding: 1rem 0;
   display: flex;
   flex-direction: column;

@@ -43,7 +43,7 @@ function Dropdown({ items, setFilter }: IProps) {
         opacity: 1,
         yPercent: 0,
         rotateX: 0,
-        duration: 0.4,
+        duration: 0.2,
         stagger: 0.05,
       });
     } else if (!open && menuRef) {
@@ -55,7 +55,7 @@ function Dropdown({ items, setFilter }: IProps) {
         opacity: 0,
         yPercent: -25,
         rotateX: 180,
-        duration: 0.4,
+        duration: 0.2,
         stagger: { from: "end", each: 0.05 },
       });
     }
@@ -89,7 +89,7 @@ function Dropdown({ items, setFilter }: IProps) {
 export default Dropdown;
 
 const Container = styled.div`
-  /* position: relative; */
+  position: relative;
 `;
 
 const Title = styled.h1`
@@ -99,10 +99,11 @@ const Title = styled.h1`
   cursor: pointer;
 `;
 const Menu = styled.ul`
+  cursor: pointer;
   position: absolute;
   z-index: 1;
-  right: 3vw;
-  top: calc(15vh + 2rem);
+  right: 0;
+  top: 3rem;
   height: 20rem;
   display: flex;
   flex-direction: column;

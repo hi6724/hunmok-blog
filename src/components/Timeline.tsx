@@ -3,9 +3,10 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
+import { aboutMeDetailAtom } from "../atom/aboutMeAtom";
 import { colors } from "../color";
 import { getTypeColor } from "./Home/Blog";
-
+import { useRecoilState } from "recoil";
 const anim = {
   open: {
     autoAlpha: 1,
@@ -22,11 +23,17 @@ const anim = {
 };
 
 function Timeline() {
+  const [openIndex, setOpenIndex] = useRecoilState(aboutMeDetailAtom);
+
   const arrowRef = useRef<any>();
   const contentRef = useRef<any>();
   const containerRef = useRef<any>();
 
   useEffect(() => {
+    ScrollTrigger.getAll().forEach((trigger) => trigger.kill(true));
+
+    console.log(ScrollTrigger.getAll());
+    console.log("EFFECT!!");
     gsap.to(arrowRef.current, {
       scrollTrigger: {
         trigger: arrowRef.current,
@@ -37,6 +44,7 @@ function Timeline() {
       ease: "linear",
       height: "100%",
     });
+    console.log(ScrollTrigger.getAll());
 
     if (contentRef.current?.children) {
       gsap.set(contentRef.current?.children, {
@@ -47,7 +55,6 @@ function Timeline() {
         interval: 0.1,
         start: "top 90%",
         onEnter: (batch) => {
-          console.log();
           gsap.to(batch, anim.open);
           gsap.to(batch[0].children[0], {});
         },
@@ -55,18 +62,27 @@ function Timeline() {
         onEnterBack: (batch) => gsap.to(batch, anim.open),
         onLeaveBack: (batch) => gsap.to(batch, anim.close),
       });
+      console.log(ScrollTrigger.getAll());
     }
-  }, [containerRef]);
+    return () => {};
+  }, [openIndex]);
 
   return (
     <>
+      {openIndex ? <div /> : <div />}
+
       <Container>
         <Arrow color={colors.darkGray} />
         <ArrowContainer ref={containerRef}>
           <Arrow
+            className="debug"
             ref={arrowRef}
             color={colors.lightGray}
-            style={{ width: "3px", transform: "translateX(-1px)", height: "0" }}
+            style={{
+              width: "3px",
+              transform: "translateX(-1px)",
+              height: "0",
+            }}
           />
           <Content ref={contentRef}>
             <ListItem type="language">

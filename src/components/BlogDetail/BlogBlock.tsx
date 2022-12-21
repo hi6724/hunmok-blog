@@ -41,12 +41,25 @@ function BlogBlock({ data, typeColor }: any) {
 export default BlogBlock;
 
 const Container = styled.div<any>`
+  font-size: 1rem;
+  line-height: 120%;
+  h1,
+  h2,
+  h3,
+  div,
+  p,
+  code,
+  section,
+  li,
+  div {
+    font-family: "NEXON";
+  }
+
   width: 100%;
   > * {
     width: 100%;
   }
   display: flex;
-  justify-content: center;
   white-space: pre-wrap;
   color: ${colors.gray};
   font-family: "BM-E";
@@ -76,11 +89,14 @@ const Container = styled.div<any>`
     background-color: ${colors.lightGray};
     color: ${colors.black};
     border-radius: 0.5rem;
+    font-family: "NEXON";
+  }
+  p {
+    font-family: "NEXON";
   }
   /* code */
   /* img */
   img {
     width: 100%;
-    max-width: 600px;
   }
 `;

@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import velog from "../../assets/logo/velog.ico";
 
 import { colors } from "../../color";
 import Button from "../Button";
@@ -18,10 +19,14 @@ const MetaData = () => {
       <SlimText>hi6724@gmail.com | +8210-4362-6724</SlimText>
       <div style={{ display: "flex", gap: 15 }}>
         <SnsLink href={"https://github.com/hi6724"} target="_blank">
-          <IoLogoGithub size={"2rem"} color={colors.gray} />
+          <IoLogoGithub size={"2rem"} color={colors.link} />
         </SnsLink>
-        <SnsLink href={"https://www.facebook.com/hunmok.ha"} target="_blank">
-          <IoLogoFacebook size={"2rem"} color={colors.link} />
+        <SnsLink href={"https://velog.io/@hunmok1027"} target="_blank">
+          <img
+            src={velog}
+            alt=""
+            style={{ width: "2rem", padding: "0.1rem" }}
+          />
         </SnsLink>
         <SnsLink href={"https://www.instagram.com/ha_hunmok/"} target="_blank">
           <IoLogoInstagram size={"2rem"} color={colors.pink} />
@@ -271,5 +276,8 @@ const Wrapper = styled.div`
   height: 100%;
 `;
 const SnsLink = styled.a`
-  color: black;
+  transition: all 0.2s;
+  :hover {
+    scale: 1.2;
+  }
 `;

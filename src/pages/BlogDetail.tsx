@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Loading from "react-loading";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import useSWR from "swr";
@@ -8,6 +9,7 @@ import BlogBlock from "../components/BlogDetail/BlogBlock";
 import BlogHeader from "../components/BlogDetail/BlogHeader";
 import { getTypeColor } from "../components/Home/Blog";
 import { getNotionByIdApi } from "../utils/apiRoutes";
+import { LoadingContainer } from "./ProjectDetailPage";
 
 function BlogDetail() {
   const { id } = useParams();
@@ -17,6 +19,7 @@ function BlogDetail() {
 
   const { data } = useSWR(`${getNotionByIdApi}/${id}`);
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (data) {
       setBlocks(data.child);
       setPageInfo(data.pageInfo);
@@ -27,7 +30,9 @@ function BlogDetail() {
   return (
     <Container>
       {loading ? (
-        "Loading..."
+        <LoadingContainer>
+          <Loading width={"30vw"} height={"30vw"} />
+        </LoadingContainer>
       ) : (
         <div>
           <BlogHeader info={pageInfo} />

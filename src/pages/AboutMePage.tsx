@@ -1,11 +1,10 @@
-import dayjs from "dayjs";
 import gsap from "gsap";
 import React, { useRef, useEffect } from "react";
 import { animateScroll } from "react-scroll";
 import styled from "styled-components";
 
 import { colors } from "../color";
-import ShadowText from "../components/Navigation/ShadowText";
+import ProjectsPageHeader from "../components/ProjectsPageHeader";
 import Skills from "../components/Skills";
 import Timeline from "../components/Timeline";
 import TypingText from "../hooks/TypingText";
@@ -21,10 +20,6 @@ function AboutMePage() {
     if (titleRef.current && descriptionRef.current) {
       gsap.to(titleRef.current?.children, {
         ...bounceAnim,
-        scrollTrigger: {
-          trigger: titleRef.current.children,
-          start: "top 40%",
-        },
       });
       gsap.from(descriptionRef.current?.children, {
         delay: 0.5,
@@ -34,37 +29,20 @@ function AboutMePage() {
         stagger: {
           each: 0.2,
         },
-        scrollTrigger: {
-          trigger: descriptionRef.current.children,
-          start: "top 60%",
-        },
       });
     }
   });
 
   return (
-    <Container>
-      <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
-        <TypingText size={isMobile ? "3rem" : "5rem"}>
-          나를 소개합니다
-        </TypingText>
-      </Title>
-      <Description ref={descriptionRef}>
-        {!isMobile ? (
-          <>
-            <section>
-              <h4>프론트엔드</h4>
-              <h6> react, react-native, next.js</h6>
-              <h6>redux, gsap, styled-components, react-query</h6>
-            </section>
-            <section>
-              <h4>백엔드</h4>
-              <h6>node.js, python, java</h6>
-              <h6>express, graphql, django, spring</h6>
-            </section>
-            <Timeline />
-          </>
-        ) : (
+    <>
+      <ProjectsPageHeader text="ABOUT" />
+      <Container>
+        <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
+          <TypingText size={isMobile ? "3rem" : "5rem"}>
+            나를 소개합니다
+          </TypingText>
+        </Title>
+        <Description ref={descriptionRef}>
           <>
             <section>
               저는 2015년에 고등학교를 졸업하고, 일본으로 유학을 떠났습니다.
@@ -83,12 +61,12 @@ function AboutMePage() {
               2022년 7월 부터 <StrongText>SSAFY</StrongText>에 다니면서 web
               개발자로서 부족한 필수 역량을 키우고 있습니다.
             </section>
-            <Skills />
+            <Skills detail />
             <Timeline />
           </>
-        )}
-      </Description>
-    </Container>
+        </Description>
+      </Container>
+    </>
   );
 }
 

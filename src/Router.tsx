@@ -10,11 +10,11 @@ import AboutMePage from "./pages/AboutMePage";
 import BlogPage from "./pages/BlogPage";
 import ProjectsPage from "./pages/ProjectsPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
+import GuestBookPage from "./pages/GuestBookPage";
 
 function Router() {
   const location: any = useLocation();
   useEffect(() => {
-    animateScroll.scrollToTop();
     scroller.scrollTo(location?.state?.from, {
       duration: 800,
       delay: 0,
@@ -32,6 +32,7 @@ function Router() {
         <Route path="/about-me" element={<AboutMePage />} />
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/projects/:id" element={<ProjectDetailPage />} />
+        <Route path="/guestbook" element={<GuestBookPage />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

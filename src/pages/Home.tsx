@@ -7,6 +7,7 @@ import Blog from "../components/Home/Blog";
 import ContactMe from "../components/Home/ContactMe";
 import MyProjects from "../components/Home/MyProjects";
 import Welcome from "../components/Home/Welcome";
+import GuestBookPreview from "../components/GuestBookPreview/GuestBookPreview";
 
 const Home = () => {
   return (
@@ -20,6 +21,7 @@ const Home = () => {
       <Element style={{ paddingTop: "10vh" }} name="blog-scroll" />
       <Blog />
       <Element style={{ paddingTop: "10vh" }} name="contact-scroll" />
+      <GuestBookPreview />
       <ContactMe />
     </Container>
   );

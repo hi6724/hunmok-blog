@@ -1,15 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { AiFillGithub, AiFillInstagram, AiFillFacebook } from "react-icons/ai";
-import { scroller } from "react-scroll";
+import { animateScroll } from "react-scroll";
 
 import { colors } from "../../color";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useMobile } from "../../utils/useMobile";
-
+import velog from "../../assets/logo/velog.ico";
 type item = {
   title: string;
-  to: string;
+  to?: string;
   path: string;
 };
 type Props = {
@@ -19,17 +18,13 @@ type Props = {
 
 const Items = ({ data, toggleOpen }: Props) => {
   const location = useLocation();
-  const isMobile = useMobile();
   const navigate = useNavigate();
 
-  const handleClick = ({ to, path }: item) => {
+  const handleClick = ({ path }: item) => {
     toggleOpen();
-    if (location.pathname === "/" && !isMobile) {
-      scroller.scrollTo(to, {
-        duration: 800,
-        delay: 0,
-        smooth: "easeInOutQuad",
-      });
+    console.log(path, location.pathname);
+    if (location.pathname === path) {
+      animateScroll.scrollToTop({ duration: 500 });
     } else {
       navigate(path);
     }
@@ -42,7 +37,7 @@ const Items = ({ data, toggleOpen }: Props) => {
         {data.map((el, i) => (
           <React.Fragment key={i}>
             <Item
-              focus={location.pathname === el.path && location.pathname !== "/"}
+              focus={location.pathname === el.path}
               onClick={() => handleClick(el)}
             >
               <span>{el.title.toLowerCase()}</span>
@@ -52,16 +47,30 @@ const Items = ({ data, toggleOpen }: Props) => {
         ))}
       </ItemsContainer>
       <SNSContainer>
-        <AiFillGithub />
-        <AiFillInstagram />
-        <AiFillFacebook />
+        <IconContainer>
+          <AiFillGithub color={colors.link} />
+        </IconContainer>
+        <IconContainer>
+          <img src={velog} width={16} alt="" />
+        </IconContainer>
+        <IconContainer>
+          <AiFillInstagram color={colors.pink} />
+        </IconContainer>
       </SNSContainer>
     </Container>
   );
 };
 
 export default Items;
-
+const IconContainer = styled.div`
+  cursor: pointer;
+  width: 1rem;
+  filter: grayscale(100%);
+  transition: all 0.2s;
+  :hover {
+    filter: grayscale(0%);
+  }
+`;
 const SNSContainer = styled.div`
   height: 20vh;
   display: flex;
@@ -85,13 +94,20 @@ const Container = styled.div`
 `;
 
 const Item = styled.div<any>`
+  cursor: pointer;
   padding: 1.3rem 0;
   display: flex;
   font-size: 1rem;
-  color: ${({ focus }) => (focus ? colors.fluor : "#aaa")};
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: "BM-Air";
+  transition: all 0.2s;
+  color: ${({ focus }) => (focus ? colors.fluor : "#aaa")};
+  :hover {
+    color: ${({ focus }) => (focus ? colors.fluor : colors.lightGray)};
+    scale: ${({ focus }) => (focus ? 1 : 1.1)};
+  }
 `;
 
 const Divider = styled.span`

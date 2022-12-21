@@ -1,15 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-  AiFillCalendar,
-  AiFillPieChart,
-  AiOutlineUnorderedList,
-} from "react-icons/ai";
+import React, { useEffect, useState } from "react";
+import { AiFillCalendar, AiOutlineUnorderedList } from "react-icons/ai";
 import styled from "styled-components";
 import { colors } from "../color";
 import { useMobile } from "../utils/useMobile";
-import { getTypeColor } from "./Home/Blog";
+import skillIcons from "../assets/skills/index";
 
 function DetailHeader({ info }: any) {
+  const skillIconsNames = skillIcons.map(
+    (str) => str.split("icons8-")[1].split(".")[0]
+  );
   const [icon, setIcon] = useState("");
   const isMobile = useMobile();
   useEffect(() => {
@@ -37,19 +36,25 @@ function DetailHeader({ info }: any) {
             <AiOutlineUnorderedList />
             기술스택
           </p>
-          <SkillItems
-            style={{
-              display: "grid",
-              gridTemplateColumns: isMobile
-                ? "1fr 1fr 1fr"
-                : "repeat(auto-fill, minmax(8rem, 1fr))",
-
-              width: "100%",
-            }}
-          >
-            {info.skills.map((skill: string, i: number) => (
-              <li key={i}>{skill}</li>
-            ))}
+          <SkillItems style={{ display: "grid" }}>
+            {info.skills.map((skill: string, i: number) => {
+              const index = skillIconsNames
+                .map((iconName, i) => iconName == skill)
+                .indexOf(true);
+              if (index > 0) {
+                return (
+                  <li key={i}>
+                    <img src={skillIcons[index]} />
+                    <p>{skill}</p>
+                  </li>
+                );
+              }
+              return (
+                <li key={i} style={{ padding: "0 0.4rem" }}>
+                  <p>{skill}</p>
+                </li>
+              );
+            })}
           </SkillItems>
         </SkillContainer>
         <SkillContainer>
@@ -60,13 +65,6 @@ function DetailHeader({ info }: any) {
           <ul>
             {info.start} ~ {info.end}
           </ul>
-        </SkillContainer>
-        <SkillContainer>
-          <p>
-            <AiFillPieChart />
-            요약
-          </p>
-          <ul>{info.overview}</ul>
         </SkillContainer>
 
         <Header>
@@ -79,9 +77,41 @@ function DetailHeader({ info }: any) {
 }
 
 export default DetailHeader;
+
 const SkillItems = styled.ul`
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  grid-template-columns: repeat(auto-fill, 200px);
+  gap: 0.2rem;
+  li {
+    border-radius: 0.3rem;
+    padding: 0.2rem 0.4rem;
+    color: ${colors.darkBlack};
+    background-color: ${colors.darkGray};
+    display: flex;
+    align-items: center;
+    height: 40px;
+    font-family: "BM-Pro";
+    color: ${colors.lightBlack};
+    p {
+      font-size: 1.2rem;
+      word-break: break-all;
+    }
+    img,
+    span {
+      font-size: 1.5rem;
+      width: 2rem;
+    }
+  }
+  @media (max-width: 1000px) {
+    grid-template-columns: repeat(auto-fill, 115px);
+    li {
+      padding: 0;
+      p {
+        font-size: 0.8rem;
+      }
+    }
+  }
 `;
 const SkillContainer = styled.div`
   color: ${colors.white};
@@ -94,16 +124,6 @@ const SkillContainer = styled.div`
     align-items: center;
     gap: 0.2rem;
     min-width: 5rem;
-  }
-  ul {
-    display: flex;
-    gap: 0.2rem;
-    li {
-      border-radius: 0.3rem;
-      padding: 0.2rem 0.4rem;
-      color: ${colors.darkBlack};
-      background-color: ${colors.darkGray};
-    }
   }
 `;
 const CoverContainer = styled.div`

@@ -7,6 +7,7 @@ import useSWR from "swr";
 import { colors } from "../../color";
 
 import { getProjectsApi } from "../../utils/apiRoutes";
+import { overflowOneLineText } from "../../utils/overflowText";
 import { useMobile } from "../../utils/useMobile";
 import Button from "../Button";
 
@@ -34,8 +35,12 @@ function GridItems() {
 
   useEffect(() => {
     if (projects) {
-      setFirstLine([...projects.slice(0, 5), ...projects.slice(0, 5)]);
-      setSecondLine([...projects.slice(5, 10), ...projects.slice(5, 10)]);
+      const half = Math.floor(projects.length / 2);
+      setFirstLine([...projects.slice(0, half), ...projects.slice(0, half)]);
+      setSecondLine([
+        ...projects.slice(half, projects.length),
+        ...projects.slice(half, projects.length),
+      ]);
     }
   }, [projects]);
 
@@ -54,11 +59,13 @@ function GridItems() {
   };
   const handleFlip = (index: number, i: number) => {
     let next;
-    console.log("flip!");
-    if (i < 5) {
-      next = (i % 5) + 5;
+    let half = Math.floor(firstLine.length / 2);
+    if (index === 1) half = Math.floor(secondLine.length / 2);
+
+    if (i < half) {
+      next = (i % half) + half;
     } else {
-      next = i % 5;
+      next = i % half;
     }
 
     if (isFocus.current[index] === -1) isFocus.current[index] = i;
@@ -70,11 +77,9 @@ function GridItems() {
     }
 
     const parent = ref.current[index];
-    animateRef.current[index].kill();
-
-    gsap.getTweensOf(ref.current[index])[0].paused()
-      ? gsap.getTweensOf(ref.current[index])[0].play()
-      : gsap.getTweensOf(ref.current[index])[0].pause();
+    animateRef.current[index].paused()
+      ? animateRef.current[index].play()
+      : animateRef.current[index].pause();
 
     const clickedElement = parent.children[i];
     const nextElement = parent.children[next];
@@ -92,12 +97,18 @@ function GridItems() {
   };
 
   useEffect(() => {
-    ref.current !== null &&
-      ref.current.forEach((el, i) => {
-        gsap.from(el.children, {
+    if (!ref.current) return;
+    ref.current.forEach((el, i) => {
+      const half = Math.floor(el.children.length / 2);
+      if (!el.children) return;
+      gsap.fromTo(
+        el.children,
+        {
           scale: 0.2,
           opacity: 0,
           duration: 0.4,
+        },
+        {
           scrollTrigger: {
             trigger: ref.current,
             start: "top center",
@@ -107,21 +118,24 @@ function GridItems() {
             from: "start",
             each: 0.1,
           },
-        });
-        animateRef.current[i] = gsap.to(el, {
-          duration: isMobile ? 30 : 20,
-          repeat: -1,
-          ease: "linear",
-          x:
-            i === 0
-              ? isMobile
-                ? "-=300vw"
-                : "-=125vw"
-              : isMobile
-              ? "+=300vw"
-              : "+=125vw",
-        });
+          scale: 1,
+          opacity: 1,
+        }
+      );
+      animateRef.current[i] = gsap.to(el, {
+        duration: isMobile ? half * 3 : half * 2,
+        repeat: -1,
+        ease: "linear",
+        x:
+          i === 0
+            ? isMobile
+              ? `-=${half * 60}vw`
+              : `-=${half * 25}vw`
+            : isMobile
+            ? `+=${half * 60}vw`
+            : `+=${half * 25}vw`,
       });
+    });
   });
 
   return (
@@ -186,7 +200,9 @@ const ProjectWrapper = styled.div<any>`
 `;
 
 const Container = styled.div`
+  height: 50vw;
   @media screen and (max-width: 1000px) {
+    height: 120vw;
   }
 `;
 
@@ -282,6 +298,7 @@ const Header = styled.div`
   h1 {
     font-family: "NEXON";
     font-size: 4vw;
+    ${overflowOneLineText}
   }
   @media screen and (min-width: 1000px) {
     gap: 0.5rem;

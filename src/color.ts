@@ -11,4 +11,8 @@ export const colors = {
   purple: "#be2ed6",
   link: "#4286f4",
   lightGreen: "#72cc50",
+  primary: "#23adad",
+  greyLight: "#23adade1",
+  greyLight2: "#cbe0dd",
+  greyDark: "#2d4848",
 };

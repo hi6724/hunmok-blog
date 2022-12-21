@@ -14,6 +14,7 @@ import { getNotionListApi } from "../../utils/apiRoutes";
 import useSWR from "swr";
 import Dropdown from "../Dropdown";
 import { filterItems } from "../../utils/filterItems";
+import GradientButton from "../GradientButton";
 
 type ObjType = {
   [index: string]: string;
@@ -161,17 +162,17 @@ function Blog({ show = false }: { show?: boolean }) {
         </GridContainer>
         <CenteredContainer>
           {!show ? (
-            <Button
+            <GradientButton
               onClick={() => {
                 navigation("/blog");
               }}
             >
               전체글 보기
-            </Button>
+            </GradientButton>
           ) : data ? (
             cursor.current !== null &&
             data.next_cursor && (
-              <Button
+              <GradientButton
                 onClick={() => {
                   animate.current = true;
                   animCursor.current += count.current;
@@ -180,7 +181,7 @@ function Blog({ show = false }: { show?: boolean }) {
                 }}
               >
                 더보기
-              </Button>
+              </GradientButton>
             )
           ) : (
             <ReactLoading
@@ -206,7 +207,6 @@ const Title = styled.h2<any>`
   font-size: ${(p) => p.size};
   font-family: "BM-Pro";
   color: ${colors.fluor};
-  margin-bottom: 2rem;
   display: flex;
 `;
 
@@ -235,5 +235,5 @@ const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 5vw;
+  padding: 2rem 5vw;
 `;

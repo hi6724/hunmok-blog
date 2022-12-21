@@ -1,6 +1,6 @@
 import gsap from "gsap";
 import React, { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { colors } from "../../color";
@@ -8,6 +8,7 @@ import TypingText from "../../hooks/TypingText";
 import { bounceAnim } from "../../utils/bounceAnim";
 import { useMobile } from "../../utils/useMobile";
 import Button from "../Button";
+import GradientButton from "../GradientButton";
 import GridItems from "../GridItems/GridItems";
 import ScrollAnimContainer from "../ScrollAnimContainer";
 
@@ -52,18 +53,17 @@ function MyProjects() {
           </TypingText>
         </Title>
         <Description ref={descriptionRef}>
+          <p>2021년부터 프론트엔드를 공부해 오면서 진행한, 프로젝트들입니다.</p>
           <p>
-            Quisque et nisl nulla. nec bibendum turpis enim, a gravida massa
+            저의 프로젝트에 관심이 있으시다면{" "}
+            <Link
+              to={"/projects"}
+              style={{ color: colors.link, cursor: "pointer" }}
+            >
+              자세히보기
+            </Link>
+            를 클릭해주세요
           </p>
-          {!isMobile && (
-            <>
-              <p>
-                maximus quis. Duis ante ex, volutpat ac pulvinar at, feugiat non
-                enim.
-              </p>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </>
-          )}
         </Description>
       </Container>
       <GridItems />
@@ -77,7 +77,9 @@ function MyProjects() {
         from={true}
         anim={{ opacity: 0, scale: 0.3 }}
       >
-        <Button onClick={() => navigate("/projects")}>전체보기</Button>
+        <GradientButton onClick={() => navigate("/projects")}>
+          프로젝트 더 보기
+        </GradientButton>
       </ScrollAnimContainer>
     </>
   );
@@ -98,11 +100,10 @@ const Title = styled.h2<any>`
   display: flex;
 `;
 const Description = styled.div`
-  font-size: 1.2rem;
   font-family: "BM-Air";
   line-height: 1.5rem;
   color: ${colors.white};
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 1rem;
 `;
