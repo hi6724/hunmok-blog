@@ -3,6 +3,7 @@ import Slider, { Settings } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
+import { colors } from "../../color";
 
 interface Props {
   children: ReactElement[];
@@ -34,5 +35,8 @@ export const Container = styled.div<ContainerProp>`
   .slick-slide {
     display: flex;
     justify-content: center;
+  }
+  .slick-dots > li > button:before {
+    color: ${colors.lightGray};
   }
 `;
