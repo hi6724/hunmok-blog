@@ -2,6 +2,8 @@ import { useFrame } from "@react-three/fiber";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import myFont from "three/examples/fonts/droid/droid_sans_bold.typeface.json";
 import React, { useEffect, useRef, useState } from "react";
+import { extend } from "@react-three/fiber";
+import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 
 import { colors } from "../../color";
 
@@ -37,6 +39,8 @@ const TEXT_ARR = [
 ];
 
 function Three() {
+  extend({ TextGeometry });
+
   const [planes, setPlanes] = useState<any>([]);
   const [pointsRef, setPointsRef] = useState<any>();
   const font = useRef(new FontLoader().parse(myFont));

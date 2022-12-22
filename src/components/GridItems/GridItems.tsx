@@ -60,7 +60,7 @@ function GridItems() {
     <SliderSection>
       <MySlider settings={sliderSettings} width="90vw">
         {projects.map((project) => (
-          <SliderItem project={project} />
+          <SliderItem key={project.id} project={project} />
         ))}
       </MySlider>
     </SliderSection>

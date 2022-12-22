@@ -57,8 +57,8 @@ function SliderCover({ project }: { project: IProject }) {
           <p>{project.overview}</p>
         </div>
         <ul>
-          {project.skills.map((str) => (
-            <SkillIcon str={str} />
+          {project.skills.map((str, i) => (
+            <SkillIcon key={i} str={str} />
           ))}
         </ul>
         <div>

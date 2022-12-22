@@ -13,14 +13,12 @@ function ProjectsCard({ project }: { project: IProject }) {
   const skillIconsNames = skillIcons.map(
     (str) => str.split("icons8-")[1].split(".")[0]
   );
-  console.log(skillIcons, skillIconsNames);
 
   let today = dayjs(project.startData);
   let expired_at = dayjs(project.endDate);
   let result = expired_at.diff(today, "day", true);
   let d_day = Math.floor(result);
   const [month, date] = dayjs.duration(d_day, "days").format("M-D").split("-");
-  console.log(month, date);
 
   return (
     <Card className="card">
