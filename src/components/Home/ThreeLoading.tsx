@@ -5,6 +5,7 @@ import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import myFont from "three/examples/fonts/droid/droid_sans_bold.typeface.json";
 import { colors } from "../../color";
 import gsap from "gsap";
+import { useMobile } from "../../utils/useMobile";
 
 const angleToRadians = (angleInDeg: number) => (Math.PI / 180) * angleInDeg;
 
@@ -28,6 +29,7 @@ function lightAnim(mesh: any, i: number, clock: THREE.Clock) {
 }
 
 function ThreeLoading() {
+  const isMobile = useMobile();
   const font = useRef(new FontLoader().parse(myFont));
   const lightRef = useRef<any>([]);
   const textRef = useRef<any>([]);
@@ -38,7 +40,7 @@ function ThreeLoading() {
     }
   }, [textRef.current]);
   useThree(({ camera }) => {
-    camera.position.z = 6;
+    camera.position.z = isMobile ? 8 : 6;
     camera.position.y = 1.5;
     camera.lookAt(0, 1, 0);
   });

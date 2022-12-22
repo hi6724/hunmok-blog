@@ -3,7 +3,6 @@ import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { colors } from "../color";
 import { useMobile } from "../utils/useMobile";
-import { AiOutlineDown } from "react-icons/ai";
 
 function ProjectsPageHeader({ text }: { text: string }) {
   const isMobile = useMobile();
@@ -16,16 +15,17 @@ function ProjectsPageHeader({ text }: { text: string }) {
       },
       {
         ease: "linear",
-        duration: isMobile ? 10 : 15,
+        duration: 15,
         repeat: -1,
-        x: isMobile ? "-75vw" : `-${(text.length + 1) * 6}rem`,
+        x: isMobile
+          ? `-${(text.length + 1) * 4.5}rem`
+          : `-${(text.length + 1) * 6}rem`,
       }
     );
   });
   return (
     <HeaderContainer>
       <Work ref={ref} num={text.length}>
-        <div>{text}</div>
         <div>{text}</div>
         <div>{text}</div>
         <div>{text}</div>
@@ -57,8 +57,11 @@ const Work = styled.div<any>`
   padding: 6rem 0 3rem 0;
   display: flex;
   div {
-    font-size: 15vw;
-    width: 65vw;
+    display: flex;
+    font-size: 7rem;
+    width: ${(p) => p.num * 4.5}rem;
+    margin-right: 4.5rem;
+    flex: 0 0 auto;
   }
   @media (min-width: 1000px) {
     padding: 1rem 0 2rem 0;
