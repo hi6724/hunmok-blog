@@ -15,19 +15,24 @@ export const SKILL_DATA: ISkill[] = [
     value: 80,
     details: [
       {
-        title: "JavaScript & TypeScript",
+        title: "JS & TS",
         description: `
-자바스트립트 및 타입스크립트를 사용해서 웹서비스를 개발한 경험이 있습니다.
+JS 및 TS 사용해서 웹서비스를 개발한 경험이 있습니다.
+TS의 타입추론에 대해서 이해하고 있습니다.
         `,
       },
       {
         title: "python",
         description: `
+주로 python 을 사용해서 알고리즘을 공부하고 있습니다.
+django 로 간단한 rest api 를 개발할 수 있습니다.
         `,
       },
       {
         title: "java",
         description: `
+java의 기초적인 활용이 가능합니다.
+현재 SSAFY에서 spring 을 배우고 있습니다.
 `,
       },
     ],
@@ -40,10 +45,9 @@ export const SKILL_DATA: ISkill[] = [
       {
         title: "react & react-native",
         description: `
-리액트를 사용해서 웹개발을 한적이 있고,
-리액트 네이티브를 사용해서 앱개발을 한 경험이 있습니다.
-메모이제이션을 이용한 렌더링 최적화에 대해서 이해하고 있습니다.
-상태 관리 라이브러리를 이용한 전역 상태 관리에 대해 이해하고 있습니다.
+렌더링 최적화에 대해서 이해하고 있습니다.
+전역 상태관리에 대해서 이해하고 있고, FLUX 패턴을 적용시킬 수 있습니다.
+RTK, Recoil, SWR 과 같은 라이브러리를 사용할 수 있습니다.
         `,
       },
       {
@@ -56,10 +60,8 @@ SSR, SSG, ISG  의 장단점에 대해서 이해하고 적절하게 사용할 �
       {
         title: "style",
         description: `
-twailwind, scss 를 사용할 수 있습니다. 
-styled-components, emotion 과 같은 css in js 를 사용할 수 있습니다.
+css in js 와 tailwind 를 사용할 수 있습니다. 
 gsap 및 framer-motion 과 같은 애니메이션 라이브러리를 사용할 수 있습니다.
-media query 를 이용한 반응 형 웹사이트를 제작할 수 있습니다.
 `,
       },
     ],
@@ -73,7 +75,7 @@ media query 를 이용한 반응 형 웹사이트를 제작할 수 있습니다.
         title: "express & graphql",
         description: `
 nodeJS의 express와 graphql을 이용해서 백엔드를 개발한 경험이 있습니다.
-간단한 rest api 를 구축할 수 있습니다.
+express로 간단한 rest api 를 구축할 수 있습니다.
 `,
       },
       {
@@ -99,17 +101,17 @@ github을 이용해서 소스 코드 관리를 한 적이 있습니다.
 `,
       },
       {
-        title: "slack",
+        title: "slack & notion",
         description: `
-SSAFY 에서 Spring 에 대해서 배우고 있습니다.
-MVC 패턴을 이해하고 있고 사용할 수 있습니다.
+slack 과 notion 을 통한 커뮤니케이션이 능숙합니다.
+notion 과 slack api 를 사용한 경험이 있습니다.
 `,
       },
       {
         title: "figma",
         description: `
-SSAFY 에서 Spring 에 대해서 배우고 있습니다.
-MVC 패턴을 이해하고 있고 사용할 수 있습니다.
+figma 를 사용한 협업경험이 있습니다.
+figma 의 내용대로 구현할 수 있습니다.
 `,
       },
     ],

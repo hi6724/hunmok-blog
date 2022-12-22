@@ -67,7 +67,7 @@ function ProjectsPage() {
 
       <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
         <TypingText size={isMobile ? "3rem" : "5rem"}>
-          나를 소개합니다
+          나의 프로젝트들
         </TypingText>
       </Title>
       <ProjectsContainer ref={ref}>

@@ -11,8 +11,8 @@ import reactNative from "./icons8-react.svg";
 import redux from "./icons8-redux.svg";
 import spring from "./icons8-spring.svg";
 import tailwindcss from "./icons8-tailwind.svg";
-import typescript from "./icons8-typescript.svg";
-import javascript from "./icons8-javascript.svg";
+import typescript from "./icons8-ts.svg";
+import javascript from "./icons8-js.svg";
 import express from "./icons8-express.svg";
 import vue from "./icons8-vue.svg";
 import style from "./icons8-style.svg";
@@ -20,6 +20,7 @@ import github from "./icons8-github.svg";
 import slack from "./icons8-slack.svg";
 import figma from "./icons8-figma.svg";
 import java from "./icons8-java.svg";
+import notion from "./icons8-notion.svg";
 
 const skillIcons = [
   cloudflare,
@@ -27,6 +28,7 @@ const skillIcons = [
   java,
   slack,
   django,
+  notion,
   figma,
   git,
   google,
