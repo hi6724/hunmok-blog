@@ -4,6 +4,7 @@ import { RecoilRoot } from "recoil";
 import { SWRConfig } from "swr";
 
 import App from "./App";
+import { GlobalStyle } from "./GlobalStyle";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <RecoilRoot>
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         revalidateOnReconnect: false,
       }}
     >
+      <GlobalStyle />
       <App />
     </SWRConfig>
   </RecoilRoot>

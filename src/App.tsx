@@ -8,7 +8,6 @@ import FontFaceObserver from "fontfaceobserver";
 import { SWRConfig, preload } from "swr";
 
 import "./style.css";
-import { GlobalStyle } from "./GlobalStyle";
 import Router from "./Router";
 import ThreeLoading from "./components/Home/ThreeLoading";
 import {
@@ -17,6 +16,7 @@ import {
   getNotionListApi,
 } from "./utils/apiRoutes";
 import useImagePreloader from "./hooks/useImagePreloader";
+import { colors } from "./color";
 
 gsap.registerPlugin(ScrollTrigger);
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -45,12 +45,17 @@ function App() {
   return (
     <>
       {loading || !imagesPreloaded ? (
-        <Canvas style={{ width: "100%", height: "100vh" }}>
+        <Canvas
+          style={{
+            width: "100vw",
+            height: "100vh",
+            background: colors.lightBlack,
+          }}
+        >
           <ThreeLoading />
         </Canvas>
       ) : (
         <>
-          <GlobalStyle />
           <BrowserRouter>
             <Router />
           </BrowserRouter>
