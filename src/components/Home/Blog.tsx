@@ -167,7 +167,7 @@ function Blog({ show = false }: { show?: boolean }) {
                 navigation("/blog");
               }}
             >
-              전체글 보기
+              블로그 전체보기
             </GradientButton>
           ) : data ? (
             cursor.current !== null &&

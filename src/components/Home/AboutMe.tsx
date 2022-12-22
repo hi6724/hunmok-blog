@@ -110,7 +110,7 @@ function AboutMe() {
         anim={{ opacity: 0, scale: 0.3 }}
       >
         <GradientButton onClick={() => navigation("/about-me")}>
-          자세히보기
+          자기소개 자세히보기
         </GradientButton>
       </ScrollAnimContainer>
     </div>

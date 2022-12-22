@@ -6,6 +6,17 @@ import { SWRConfig } from "swr";
 import App from "./App";
 import { GlobalStyle } from "./GlobalStyle";
 
+function localStorageProvider(): any {
+  const map = new Map(JSON.parse(localStorage.getItem("app-cache") || "[]"));
+
+  window.addEventListener("beforeunload", () => {
+    const appCache = JSON.stringify(Array.from(map.entries()));
+    localStorage.setItem("app-cache", appCache);
+  });
+
+  return map;
+}
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <RecoilRoot>
     <SWRConfig
@@ -14,6 +25,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         revalidateIfStale: false,
         revalidateOnFocus: false,
         revalidateOnReconnect: false,
+        provider: localStorageProvider,
       }}
     >
       <GlobalStyle />

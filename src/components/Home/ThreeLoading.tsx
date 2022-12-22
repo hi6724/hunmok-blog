@@ -59,6 +59,7 @@ function ThreeLoading() {
         if (i > 4) xPos -= 0.2;
         return (
           <mesh
+            key={i}
             position={[xPos, 1, 3]}
             castShadow
             ref={(el) => (textRef.current[i] = el)}

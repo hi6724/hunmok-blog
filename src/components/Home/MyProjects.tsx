@@ -78,7 +78,7 @@ function MyProjects() {
         anim={{ opacity: 0, scale: 0.3 }}
       >
         <GradientButton onClick={() => navigate("/projects")}>
-          프로젝트 더 보기
+          프로젝트 자세히보기
         </GradientButton>
       </ScrollAnimContainer>
     </>
@@ -106,4 +106,5 @@ const Description = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  font-size: 1.2rem;
 `;
