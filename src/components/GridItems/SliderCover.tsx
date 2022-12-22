@@ -15,9 +15,7 @@ function SliderCover({ project }: { project: IProject }) {
   const coverRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState([0, 0]);
   const navigate = useNavigate();
-  const skillIconsNames = skillIcons.map(
-    (str) => str.split("icons8-")[1].split(".")[0]
-  );
+
   const handleMouseDown = (data: React.MouseEvent) => {
     setMousePosition([data.clientX, data.clientY]);
   };
@@ -37,6 +35,9 @@ function SliderCover({ project }: { project: IProject }) {
   };
 
   const SkillIcon = ({ str }: { str: string }) => {
+    const skillIconsNames = skillIcons.map(
+      (str) => str.split("icons8-")[1].split(".")[0]
+    );
     const index = skillIconsNames
       .map((iconName) => iconName == str)
       .indexOf(true);
