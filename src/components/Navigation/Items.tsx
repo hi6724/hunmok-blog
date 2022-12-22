@@ -22,7 +22,6 @@ const Items = ({ data, toggleOpen }: Props) => {
 
   const handleClick = ({ path }: item) => {
     toggleOpen();
-    console.log(path, location.pathname);
     if (location.pathname === path) {
       animateScroll.scrollToTop({ duration: 500 });
     } else {

@@ -1,13 +1,26 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { animateScroll } from "react-scroll";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { colors } from "../../color";
 import ShadowText from "./ShadowText";
 
-const Logo = () => {
+const Logo = ({ toggleOpen }: { toggleOpen: Function }) => {
+  const location = useLocation();
   const navigate = useNavigate();
+
+  const handleClick = () => {
+    toggleOpen();
+    if (location.pathname == "/") {
+      animateScroll.scrollToTop({ duration: 500 });
+    } else {
+      navigate("/");
+    }
+  };
+
   return (
-    <Container onClick={() => navigate("/")}>
+    <Container onClick={handleClick}>
       <ShadowText text="H" size={"6rem"} />
       <NameText>Hunmok</NameText>
       <h4>web developer</h4>

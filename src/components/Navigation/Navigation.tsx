@@ -73,7 +73,7 @@ const Navigation = () => {
         )}
       </Dropdown>
       <Container ref={containerRef}>
-        <Logo />
+        <Logo toggleOpen={openMenu} />
         <Items data={DATA} toggleOpen={openMenu} />
       </Container>
     </>
