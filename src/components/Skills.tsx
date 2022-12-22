@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { colors } from "../color";
 import { getTypeColor } from "./Home/Blog";
 import skillIcons from "../assets/skills/index";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { aboutMeDetailAtom, detailHeightAtom } from "../atom/aboutMeAtom";
 import { ISkill, SKILL_DATA } from "../data/skills";
 
@@ -108,11 +108,11 @@ function Skill({ skillData, detail }: { skillData: ISkill; detail: boolean }) {
   );
 }
 
-function Skills({ detail }: { detail: boolean }) {
-  const [detailHeight, setDetailHeight] = useRecoilState(detailHeightAtom);
-  console.log(detailHeight);
+function Skills({ detail, ...rest }: { detail: boolean; [key: string]: any }) {
+  const detailHeight = useRecoilValue(detailHeightAtom);
+
   return (
-    <SkillsContainer height={480 + detailHeight}>
+    <SkillsContainer {...rest} height={480 + detailHeight}>
       {SKILL_DATA.map((skill, i) => (
         <Skill skillData={skill} detail={detail} key={i} />
       ))}
@@ -130,6 +130,7 @@ function hexToRgba(str: string, opacity: number) {
   return `rgba(${r},${g},${b},${opacity})`;
 }
 export default Skills;
+
 const Arrow = styled.div<any>`
   width: 100%;
   padding: 0.5rem 0;
@@ -151,7 +152,6 @@ const Arrow = styled.div<any>`
 `;
 const SkillsContainer = styled.div<any>`
   height: ${(p) => p.height}px;
-
   display: flex;
   flex-direction: column;
   padding: 3rem 0;

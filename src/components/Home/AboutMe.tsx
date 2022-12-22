@@ -83,7 +83,7 @@ function AboutMe() {
               </span>{" "}
               등을 사용할 수 있습니다.
             </section>
-            <Skills detail={false} />
+            <Skills style={{ height: "400px" }} detail={false} />
           </Description>
         </div>
         <div
@@ -93,6 +93,7 @@ function AboutMe() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            marginBottom: isMobile ? "2rem" : "",
           }}
         >
           <Canvas ref={threeRef}>
