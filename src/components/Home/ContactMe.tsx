@@ -236,17 +236,37 @@ const Input = styled.input<any>`
     color: ${colors.fluor};
     ::placeholder,
     ::-webkit-input-placeholder {
-      color: ${colors.fluor};
+      color: ${(props) => (props.isError ? "tomato" : colors.fluor)};
     }
   }
   transition: all 0.3s;
 `;
-const InputBox = styled(Input)`
+const InputBox = styled.textarea<any>`
   transition: all 0.2s;
-  :focus {
-    height: 15vh;
+  font-size: 16px;
+  font-family: "BM-Air";
+  background-color: #1d1d1d;
+  color: ${colors.lightGray};
+  border: none;
+  border-bottom: 2px solid white;
+  outline: none;
+  margin-bottom: 1rem;
+  ::placeholder,
+  ::-webkit-input-placeholder {
+    color: ${(props) => (props.isError ? "tomato" : colors.lightGray)};
   }
+  :focus {
+    border-color: ${colors.fluor};
+    color: ${colors.fluor};
+    ::placeholder,
+    ::-webkit-input-placeholder {
+      color: ${colors.fluor};
+    }
+  }
+  height: 15vh;
+  resize: none;
 `;
+
 const SlimText = styled.h1`
   font-family: "BM-Air";
 `;

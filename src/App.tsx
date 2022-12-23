@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FontFaceObserver from "fontfaceobserver";
-import { SWRConfig, preload } from "swr";
+import useSWR, { preload } from "swr";
 
 import "./style.css";
 import Router from "./Router";
@@ -22,12 +22,13 @@ gsap.registerPlugin(ScrollTrigger);
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 preload(getNotionListApi + `/0?count=12&filter=all`, fetcher);
 preload(getGuestbooksApi, fetcher);
-const projects = await preload(getProjectsApi, fetcher);
+preload(getProjectsApi, fetcher);
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const { data: projects } = useSWR(getProjectsApi);
   const { imagesPreloaded } = useImagePreloader(
-    projects.map((p: any) => p.thumbImageUri)
+    projects?.map((p: any) => p.thumbImageUri)
   );
   useLayoutEffect(() => {
     extend({ TextGeometry });

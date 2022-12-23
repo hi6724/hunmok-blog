@@ -98,5 +98,6 @@ const Container = styled.div<any>`
   /* img */
   img {
     width: 100%;
+    max-width: 800px;
   }
 `;

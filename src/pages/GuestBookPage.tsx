@@ -95,6 +95,7 @@ function GuestBookPage() {
                   ? (formState?.errors?.password?.message as string)
                   : "비밀번호 (수정 및 삭제에 사용됩니다)"
               }
+              type="password"
               {...register("password", {
                 required: { value: true, message: "비밀번호를 입력해주세요" },
               })}
@@ -181,11 +182,11 @@ export const Input = styled.input<any>`
     color: ${(props) => (props.isError ? "tomato" : colors.darkGray)};
   }
   :focus {
-    border-color: ${colors.fluor};
+    border-color: ${(props) => (props.isError ? "tomato" : colors.fluor)};
     color: ${colors.fluor};
     ::placeholder,
     ::-webkit-input-placeholder {
-      color: ${colors.fluor};
+      color: ${(props) => (props.isError ? "tomato" : colors.fluor)};
     }
   }
   transition: all 0.3s;
@@ -193,12 +194,32 @@ export const Input = styled.input<any>`
     font-size: "1rem";
   }
 `;
-export const InputBox = styled(Input)`
+export const InputBox = styled.textarea<any>`
   transition: all 0.2s;
-  :focus {
-    height: 15vh;
+  font-size: 16px;
+  font-family: "BM-Air";
+  background-color: #1d1d1d;
+  color: ${colors.lightGray};
+  border: none;
+  border-bottom: 2px solid white;
+  outline: none;
+  margin-bottom: 1rem;
+  ::placeholder,
+  ::-webkit-input-placeholder {
+    color: ${(props) => (props.isError ? "tomato" : colors.darkGray)};
   }
+  :focus {
+    border-color: ${colors.fluor};
+    color: ${colors.fluor};
+    ::placeholder,
+    ::-webkit-input-placeholder {
+      color: ${(props) => (props.isError ? "tomato" : colors.fluor)};
+    }
+  }
+  height: 15vh;
+  resize: none;
 `;
+
 export const ModalTitle = styled.h1`
   font-size: 3rem;
   padding: 2rem 0;

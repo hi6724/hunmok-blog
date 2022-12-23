@@ -68,7 +68,7 @@ interface ContainerProp {
 
 export const Container = styled.div<ContainerProp>`
   position: relative;
-  max-width: ${({ width }) => (width ? width : "100vw")};
+  width: ${({ width }) => (width ? width : "100vw")};
   position: relative;
   .slick-slide {
     display: flex;
