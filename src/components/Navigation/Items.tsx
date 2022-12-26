@@ -46,13 +46,19 @@ const Items = ({ data, toggleOpen }: Props) => {
         ))}
       </ItemsContainer>
       <SNSContainer>
-        <IconContainer>
+        <IconContainer
+          target={"_blank"}
+          href="https://github.com/hi6724/gsap-blog"
+        >
           <AiFillGithub color={colors.link} />
         </IconContainer>
-        <IconContainer>
+        <IconContainer target={"_blank"} href="https://velog.io/@hunmok1027">
           <img src={velog} width={16} alt="" />
         </IconContainer>
-        <IconContainer>
+        <IconContainer
+          target={"_blank"}
+          href="https://www.instagram.com/ha_hunmok/"
+        >
           <AiFillInstagram color={colors.pink} />
         </IconContainer>
       </SNSContainer>
@@ -61,7 +67,7 @@ const Items = ({ data, toggleOpen }: Props) => {
 };
 
 export default Items;
-const IconContainer = styled.div`
+const IconContainer = styled.a`
   cursor: pointer;
   width: 1rem;
   filter: grayscale(100%);

@@ -112,16 +112,7 @@ const GuestBookPage = React.forwardRef(
                 </div>
 
                 <div className="page-text">
-                  <p
-                    style={{
-                      fontSize: "0.8rem",
-                      display: "flex",
-                      marginBottom: "0.3rem",
-                      flexDirection: "row-reverse",
-                    }}
-                  >
-                    작성자 : {guestBook.user.username}
-                  </p>
+                  <p>작성자 : {guestBook.user.username}</p>
                   {guestBook.content}
                 </div>
               </div>
@@ -289,6 +280,13 @@ export const GuestBookPageStyle = styled.div`
       padding-top: 10px;
       box-sizing: border-box;
       border-top: solid 1px #f4e8d7;
+      p {
+        font-size: 0.8rem;
+        display: flex;
+        margin-bottom: 0.3rem;
+        flex-direction: row-reverse;
+        white-space: break-spaces;
+      }
     }
 
     .page-footer {
