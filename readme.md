@@ -1,3 +1,5 @@
+### Notion API를 사용해서 Notion을 DB로 사용하는 개인 블로그 입니다.
+
 <h1 align="center"> 𝒉𝒖𝒏𝒎𝒐𝒌-𝒃𝒍𝒐𝒈 </h1>
 <br/>
 
@@ -7,7 +9,7 @@
 
 http://hunmok.shop/
 
-Notion API를 사용해서 Notion을 DB로 사용하는 개인 블로그 입니다.
+
 
 
 ## 💜 프로젝트 진행 기간
