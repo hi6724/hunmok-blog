@@ -1,7 +1,6 @@
-### Notion API를 사용해서 Notion을 DB로 사용하는 개인 블로그 입니다.
+# Notion API를 사용해서 Notion을 DB로 사용하는 개인 블로그 입니다.
 
-<h1 align="center"> 𝒉𝒖𝒏𝒎𝒐𝒌-𝒃𝒍𝒐𝒈 </h1>
-<br/>
+
 
 <img align="center" width='100%' src="https://github.com/hi6724/gsap-blog/raw/master/public/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-04-09%20122108.png" />
 <br/>
