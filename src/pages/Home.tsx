@@ -4,7 +4,7 @@ import { Element } from "react-scroll";
 import { colors } from "../color";
 import AboutMe from "../components/Home/AboutMe";
 import Blog from "../components/Home/Blog";
-import ContactMe from "../components/Home/ContactMe";
+import ContactMe from "../components/Home/ContactMe/ContactMe";
 import MyProjects from "../components/Home/MyProjects";
 import Welcome from "../components/Home/Welcome";
 import GuestBookPreview from "../components/GuestBookPreview/GuestBookPreview";
