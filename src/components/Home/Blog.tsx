@@ -1,20 +1,20 @@
-import React, { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
-import gsap from "gsap";
-import ReactLoading from "react-loading";
+import React, { useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
+import gsap from 'gsap';
+import ReactLoading from 'react-loading';
 
-import { colors } from "../../color";
-import TypingText from "../../hooks/TypingText";
-import { useMobile } from "../../utils/useMobile";
-import { bounceAnim } from "../../utils/bounceAnim";
-import { useNavigate } from "react-router-dom";
-import SmallBlogItem from "../BlogDetail/SmallBlogItem";
-import Button from "../Button";
-import { getNotionListApi } from "../../utils/apiRoutes";
-import useSWR from "swr";
-import Dropdown from "../Dropdown";
-import { filterItems } from "../../utils/filterItems";
-import GradientButton from "../GradientButton";
+import { colors } from '../../color';
+import TypingText from '../../hooks/TypingText';
+import { useMobile } from '../../utils/useMobile';
+import { bounceAnim } from '../../utils/bounceAnim';
+import { useNavigate } from 'react-router-dom';
+import SmallBlogItem from '../BlogDetail/SmallBlogItem';
+import Button from '../Button';
+import { getNotionListApi } from '../../utils/apiRoutes';
+import useSWR from 'swr';
+import Dropdown from '../Dropdown';
+import { filterItems } from '../../utils/filterItems';
+import GradientButton from '../GradientButton';
 
 type ObjType = {
   [index: string]: string;
@@ -24,8 +24,8 @@ type ObjType = {
 export type PostType = {
   createdAt: string;
   icon:
-    | { type: "emoji"; emoji: "✅" | "❌" }
-    | { type: "file"; file: { url: string } };
+    | { type: 'emoji'; emoji: '✅' | '❌' }
+    | { type: 'file'; file: { url: string } };
   id: string;
   site: string;
   status: string;
@@ -43,11 +43,12 @@ const TYPE_PALETTE: ObjType = {
   algorithm: colors.fluor,
   frontend: colors.pink,
   backend: colors.purple,
+  ssafy: colors.link,
   fullstack: colors.link,
 };
 export const getTypeColor = (type?: keyof typeof TYPE_PALETTE) => {
   if (type && TYPE_PALETTE[type]) {
-    return TYPE_PALETTE[type];
+    return TYPE_PALETTE[type.toString().toLowerCase()];
   }
   return colors.lightGreen;
 };
@@ -64,11 +65,11 @@ function Blog({ show = false }: { show?: boolean }) {
   const count = useRef(isMobile ? 6 : 12);
 
   const animCursor = useRef(isMobile ? 6 : 12);
-  const cursor = useRef("0");
+  const cursor = useRef('0');
 
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState("all");
-  const [focusItem, setFocusItem] = useState("");
+  const [filter, setFilter] = useState('all');
+  const [focusItem, setFocusItem] = useState('');
   const [postList, setPostList] = useState<PostType[]>([]);
 
   const { data, error } = useSWR<NotionListResponse>(
@@ -84,7 +85,7 @@ function Blog({ show = false }: { show?: boolean }) {
         },
         scrollTrigger: {
           trigger: titleRef.current.children,
-          start: "top 70%",
+          start: 'top 70%',
         },
       });
     }
@@ -93,7 +94,7 @@ function Blog({ show = false }: { show?: boolean }) {
         scale: 0,
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top 70%",
+          start: 'top 70%',
         },
         duration: (index) => {
           const delay =
@@ -122,7 +123,7 @@ function Blog({ show = false }: { show?: boolean }) {
   }, [data]);
 
   useEffect(() => {
-    cursor.current = "0";
+    cursor.current = '0';
     animCursor.current = isMobile ? 6 : 12;
     setPostList([]);
     if (data !== undefined) {
@@ -140,10 +141,10 @@ function Blog({ show = false }: { show?: boolean }) {
 
   return (
     <Container>
-      <HeaderContainer style={{ flexDirection: show ? "row-reverse" : "row" }}>
+      <HeaderContainer style={{ flexDirection: show ? 'row-reverse' : 'row' }}>
         {!show && (
-          <Title size={isMobile ? "3rem" : "5rem"} ref={titleRef}>
-            <TypingText size={isMobile ? "3rem" : "5rem"}>블로그</TypingText>
+          <Title size={isMobile ? '3rem' : '5rem'} ref={titleRef}>
+            <TypingText size={isMobile ? '3rem' : '5rem'}>블로그</TypingText>
           </Title>
         )}
         {show && <Dropdown items={filterItems} setFilter={setFilter} />}
@@ -164,7 +165,7 @@ function Blog({ show = false }: { show?: boolean }) {
           {!show ? (
             <GradientButton
               onClick={() => {
-                navigation("/blog");
+                navigation('/blog');
               }}
             >
               블로그 전체보기
@@ -185,10 +186,10 @@ function Blog({ show = false }: { show?: boolean }) {
             )
           ) : (
             <ReactLoading
-              type={"spokes"}
+              type={'spokes'}
               color={colors.fluor}
-              height={"10vw"}
-              width={"10vw"}
+              height={'10vw'}
+              width={'10vw'}
             />
           )}
         </CenteredContainer>
@@ -205,7 +206,7 @@ const CenteredContainer = styled.div`
 `;
 const Title = styled.h2<any>`
   font-size: ${(p) => p.size};
-  font-family: "BM-Pro";
+  font-family: 'BM-Pro';
   color: ${colors.fluor};
   display: flex;
 `;

@@ -1,24 +1,25 @@
-import React from "react";
-import styled from "styled-components";
-import { colors } from "../../color";
-import typeTransform from "../../utils/typeTransform";
-import { CodeBlock, CopyBlock, dracula } from "react-code-blocks";
+import React from 'react';
+import styled from 'styled-components';
+import { colors } from '../../color';
+import typeTransform from '../../utils/typeTransform';
+// @ts-ignore
+import { CodeBlock, CopyBlock, dracula } from 'react-code-blocks';
 
 function BlogBlock({ data, typeColor }: any) {
   return (
     <Container typeColor={typeColor}>
-      {typeTransform(data.type) !== "hr" ? (
-        typeTransform(data.type) === "code" ? (
+      {typeTransform(data.type) !== 'hr' ? (
+        typeTransform(data.type) === 'code' ? (
           <CopyBlock
-            language="sql"
+            language={data.language}
             text={data.payload}
             codeBlock
             theme={dracula}
             showLineNumbers={false}
-            style={{ width: "100%" }}
+            style={{ width: '100%' }}
           />
-        ) : typeTransform(data.type) === "img" ? (
-          <img src={data.payload.file.url} />
+        ) : typeTransform(data.type) === 'img' ? (
+          <img src={data.payload[data.payload.type].url} />
         ) : (
           React.createElement(typeTransform(data.type), {
             ...(data.link && {
@@ -29,9 +30,9 @@ function BlogBlock({ data, typeColor }: any) {
           })
         )
       ) : (
-        React.createElement("hr", {
+        React.createElement('hr', {
           color: typeColor,
-          style: { width: "100%" },
+          style: { width: '100%' },
         })
       )}
     </Container>
@@ -52,7 +53,7 @@ const Container = styled.div<any>`
   section,
   li,
   div {
-    font-family: "NEXON";
+    font-family: 'NEXON';
   }
 
   width: 100%;
@@ -62,7 +63,7 @@ const Container = styled.div<any>`
   display: flex;
   white-space: pre-wrap;
   color: ${colors.gray};
-  font-family: "BM-E";
+  font-family: 'BM-E';
   [link] {
     display: inline;
     cursor: pointer;
@@ -74,8 +75,9 @@ const Container = styled.div<any>`
   h2,
   h3 {
     color: ${colors.lightGray};
-    font-family: "BM-Pro";
+    font-family: 'BM-Pro';
     font-size: 2rem;
+    line-height: 120%;
   }
   h2 {
     font-size: 1.8rem;
@@ -89,10 +91,10 @@ const Container = styled.div<any>`
     background-color: ${colors.lightGray};
     color: ${colors.black};
     border-radius: 0.5rem;
-    font-family: "NEXON";
+    font-family: 'NEXON';
   }
   p {
-    font-family: "NEXON";
+    font-family: 'NEXON';
   }
   /* code */
   /* img */

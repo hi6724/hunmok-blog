@@ -1,9 +1,10 @@
-import gsap from "gsap";
-import React, { useRef, useState, useEffect } from "react";
-import { AiOutlineRight } from "react-icons/ai";
-import styled from "styled-components";
-import { colors } from "../color";
-import { getTypeColor } from "./Home/Blog";
+import gsap from 'gsap';
+import React, { useRef, useState, useEffect } from 'react';
+// @ts-ignore
+import { AiOutlineRight } from 'react-icons/ai';
+import styled from 'styled-components';
+import { colors } from '../color';
+import { getTypeColor } from './Home/Blog';
 
 interface IFilterItem {
   uri: string;
@@ -28,7 +29,7 @@ function Dropdown({ items, setFilter }: IProps) {
   const toggleShow = () => {
     Array.from(menuRef.current!.children as HTMLCollectionOf<HTMLElement>).map(
       (el) => {
-        el.style.display = open ? "flex" : "none";
+        el.style.display = open ? 'flex' : 'none';
       }
     );
   };
@@ -56,7 +57,7 @@ function Dropdown({ items, setFilter }: IProps) {
         yPercent: -25,
         rotateX: 180,
         duration: 0.2,
-        stagger: { from: "end", each: 0.05 },
+        stagger: { from: 'end', each: 0.05 },
       });
     }
   }, [open]);
@@ -94,7 +95,7 @@ const Container = styled.div`
 
 const Title = styled.h1`
   color: ${colors.gray};
-  font-family: "BM-Air";
+  font-family: 'BM-Air';
   font-size: 1.5rem;
   cursor: pointer;
 `;
@@ -121,8 +122,8 @@ const MenuItem = styled.li<any>`
   height: 100%;
   border-bottom: 1px solid ${colors.darkGray};
   border-width: ${({ last }) => (last ? 0 : 1)}px;
-  color: ${({ type }) => getTypeColor(type)};
-  font-family: "BM-Pro";
+  color: ${({ type }: { type: string }) => getTypeColor(type.toLowerCase())};
+  font-family: 'BM-Pro';
   font-size: 1.2rem;
   backface-visibility: hidden;
 `;
